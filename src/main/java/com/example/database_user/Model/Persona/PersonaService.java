@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,8 +19,9 @@ public class PersonaService {
     }
 
 
-    public List<Persona> fetchDateRangePeople(LocalDate start, LocalDate end) {
+    public List<Persona> fetchDateRangePeople(String start, String end) {
 
-        return personaRepository.findPersonaByBirthdayIsBetween(start, end).stream().toList();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+        return personaRepository.findAllByBirthdayBetween(LocalDate.parse(start, formatter), LocalDate.parse(end, formatter)).stream().toList();
     }
 }

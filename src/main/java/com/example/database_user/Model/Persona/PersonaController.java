@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -28,7 +27,7 @@ public class PersonaController {
     @GetMapping(value = "/daterange/{initial}/{final}")
     public ResponseEntity<List<Persona>> fetchDateRangePeople(@PathVariable("initial") String initialDate, @PathVariable("final") String finalDate) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(personaService.fetchDateRangePeople(LocalDate.parse(initialDate), LocalDate.parse(finalDate)));
+        return ResponseEntity.status(HttpStatus.OK).body(personaService.fetchDateRangePeople(initialDate, finalDate));
 
     }
 

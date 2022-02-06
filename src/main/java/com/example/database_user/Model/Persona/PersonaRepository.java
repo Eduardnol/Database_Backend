@@ -6,5 +6,5 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface PersonaRepository extends MongoRepository<Persona, String> {
-    Optional<Persona> findPersonaByBirthdayIsBetween(LocalDate start, LocalDate end);
+    Optional<Persona> findAllByBirthdayBetween(LocalDate start, LocalDate end);
 }
