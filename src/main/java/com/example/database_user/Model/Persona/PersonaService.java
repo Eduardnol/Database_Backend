@@ -75,4 +75,14 @@ public class PersonaService {
         return new ResponseEntity<List<Persona>>(queryResult, status);
 
     }
+
+
+    public ResponseEntity<String> insertNewPerson(Persona person) {
+
+        personaRepository.insert(person);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+
+    }
 }

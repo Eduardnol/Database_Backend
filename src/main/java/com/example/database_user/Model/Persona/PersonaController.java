@@ -3,10 +3,7 @@ package com.example.database_user.Model.Persona;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class PersonaController {
     }
 
 
-    @GetMapping(value = "/name/{name}")
+    @GetMapping(value = "/search/{name}")
     public ResponseEntity<List<Persona>> fetchPeopleByName(@PathVariable("name") String name) {
 
         return personaService.fetchPeopleByName(name);
@@ -35,6 +32,14 @@ public class PersonaController {
     public ResponseEntity<List<Persona>> fetchDateRangePeople(@PathVariable("initial") String initialDate, @PathVariable("final") String finalDate) {
 
         return personaService.fetchBirthRangePeople(initialDate, finalDate);
+
+    }
+
+
+    @PostMapping(value = "/insertnew/")
+    public ResponseEntity<String> insertNewUser(@RequestBody Persona persona) {
+
+        return personaService.insertNewPerson(persona);
 
     }
 
