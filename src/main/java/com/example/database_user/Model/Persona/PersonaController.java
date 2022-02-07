@@ -27,7 +27,7 @@ public class PersonaController {
     @GetMapping(value = "/daterange/{initial}/{final}")
     public ResponseEntity<List<Persona>> fetchDateRangePeople(@PathVariable("initial") String initialDate, @PathVariable("final") String finalDate) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(personaService.fetchBirthRangePeople(initialDate, finalDate));
+        return personaService.fetchBirthRangePeople(initialDate, finalDate);
 
     }
 
