@@ -24,6 +24,13 @@ public class PersonaController {
     }
 
 
+    @GetMapping(value = "/name/{name}")
+    public ResponseEntity<List<Persona>> fetchPeopleByName(@PathVariable("name") String name) {
+
+        return personaService.fetchPeopleByName(name);
+    }
+
+
     @GetMapping(value = "/daterange/{initial}/{final}")
     public ResponseEntity<List<Persona>> fetchDateRangePeople(@PathVariable("initial") String initialDate, @PathVariable("final") String finalDate) {
 

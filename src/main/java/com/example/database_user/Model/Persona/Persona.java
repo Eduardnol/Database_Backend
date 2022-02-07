@@ -2,7 +2,7 @@ package com.example.database_user.Model.Persona;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -12,11 +12,11 @@ import java.time.LocalDate;
 public class Persona {
     @Id
     private String id;
-    @Indexed
+    @TextIndexed(weight = 3)
     private String nombre;
-    @Indexed
+    @TextIndexed(weight = 2)
     private String apellido;
-    @Indexed
+    @TextIndexed
     private String email;
     private LocalDate birthday;
     private LocalDate saint;
