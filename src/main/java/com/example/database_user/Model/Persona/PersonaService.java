@@ -20,14 +20,16 @@ public class PersonaService {
     }
 
 
-    public List<Persona> fetchDateRangePeople(String start, String end) {
+    public List<Persona> fetchBirthRangePeople(String start, String end) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
         List<Persona> queryResult = new ArrayList<>();
-        personaRepository.findAllByBirthdayBetween(LocalDate.parse(start, formatter)
-                , LocalDate.parse(end, formatter)).ifPresent(s -> {
+
+        personaRepository.findAllByBirthdayBetween(LocalDate.parse(start, formatter).minusDays(1)
+                , LocalDate.parse(end, formatter).plusDays(1)).ifPresent(s -> {
             queryResult.addAll(s);
         });
+
         return queryResult;
     }
 }
