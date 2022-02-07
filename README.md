@@ -52,7 +52,7 @@ The REST API to the example app is described below.
 
 ### Request
 
-`POST /thing/`
+`POST /insertnew/`
 
     curl -i -H 'Accept: application/json' -d 'name=Foo&status=new' http://localhost:7000/thing
 

@@ -18,8 +18,8 @@ public class EmmausController {
     @GetMapping("/allemmaus")
     public ResponseEntity<List<Emaus>> getAllEmmaus() {
         //Do not query the people inside
+        return null;
     }
-
 
 
 }

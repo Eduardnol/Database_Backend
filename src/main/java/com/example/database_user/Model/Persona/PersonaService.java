@@ -28,6 +28,7 @@ public class PersonaService {
 
     public List<Persona> fetchAllPeople() {
 
+
         return personaRepository.findAll();
 
     }
@@ -41,7 +42,6 @@ public class PersonaService {
                 .matching(name);
 
         Query query = TextQuery.queryText(criteria).sortByScore();
-
         List<Persona> posts = mongoTemplate.find(query, Persona.class);
 
         status = HttpStatus.OK;
@@ -82,7 +82,6 @@ public class PersonaService {
         personaRepository.insert(person);
 
         return new ResponseEntity<>(HttpStatus.OK);
-
 
     }
 }
