@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -79,7 +81,26 @@ public class PersonaService {
 
     public ResponseEntity<String> insertNewPerson(Persona person) {
 
-        personaRepository.insert(person);
+        try {
+            personaRepository.insert(person);
+        } catch (HttpMessageNotReadableException e) {
+            System.out.println("Data Access");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+
+    }
+
+
+    public ResponseEntity<String> deletePerson(String personID) {
+
+        try {
+            personaRepository.deleteById(personID);
+        } catch (HttpMessageNotReadableException e) {
+            System.out.println("Data Access");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(HttpStatus.OK);
 

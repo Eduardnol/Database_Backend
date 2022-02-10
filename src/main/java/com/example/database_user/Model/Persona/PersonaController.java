@@ -43,4 +43,11 @@ public class PersonaController {
 
     }
 
+
+    @DeleteMapping(value = "/deletebyid")
+    public ResponseEntity<String> deleteUser(@RequestBody String ID) {
+
+        return personaService.deletePerson(ID);
+    }
+
 }
