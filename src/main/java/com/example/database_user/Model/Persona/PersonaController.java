@@ -50,4 +50,12 @@ public class PersonaController {
         return personaService.deletePerson(identificador);
     }
 
+
+    @PutMapping(value = "/update/")
+    public ResponseEntity<String> updateExisting(@RequestBody Persona persona) {
+
+        return personaService.updatePerson(persona);
+
+    }
+
 }
