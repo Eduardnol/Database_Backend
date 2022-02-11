@@ -105,6 +105,7 @@ public class PersonaService {
     }
     public ResponseEntity<String> updatePerson(Persona person) {
 
+        System.out.println("The corresponding id is:" + person.getId());
         personaRepository.deleteById(person.getId());
         personaRepository.insert(person);
         return new ResponseEntity<>(HttpStatus.OK);
