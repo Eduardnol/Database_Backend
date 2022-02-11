@@ -21,5 +21,4 @@ public class EmmausController {
         return null;
     }
 
-
 }

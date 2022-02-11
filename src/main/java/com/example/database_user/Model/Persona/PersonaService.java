@@ -80,8 +80,14 @@ public class PersonaService {
     public ResponseEntity<String> insertNewPerson(Persona person) {
 
         personaRepository.insert(person);
-
         return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+
+    public ResponseEntity<String> updatePerson(Persona person) {
+
+        personaRepository.deleteById(person.getId());
+        personaRepository.insert(person);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
