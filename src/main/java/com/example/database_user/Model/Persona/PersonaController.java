@@ -44,6 +44,13 @@ public class PersonaController {
     }
 
 
+    @DeleteMapping(value = "/deletebyid")
+    public ResponseEntity<String> deleteUser(@RequestParam(required = false, name = "id") String identificador) {
+
+        return personaService.deletePerson(identificador);
+    }
+
+
     @PutMapping(value = "/update/")
     public ResponseEntity<String> updateExisting(@RequestBody Persona persona) {
 
