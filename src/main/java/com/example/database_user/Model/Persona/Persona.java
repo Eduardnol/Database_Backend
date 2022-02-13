@@ -1,5 +1,6 @@
 package com.example.database_user.Model.Persona;
 
+import com.example.database_user.Model.Custom;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
@@ -22,10 +23,11 @@ public class Persona {
     private LocalDate birthday;
     private LocalDate saint;
     private String dni;
+    private Custom extras;
     // private Map<String, String> map;
 
 
-    public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni) {
+    public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, Custom extras) {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -33,5 +35,11 @@ public class Persona {
         this.birthday = birthday;
         this.saint = saint;
         this.dni = dni;
+        if (extras == null) {
+            this.extras = new Custom();
+        } else {
+
+            this.extras = extras;
+        }
     }
 }
