@@ -10,7 +10,6 @@ public class Custom {
 
 
     public Custom() {
-
         selected = "";
         name = "";
         tagname = "";

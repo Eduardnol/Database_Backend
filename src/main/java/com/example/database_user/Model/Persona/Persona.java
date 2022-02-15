@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Document
@@ -23,11 +25,11 @@ public class Persona {
     private LocalDate birthday;
     private LocalDate saint;
     private String dni;
-    private Custom extras;
+    private ArrayList<Custom> extras;
     // private Map<String, String> map;
 
 
-    public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, Custom extras) {
+    public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras) {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -36,7 +38,7 @@ public class Persona {
         this.saint = saint;
         this.dni = dni;
         if (extras == null) {
-            this.extras = new Custom();
+            this.extras = new ArrayList<>();
         } else {
 
             this.extras = extras;
