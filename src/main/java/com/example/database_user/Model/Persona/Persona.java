@@ -29,8 +29,6 @@ public class Persona {
     private ArrayList<Custom> extras;
     private Sacraments sacraments;
 
-    // private Map<String, String> map;
-
 
     public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments) {
 
@@ -41,10 +39,6 @@ public class Persona {
         this.saint = saint;
         this.dni = dni;
         this.extras = Objects.requireNonNullElseGet(extras, ArrayList::new);
-        if (this.sacraments == null) {
-            this.sacraments = new Sacraments();
-        } else {
-            this.sacraments = sacraments;
-        }
+        this.sacraments = Objects.requireNonNullElseGet(sacraments, Sacraments::new);
     }
 }

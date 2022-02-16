@@ -17,4 +17,5 @@ public class Sacraments {
         this.confirmacion = false;
         this.matrimonio = false;
     }
+
 }

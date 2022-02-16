@@ -68,7 +68,6 @@ public class PersonaController {
     public ResponseEntity<List<Persona>> sortPeopleByName(@RequestParam(name = "field") String field, @RequestParam(name = "direction") String direction) {
 
         if (field.equals("name")) {
-
             return personaService.sortPeopleByName(direction);
         }
         if (field.equals("surname")) {

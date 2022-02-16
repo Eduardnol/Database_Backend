@@ -30,7 +30,6 @@ public class PersonaService {
 
     public List<Persona> fetchAllPeople() {
 
-
         return personaRepository.findAll();
 
     }
