@@ -118,10 +118,38 @@ public class PersonaService {
      *
      * @return
      */
-    public ResponseEntity<List<Persona>> sortPeopleByName() {
+    public ResponseEntity<List<Persona>> sortPeopleByName(String sort) {
+
+        Sort.Direction sort_dir;
+        if (sort.equals("asc")) {
+            sort_dir = Sort.Direction.ASC;
+        } else {
+            sort_dir = Sort.Direction.DESC;
+        }
+        HttpStatus status = HttpStatus.ACCEPTED;
+        List<Persona> persons = personaRepository.findAll(Sort.by(sort_dir, "nombre"));
+        status = HttpStatus.OK;
+        return new ResponseEntity<List<Persona>>(persons, status);
+    }
+
+
+    /**
+     * Sorts people by name
+     *
+     * @return
+     */
+    public ResponseEntity<List<Persona>> sortPeopleBySurname(String sort) {
+
+
+        Sort.Direction sort_dir;
+        if (sort.equals("asc")) {
+            sort_dir = Sort.Direction.ASC;
+        } else {
+            sort_dir = Sort.Direction.DESC;
+        }
 
         HttpStatus status = HttpStatus.ACCEPTED;
-        List<Persona> persons = personaRepository.findAll(Sort.by(Sort.Direction.ASC, "nombre"));
+        List<Persona> persons = personaRepository.findAll(Sort.by(sort_dir, "apellido"));
         status = HttpStatus.OK;
         return new ResponseEntity<List<Persona>>(persons, status);
     }

@@ -59,9 +59,24 @@ public class PersonaController {
     }
 
 
-    @GetMapping(value = "/sortbyname")
-    public ResponseEntity<List<Persona>> sortPeopleByName() {
+    /**
+     * @param field     Field to be sorted by the database
+     * @param direction Direction must be ASC or DESC (else is default DESC)
+     * @return
+     */
+    @GetMapping(value = "/sort")
+    public ResponseEntity<List<Persona>> sortPeopleByName(@RequestParam(name = "field") String field, @RequestParam(name = "direction") String direction) {
 
-        return personaService.sortPeopleByName();
+        if (field.equals("name")) {
+
+            return personaService.sortPeopleByName(direction);
+        }
+        if (field.equals("surname")) {
+            return personaService.sortPeopleBySurname(direction);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        if(identificador.equals("date")){
+//
+//        }
     }
 }
