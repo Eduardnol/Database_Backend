@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface PersonaRepository extends MongoRepository<Persona, String> {
     Optional<List<Persona>> findAllByBirthdayBetween(LocalDate start, LocalDate end);
-
 }
