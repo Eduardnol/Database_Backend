@@ -58,4 +58,10 @@ public class PersonaController {
 
     }
 
+
+    @GetMapping(value = "/sortbyname")
+    public ResponseEntity<List<Persona>> sortPeopleByName() {
+
+        return personaService.sortPeopleByName();
+    }
 }

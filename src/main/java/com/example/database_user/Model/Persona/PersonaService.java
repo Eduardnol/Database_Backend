@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
@@ -109,5 +110,19 @@ public class PersonaService {
         personaRepository.deleteById(person.getId());
         personaRepository.insert(person);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    /**
+     * Sorts people by name
+     *
+     * @return
+     */
+    public ResponseEntity<List<Persona>> sortPeopleByName() {
+
+        HttpStatus status = HttpStatus.ACCEPTED;
+        List<Persona> persons = personaRepository.findAll(Sort.by(Sort.Direction.ASC, "nombre"));
+        status = HttpStatus.OK;
+        return new ResponseEntity<List<Persona>>(persons, status);
     }
 }
