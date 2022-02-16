@@ -19,6 +19,7 @@ public class Persona {
     private String nombre;
     @TextIndexed(weight = 2)
     private String apellido;
+    @TextIndexed(weight = 2)
     private String apellido2;
     @TextIndexed
     private String email;
