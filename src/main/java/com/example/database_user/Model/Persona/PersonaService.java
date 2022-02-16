@@ -80,12 +80,10 @@ public class PersonaService {
 
     public ResponseEntity<String> insertNewPerson(Persona person) {
 
-        try {
-            personaRepository.insert(person);
-        } catch (HttpMessageNotReadableException e) {
-            System.out.println("Data Access");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        logger.info("Inserting new person");
+
+        personaRepository.insert(person);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
@@ -103,6 +101,8 @@ public class PersonaService {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+
+
     public ResponseEntity<String> updatePerson(Persona person) {
 
         System.out.println("The corresponding id is:" + person.getId());
