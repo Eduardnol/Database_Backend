@@ -1,6 +1,8 @@
 package com.example.database_user.Model.Common;
 
+import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
@@ -8,16 +10,14 @@ import java.util.stream.Stream;
 
 public interface StorageService {
 
-    void init();
+    public void init();
 
-    void store(MultipartFile file);
+    public void save(MultipartFile file);
 
-    Stream<Path> loadAll();
+    public Resource load(String filename);
 
-    Path load(String filename);
+    public void deleteAll();
 
-    Resource loadAsResource(String filename);
-
-    void deleteAll();
+    public Stream<Path> loadAll();
 
 }

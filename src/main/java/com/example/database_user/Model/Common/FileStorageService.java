@@ -1,6 +1,7 @@
 package com.example.database_user.Model.Common;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class FileStorageService {
     private final FileStorageRepository fileStorageRepository;
+    @Autowired
     private final StorageService storageService;
 
 
@@ -22,6 +24,6 @@ public class FileStorageService {
 
     public void uploadFile(MultipartFile file) {
 
-        storageService.store(file);
+        storageService.save(file);
     }
 }

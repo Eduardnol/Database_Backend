@@ -23,11 +23,12 @@ public class FileStorageController {
     }
 
 
-    @PutMapping(value = "/update")
+    @PostMapping(value = "/update")
     public ResponseEntity<String> updateExisting(@RequestParam("file") MultipartFile file, @RequestParam(name = "id") String identificador) {
 
-        return null;
-        //return fileStorageService.addFile(file);
+        fileStorageService.uploadFile(file);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
 
     }
 
