@@ -3,6 +3,8 @@ package com.example.database_user.Model.Common;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class FileStorage {
     String originalName;
@@ -18,4 +20,13 @@ public class FileStorage {
         this.newName = "";
         this.location = "";
     }
+
+
+    public static String generateNewName() {
+
+        return UUID.randomUUID().toString();
+    }
+
+
+    ;
 }
