@@ -1,32 +1,40 @@
 package com.example.database_user.Model.Common;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Data
 public class FileStorage {
-    String originalName;
-    @JsonIgnore
-    String newName;
-    @JsonIgnore
-    String location;
+    private String name;
+    private String url;
 
 
-    public FileStorage() {
+    public FileStorage(String name, String url) {
 
-        this.originalName = "";
-        this.newName = "";
-        this.location = "";
+        this.name = name;
+        this.url = url;
     }
 
 
-    public static String generateNewName() {
+    public String getName() {
 
-        return UUID.randomUUID().toString();
+        return this.name;
     }
 
 
-    ;
+    public void setName(String name) {
+
+        this.name = name;
+    }
+
+
+    public String getUrl() {
+
+        return this.url;
+    }
+
+
+    public void setUrl(String url) {
+
+        this.url = url;
+    }
 }

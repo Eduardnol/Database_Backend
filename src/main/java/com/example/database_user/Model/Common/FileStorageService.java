@@ -1,29 +1,21 @@
 package com.example.database_user.Model.Common;
 
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.nio.file.Path;
+import java.util.stream.Stream;
 
-@AllArgsConstructor
-@Service
-public class FileStorageService {
-    private final FileStorageRepository fileStorageRepository;
-    @Autowired
-    private final StorageService storageService;
+public interface FileStorageService {
 
+    public void init();
 
-    public List<FileStorage> fetchAllFiles() {
+    public void save(MultipartFile file);
 
-        return fileStorageRepository.findAll();
+    public Resource load(String filename);
 
-    }
+    public void deleteAll();
 
+    public Stream<Path> loadAll();
 
-    public void uploadFile(MultipartFile file) {
-
-        storageService.save(file);
-    }
 }
