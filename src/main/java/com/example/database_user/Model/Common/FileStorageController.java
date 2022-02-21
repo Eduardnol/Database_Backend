@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,8 +24,9 @@ public class FileStorageController {
 
 
     @PutMapping(value = "/update")
-    public ResponseEntity<String> updateExisting(@RequestBody FileStorage file, @RequestParam(name = "id") String identificador) {
+    public ResponseEntity<String> updateExisting(@RequestParam("file") MultipartFile file, @RequestParam(name = "id") String identificador) {
 
+        return null;
         //return fileStorageService.addFile(file);
 
     }
