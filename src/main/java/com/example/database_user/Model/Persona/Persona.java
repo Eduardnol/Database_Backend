@@ -1,5 +1,6 @@
 package com.example.database_user.Model.Persona;
 
+import com.example.database_user.Model.Common.FileStorage;
 import com.example.database_user.Model.Custom;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -28,9 +29,10 @@ public class Persona {
     private String dni;
     private ArrayList<Custom> extras;
     private Sacraments sacraments;
+    private ArrayList<FileStorage> fileStorage;
 
 
-    public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments) {
+    public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage) {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -40,5 +42,6 @@ public class Persona {
         this.dni = dni;
         this.extras = Objects.requireNonNullElseGet(extras, ArrayList::new);
         this.sacraments = Objects.requireNonNullElseGet(sacraments, Sacraments::new);
+        this.fileStorage = Objects.requireNonNullElseGet(fileStorage, ArrayList::new);
     }
 }

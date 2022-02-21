@@ -1,10 +1,21 @@
 package com.example.database_user.Model.Common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
 public class FileStorage {
-    private String originalName;
-    private String newName;
-    private String location;
+    String originalName;
+    @JsonIgnore
+    String newName;
+    @JsonIgnore
+    String location;
+
+
+    public FileStorage() {
+
+        this.originalName = "";
+        this.newName = "";
+        this.location = "";
+    }
 }
