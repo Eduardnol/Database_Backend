@@ -55,9 +55,10 @@ public class FilesStorageServiceImpl implements FileStorageService {
             Files.copy(file.getInputStream(), this.root.resolve(userid + "/" + file.getOriginalFilename()));
         } catch (FileAlreadyExistsException e) {
             System.out.println("File already exists");
+            logger.warn(e.getMessage());
             throw new RuntimeException("File Already Exists");
         } catch (IOException e) {
-            logger.warn(e.getMessage());
+            logger.warn("Could not store the file" + e.getMessage());
             throw new RuntimeException("Could not store the file.");
         }
         Optional<Persona> persona = personaRepository.findById(userid);
@@ -90,6 +91,8 @@ public class FilesStorageServiceImpl implements FileStorageService {
 
             }
         } catch (MalformedURLException e) {
+
+            logger.warn("Malformed url exception" + e.getMessage());
             throw new RuntimeException("Error: " + e.getMessage());
         }
     }
