@@ -20,12 +20,12 @@ public class FileStorageController {
     private final FileStorageService storageService;
 
 
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload/{userid}")
+    public ResponseEntity<ResponseMessage> uploadFile(@PathVariable String userid, @RequestParam("file") MultipartFile file) {
 
         String message = "";
         try {
-            storageService.save(file);
+            storageService.save(file, userid);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
