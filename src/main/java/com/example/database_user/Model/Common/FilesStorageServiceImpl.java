@@ -1,5 +1,8 @@
 package com.example.database_user.Model.Common;
 
+import com.example.database_user.Model.Persona.Persona;
+import com.example.database_user.Model.Persona.PersonaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -12,11 +15,14 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
+@AllArgsConstructor
 public class FilesStorageServiceImpl implements FileStorageService {
     private final Path root = Paths.get("uploads");
+    private final PersonaRepository personaRepository;
 
 
     @Override
@@ -48,6 +54,16 @@ public class FilesStorageServiceImpl implements FileStorageService {
         } catch (IOException e) {
             throw new RuntimeException("Could not store the file.");
         }
+        Optional<Persona> persona = personaRepository.findById(userid);
+        persona.ifPresent(value -> {
+
+            value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), ""));
+
+        });
+        System.out.println(persona.get().getFileStorage().toString());
+        personaRepository.deleteById(userid);
+        personaRepository.insert(persona.get());
+
     }
 
 
