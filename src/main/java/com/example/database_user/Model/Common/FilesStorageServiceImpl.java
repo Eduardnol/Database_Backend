@@ -46,22 +46,29 @@ public class FilesStorageServiceImpl implements FileStorageService {
     @Override
     public void save(MultipartFile file, String userid) {
 
+        try {
+            Files.createDirectory(this.root);
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            logger.info("Folder already exists");
+        }
 
         try {
             Files.createDirectory(this.root.resolve(userid));
         } catch (IOException e) {
-            System.out.println("Folder " + userid + " already exists");
             logger.info("Folder already exists");
         }
 
         try {
             Files.copy(file.getInputStream(), this.root.resolve(userid + "/" + file.getOriginalFilename()));
+            logger.info("Copied file into system");
         } catch (FileAlreadyExistsException e) {
             System.out.println("File already exists");
             logger.warn(e.getMessage());
             throw new RuntimeException("File Already Exists");
         } catch (IOException e) {
-            logger.warn("Could not store the file " + e.getMessage());
+            logger.warn("Could not store the file " + e.getStackTrace().toString());
+            System.out.println(e.toString());
             throw new RuntimeException("Could not store the file.");
         }
         Optional<Persona> persona = personaRepository.findById(userid);
