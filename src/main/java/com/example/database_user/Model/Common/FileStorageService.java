@@ -12,7 +12,7 @@ public interface FileStorageService {
 
     public void save(MultipartFile file, String userid);
 
-    public Resource load(String filename);
+    public Resource load(String filename, String userid);
 
     public void deleteAll();
 

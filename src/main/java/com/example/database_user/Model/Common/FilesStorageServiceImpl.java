@@ -52,10 +52,10 @@ public class FilesStorageServiceImpl implements FileStorageService {
 
 
     @Override
-    public Resource load(String filename) {
+    public Resource load(String filename, String userid) {
 
         try {
-            Path file = root.resolve(filename);
+            Path file = root.resolve(userid + "/" + filename);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
