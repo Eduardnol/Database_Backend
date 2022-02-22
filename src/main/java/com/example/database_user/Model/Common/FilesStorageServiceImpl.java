@@ -2,7 +2,10 @@ package com.example.database_user.Model.Common;
 
 import com.example.database_user.Model.Persona.Persona;
 import com.example.database_user.Model.Persona.PersonaRepository;
+import com.example.database_user.Model.Persona.PersonaService;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class FilesStorageServiceImpl implements FileStorageService {
     private final Path root = Paths.get("uploads");
+    private static final Logger logger = LogManager.getLogger(FilesStorageServiceImpl.class);
     private final PersonaRepository personaRepository;
 
 
@@ -44,6 +48,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
             Files.createDirectory(this.root.resolve(userid));
         } catch (IOException e) {
             System.out.println("Folder " + userid + "already exists");
+            logger.info("Folder already exists");
         }
 
         try {
@@ -52,12 +57,15 @@ public class FilesStorageServiceImpl implements FileStorageService {
             System.out.println("File already exists");
             throw new RuntimeException("File Already Exists");
         } catch (IOException e) {
+            logger.warn(e.getMessage());
             throw new RuntimeException("Could not store the file.");
         }
         Optional<Persona> persona = personaRepository.findById(userid);
         persona.ifPresent(value -> {
 
             value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), ""));
+
+            logger.info("Updated person on the database");
 
         });
         System.out.println(persona.get().getFileStorage().toString());
@@ -76,7 +84,10 @@ public class FilesStorageServiceImpl implements FileStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
+
+                logger.warn("The actual file could not be read");
                 throw new RuntimeException("Could not read the file!");
+
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error: " + e.getMessage());
