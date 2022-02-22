@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
@@ -108,6 +109,8 @@ public class FilesStorageServiceImpl implements FileStorageService {
     @Override
     public void deleteOne(String filename, String userid) {
         //TODO delete one file
+
+        FileSystemUtils.deleteRecursively(root.resolve(userid + "/" + filename).toFile());
     }
 
 
