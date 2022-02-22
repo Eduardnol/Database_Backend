@@ -106,6 +106,12 @@ public class FilesStorageServiceImpl implements FileStorageService {
 
 
     @Override
+    public void deleteOne(String filename, String userid) {
+        //TODO delete one file
+    }
+
+
+    @Override
     public Stream<Path> loadAll() {
 
         try {

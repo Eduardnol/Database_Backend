@@ -57,4 +57,13 @@ public class FileStorageController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
+
+    @DeleteMapping("{userid}/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String userid, @PathVariable String filename) {
+        String message = "";
+        storageService.deleteOne(filename, userid);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+    }
+
 }
