@@ -36,6 +36,8 @@ public class FilesStorageServiceImpl implements FileStorageService {
         try {
             Files.createDirectory(root);
         } catch (IOException e) {
+
+            logger.warn("Could not initialize folder for upload");
             throw new RuntimeException("Could not initialize folder for upload!");
         }
     }
@@ -48,7 +50,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
         try {
             Files.createDirectory(this.root.resolve(userid));
         } catch (IOException e) {
-            System.out.println("Folder " + userid + "already exists");
+            System.out.println("Folder " + userid + " already exists");
             logger.info("Folder already exists");
         }
 
@@ -59,7 +61,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
             logger.warn(e.getMessage());
             throw new RuntimeException("File Already Exists");
         } catch (IOException e) {
-            logger.warn("Could not store the file" + e.getMessage());
+            logger.warn("Could not store the file " + e.getMessage());
             throw new RuntimeException("Could not store the file.");
         }
         Optional<Persona> persona = personaRepository.findById(userid);
@@ -93,7 +95,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
             }
         } catch (MalformedURLException e) {
 
-            logger.warn("Malformed url exception" + e.getMessage());
+            logger.warn("Malformed url exception " + e.getMessage());
             throw new RuntimeException("Error: " + e.getMessage());
         }
     }
@@ -108,8 +110,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
 
     @Override
     public void deleteOne(String filename, String userid) {
-        //TODO delete one file
-
+        //TODO delete from the database
         FileSystemUtils.deleteRecursively(root.resolve(userid + "/" + filename).toFile());
     }
 
