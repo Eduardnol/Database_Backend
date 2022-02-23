@@ -95,6 +95,12 @@ public class FileStorageController {
     }
 
 
+    /**
+     * Given an id, retrieve all the files corresponding to that id stored in filesystem
+     * @param id Identificator of the owner of the file
+     * @return Response entity with the list of the files and it's url access
+     */
+
     @GetMapping("{id}")
     @ResponseBody
     public ResponseEntity<List<FileStorage>> getIdFiles(@PathVariable String id) {
