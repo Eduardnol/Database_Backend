@@ -22,8 +22,9 @@ public class FileStorageController {
 
     /**
      * {@code POST  /genres} : Create a new genre.
+     *
      * @param userid identificator of the owner of the file to be uploaded
-     * @param file File to be uploaded
+     * @param file   File to be uploaded
      * @return Response entity with all the file uploader
      */
 
@@ -44,6 +45,7 @@ public class FileStorageController {
 
     /**
      * Lists all the files of the server (NOT WORKING)
+     *
      * @return Returns the result of the query together with the listed files
      */
     @GetMapping("/allfiles")
@@ -61,7 +63,8 @@ public class FileStorageController {
 
     /**
      * Gets an specific file an specific user
-     * @param userid User owner of the file
+     *
+     * @param userid   User owner of the file
      * @param filename Name of the file to be downloaded
      * @return Response entity of with the result of the operation
      */
@@ -77,16 +80,33 @@ public class FileStorageController {
 
     /**
      * Deletes a user's file
-     * @param userid The owner of the file to be deleted
+     *
+     * @param userid   The owner of the file to be deleted
      * @param filename Name of the file to be deleted
      * @return Response entity with the result of the operation
      */
     @DeleteMapping("{userid}/{filename:.+}")
     @ResponseBody
     public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String userid, @PathVariable String filename) {
+
         String message = "";
         storageService.deleteOne(filename, userid);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
     }
+
+
+    @GetMapping("{id}")
+    @ResponseBody
+    public ResponseEntity<List<FileStorage>> getIdFiles(@PathVariable String id) {
+
+        List<FileStorage> fileInfos = storageService.loadFromId(id).map(path -> {
+            String filename = path.getFileName().toString();
+            String url = MvcUriComponentsBuilder
+                    .fromMethodName(FileStorageController.class, "getFile", id, path.getFileName().toString()).build().toString();
+            return new FileStorage(filename, url);
+        }).collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
+    }
+
 
 }

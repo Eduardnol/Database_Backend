@@ -18,6 +18,7 @@ public interface FileStorageService {
 
     public void deleteOne(String filename, String userid);
 
+    public Stream<Path>  loadFromId(String id);
 
     public Stream<Path> loadAll();
 

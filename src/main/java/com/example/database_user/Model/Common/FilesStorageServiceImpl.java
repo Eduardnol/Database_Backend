@@ -149,4 +149,15 @@ public class FilesStorageServiceImpl implements FileStorageService {
             throw new RuntimeException("Could not load the files!");
         }
     }
+
+    @Override
+    public Stream<Path> loadFromId(String id) {
+
+        try {
+            return Files.walk(Path.of(this.root + "/" + id), 1).filter(path ->
+                    !path.equals(Path.of(this.root + "/" + id))).map(Path.of(this.root + "/" + id)::relativize);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not load the files!");
+        }
+    }
 }
