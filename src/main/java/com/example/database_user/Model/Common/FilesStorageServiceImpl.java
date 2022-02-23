@@ -19,6 +19,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -67,7 +68,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
             logger.warn(e.getMessage());
             throw new RuntimeException("File Already Exists");
         } catch (IOException e) {
-            logger.warn("Could not store the file " + e.getStackTrace().toString());
+            logger.warn("Could not store the file " + Arrays.toString(e.getStackTrace()));
             System.out.println(e.toString());
             throw new RuntimeException("Could not store the file.");
         }
