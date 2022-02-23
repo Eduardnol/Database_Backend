@@ -75,13 +75,14 @@ public class FilesStorageServiceImpl implements FileStorageService {
         persona.ifPresent(value -> {
 
             value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), ""));
+            System.out.println(persona.get().getFileStorage().toString());
+            personaRepository.deleteById(userid);
+            personaRepository.insert(persona.get());
 
             logger.info("Updated person on the database");
 
         });
-        System.out.println(persona.get().getFileStorage().toString());
-        personaRepository.deleteById(userid);
-        personaRepository.insert(persona.get());
+
 
     }
 
@@ -115,10 +116,26 @@ public class FilesStorageServiceImpl implements FileStorageService {
     }
 
 
+    /**
+     * Deletes an specific file from the database and memory
+     *
+     * @param filename Name of the file to be deleted
+     * @param userid   Id of the folders file location
+     */
     @Override
     public void deleteOne(String filename, String userid) {
         //TODO delete from the database
         FileSystemUtils.deleteRecursively(root.resolve(userid + "/" + filename).toFile());
+
+        Optional<Persona> persona = personaRepository.findById(userid);
+        persona.ifPresent(value -> {
+            value.getFileStorage().remove(new FileStorage(filename, ""));
+            personaRepository.deleteById(userid);
+            personaRepository.insert(persona.get());
+            logger.info("Deleted file of person on the database");
+        });
+
+
     }
 
 

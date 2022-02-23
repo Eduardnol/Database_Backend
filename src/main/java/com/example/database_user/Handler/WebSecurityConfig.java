@@ -1,4 +1,4 @@
-package com.example.database_user;
+package com.example.database_user.Handler;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
