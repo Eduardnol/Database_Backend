@@ -3,8 +3,10 @@ package com.example.database_user.Model.Persona;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -37,7 +39,7 @@ public class PersonaController {
 
 
     @PostMapping(value = "/insertnew/")
-    public ResponseEntity<String> insertNewUser(@RequestBody Persona persona) {
+    public ResponseEntity<String> insertNewUser(@RequestBody @Valid Persona persona) {
 
         return personaService.insertNewPerson(persona);
 

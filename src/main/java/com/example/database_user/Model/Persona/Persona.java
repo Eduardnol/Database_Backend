@@ -6,7 +6,10 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -17,14 +20,22 @@ public class Persona {
     @Id
     private String id;
     @TextIndexed(weight = 3)
+    @NotNull(message = "The name is required.")
     private String nombre;
     @TextIndexed(weight = 2)
+    @NotNull(message = "The surname is required.")
     private String apellido;
     @TextIndexed(weight = 2)
+    @NotNull(message = "The surname2 is required.")
     private String apellido2;
     @TextIndexed
+    @Email(message = "The email address is invalid.", flags = { Pattern.Flag.CASE_INSENSITIVE })
     private String email;
+    @DateTimeFormat
+    @Past(message = "The date of birth must be in the past.")
     private LocalDate birthday;
+    @DateTimeFormat
+    @PastOrPresent(message = "The saint must be past or present")
     private LocalDate saint;
     private String dni;
     private ArrayList<Custom> extras;
