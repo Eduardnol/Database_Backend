@@ -1,8 +1,8 @@
 package com.example.database_user.Model.Common;
 
-import com.example.database_user.Model.Persona.Persona;
-import com.example.database_user.Model.Persona.PersonaRepository;
-import com.example.database_user.Model.Persona.PersonaService;
+import com.example.database_user.dtos.FileStorage;
+import com.example.database_user.dtos.Persona;
+import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
@@ -50,7 +49,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
         try {
             Files.createDirectory(this.root);
         } catch (IOException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             logger.info("Folder already exists");
         }
 
@@ -69,7 +68,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
             throw new RuntimeException("File Already Exists");
         } catch (IOException e) {
             logger.warn("Could not store the file " + Arrays.toString(e.getStackTrace()));
-            System.out.println(e.toString());
+            System.out.println(e);
             throw new RuntimeException("Could not store the file.");
         }
         Optional<Persona> persona = personaRepository.findById(userid);

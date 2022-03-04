@@ -1,13 +1,10 @@
-package com.example.database_user.Model.Persona;
+package com.example.database_user.dtos;
 
-import com.example.database_user.Model.Common.FileStorage;
-import com.example.database_user.Model.Custom;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;

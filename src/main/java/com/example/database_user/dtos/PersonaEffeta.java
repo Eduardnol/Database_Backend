@@ -1,6 +1,5 @@
-package com.example.database_user.Model.Effeta;
+package com.example.database_user.dtos;
 
-import com.example.database_user.Model.Persona.Persona;
 import lombok.Data;
 
 /**

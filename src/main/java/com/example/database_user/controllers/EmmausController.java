@@ -1,5 +1,7 @@
-package com.example.database_user.Model.Emaus;
+package com.example.database_user.controllers;
 
+import com.example.database_user.dtos.Emaus;
+import com.example.database_user.services.EmmausService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

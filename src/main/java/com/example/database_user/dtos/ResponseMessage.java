@@ -1,4 +1,4 @@
-package com.example.database_user.Model.Common;
+package com.example.database_user.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

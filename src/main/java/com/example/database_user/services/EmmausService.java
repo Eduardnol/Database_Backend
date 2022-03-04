@@ -1,5 +1,6 @@
-package com.example.database_user.Model.Emaus;
+package com.example.database_user.services;
 
+import com.example.database_user.repositories.EmmausRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

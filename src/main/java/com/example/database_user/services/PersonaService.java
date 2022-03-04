@@ -1,5 +1,7 @@
-package com.example.database_user.Model.Persona;
+package com.example.database_user.services;
 
+import com.example.database_user.dtos.Persona;
+import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,7 +60,7 @@ public class PersonaService {
         List<Persona> queryResult = new ArrayList<>();
         LocalDate startDate = LocalDate.parse(start, formatter);
         LocalDate endDate = LocalDate.parse(end, formatter);
-        HttpStatus status = HttpStatus.ACCEPTED;
+        HttpStatus status;
 
         if (endDate.isBefore(startDate)) {
             //Error
@@ -66,13 +68,11 @@ public class PersonaService {
             logger.warn("End date is before start date");
         } else {
             personaRepository.findAllByBirthdayBetween(startDate.minusDays(1)
-                    , endDate.plusDays(1)).ifPresent(s -> {
-                queryResult.addAll(s);
-            });
+                    , endDate.plusDays(1)).ifPresent(queryResult::addAll);
             status = HttpStatus.OK;
             logger.info("Retrieved users by datarange");
         }
-        return new ResponseEntity<List<Persona>>(queryResult, status);
+        return new ResponseEntity<>(queryResult, status);
 
     }
 

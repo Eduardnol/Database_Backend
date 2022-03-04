@@ -1,4 +1,4 @@
-package com.example.database_user.Model.Effeta;
+package com.example.database_user.dtos;
 
 import lombok.Data;
 
