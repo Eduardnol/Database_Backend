@@ -1,5 +1,24 @@
 # REST API Database User Administration
 
+
+
+
+## When cloning 
+Create inside /src/main/resources a file names `application.properties` with the following info inside.
+```properties
+spring.data.mongodb.authentication-database=xxxx
+#spring.data.mongodb.username=xxxx
+#spring.data.mongodb.password=xxxx
+#spring.data.mongodb.database=xxxx
+#spring.data.mongodb.port=xxxx
+#spring.data.mongodb.host=xxxx
+spring.data.mongodb.uri=xxxx
+spring.data.mongodb.auto-index-creation=true
+```
+
+
+
+
 This is a bare-bones example of a Sinatra application providing a REST
 API to a DataMapper-backed model.
 
