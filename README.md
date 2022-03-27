@@ -14,6 +14,13 @@ spring.data.mongodb.authentication-database=xxxx
 #spring.data.mongodb.host=xxxx
 spring.data.mongodb.uri=xxxx
 spring.data.mongodb.auto-index-creation=true
+spring.servlet.multipart.max-file-size=5000KB
+spring.servlet.multipart.max-request-size=5000KB
+## Hibernate properties
+spring.jpa.hibernate.use-new-id-generator-mappings=false
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.open-in-view=false
 ```
 
 
