@@ -45,6 +45,12 @@ public class FilesStorageServiceImpl implements FileStorageService {
 	}
 
 
+	/**
+	 * Uploads a file to the database and memory
+	 *
+	 * @param file   Multipart file to be uploaded
+	 * @param userid Id of the folders file location
+	 */
 	@Override
 	public void save(MultipartFile file, String userid) {
 
