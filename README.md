@@ -28,7 +28,7 @@ spring.jpa.open-in-view=false
 
 This is a bare-bones example of a Sinatra application providing a REST
 API to a DataMapper-backed model. 
-> ⚠️ NOT ACTUAL DOCUMENTATION
+> ⚠️ ⚠️ NOT ACTUAL DOCUMENTATION ⚠️ ⚠️
 
 The entire application is contained within the `app.rb` file.
 
