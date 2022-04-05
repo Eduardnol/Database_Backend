@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -38,10 +39,10 @@ public class Persona {
 	private ArrayList<Custom> extras;
 	private Sacraments sacraments;
 	private ArrayList<FileStorage> fileStorage;
-	private LocalDate createdOn;
+	private LocalDateTime createdOn;
 
 
-	public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDate createdOn) {
+	public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {
 
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -52,6 +53,6 @@ public class Persona {
 		this.extras = Objects.requireNonNullElseGet(extras, ArrayList::new);
 		this.sacraments = Objects.requireNonNullElseGet(sacraments, Sacraments::new);
 		this.fileStorage = Objects.requireNonNullElseGet(fileStorage, ArrayList::new);
-		this.createdOn = (createdOn == null) ? LocalDate.now() : createdOn;
+		this.createdOn = (createdOn == null) ? LocalDateTime.now() : createdOn;
 	}
 }
