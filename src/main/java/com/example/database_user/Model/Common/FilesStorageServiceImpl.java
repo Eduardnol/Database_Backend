@@ -21,9 +21,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+//TODO : Verificar el formato en que nos entregan los ficheros
 @Service
 @AllArgsConstructor
 public class FilesStorageServiceImpl implements FileStorageService {
@@ -54,48 +56,52 @@ public class FilesStorageServiceImpl implements FileStorageService {
 	@Override
 	public void save(MultipartFile file, String userid) {
 
-		String url;
-		try {
-			Files.createDirectory(this.root);
-		} catch (IOException e) {
-			System.out.println(e);
-			logger.info("Folder already exists");
-		}
+		if (isValidType(file)) {
+			String url;
+			try {
+				Files.createDirectory(this.root);
+			} catch (IOException e) {
+				System.out.println(e);
+				logger.info("Folder already exists");
+			}
 
-		try {
-			Files.createDirectory(this.root.resolve(userid));
-		} catch (IOException e) {
-			logger.info("Folder already exists");
-		}
+			try {
+				Files.createDirectory(this.root.resolve(userid));
+			} catch (IOException e) {
+				logger.info("Folder already exists");
+			}
 
-		try {
-			Path originalFile = this.root.resolve(userid + "/" + file.getOriginalFilename());
-			Files.copy(file.getInputStream(), originalFile);
-			logger.info("Copied file into system");
+			try {
+				Path originalFile = this.root.resolve(userid + "/" + file.getOriginalFilename());
+				Files.copy(file.getInputStream(), originalFile);
+				logger.info("Copied file into system");
 
-			url = MvcUriComponentsBuilder
-					.fromMethodName(FileStorageController.class, "getFile", userid, originalFile.getFileName().toString()).build().toString();
+				url = MvcUriComponentsBuilder
+						.fromMethodName(FileStorageController.class, "getFile", userid, originalFile.getFileName().toString()).build().toString();
 
 
-			Optional<Persona> persona = personaRepository.findById(userid);
-			persona.ifPresent(value -> {
+				Optional<Persona> persona = personaRepository.findById(userid);
+				persona.ifPresent(value -> {
 
-				value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), url));
-				System.out.println(persona.get().getFileStorage().toString());
-				personaRepository.deleteById(userid);
-				personaRepository.insert(persona.get());
+					value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), url));
+					System.out.println(persona.get().getFileStorage().toString());
+					personaRepository.deleteById(userid);
+					personaRepository.insert(persona.get());
 
-				logger.info("Updated person on the database");
+					logger.info("Updated person on the database");
 
-			});
-		} catch (FileAlreadyExistsException e) {
-			System.out.println("File already exists");
-			logger.warn(e.getMessage());
-			throw new RuntimeException("File Already Exists");
-		} catch (IOException e) {
-			logger.warn("Could not store the file " + Arrays.toString(e.getStackTrace()));
-			System.out.println(e);
-			throw new RuntimeException("Could not store the file.");
+				});
+			} catch (FileAlreadyExistsException e) {
+				System.out.println("File already exists");
+				logger.warn(e.getMessage());
+				throw new RuntimeException("File Already Exists");
+			} catch (IOException e) {
+				logger.warn("Could not store the file " + Arrays.toString(e.getStackTrace()));
+				System.out.println(e);
+				throw new RuntimeException("Could not store the file.");
+			}
+		} else {
+			throw new RuntimeException("File is not a valid format");
 		}
 
 
@@ -179,5 +185,14 @@ public class FilesStorageServiceImpl implements FileStorageService {
 		} catch (IOException e) {
 			throw new RuntimeException("Could not load the files!");
 		}
+	}
+
+
+	public boolean isValidType(MultipartFile file) {
+
+		String content = file.getContentType();
+		final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif", "application/pdf");
+
+		return contentTypes.contains(content);
 	}
 }

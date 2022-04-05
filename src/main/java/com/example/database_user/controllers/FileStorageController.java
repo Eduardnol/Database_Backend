@@ -65,7 +65,7 @@ public class FileStorageController {
 
 
     /**
-     * Gets an specific file an specific user
+     * Gets an specific file of an specific user
      *
      * @param userid   User owner of the file
      * @param filename Name of the file to be downloaded

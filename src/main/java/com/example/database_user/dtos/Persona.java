@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
-
+//TODO: verificar todos los campos que nos introducen
 @Data
 @Document
 public class Persona {
