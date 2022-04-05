@@ -12,7 +12,7 @@ public class StatisticsService {
 
 	/**
 	 * Calculates all the people inside the database
-	 * @return
+	 * @return Integer with value of all users in database
 	 */
 	public Integer countAllPeople() {
 
