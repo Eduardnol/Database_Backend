@@ -8,18 +8,18 @@ import java.util.stream.Stream;
 
 public interface FileStorageService {
 
-    public void init();
+    void init();
 
-    public void save(MultipartFile file, String userid);
+    String save(MultipartFile file, String userid);
 
-    public Resource load(String filename, String userid);
+    Resource load(String filename, String userid);
 
-    public void deleteAll();
+    void deleteAll();
 
-    public void deleteOne(String filename, String userid);
+    void deleteOne(String filename, String userid);
 
-    public Stream<Path>  loadFromId(String id);
+    Stream<Path> loadFromId(String id);
 
-    public Stream<Path> loadAll();
+    Stream<Path> loadAll();
 
 }

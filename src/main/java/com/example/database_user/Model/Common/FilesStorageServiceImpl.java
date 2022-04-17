@@ -54,7 +54,7 @@ public class FilesStorageServiceImpl implements FileStorageService {
 	 * @param userid Id of the folders file location
 	 */
 	@Override
-	public void save(MultipartFile file, String userid) {
+	public String save(MultipartFile file, String userid) {
 
 		if (isValidType(file)) {
 			String url;
@@ -90,7 +90,9 @@ public class FilesStorageServiceImpl implements FileStorageService {
 
 					logger.info("Updated person on the database");
 
+
 				});
+
 			} catch (FileAlreadyExistsException e) {
 				System.out.println("File already exists");
 				logger.warn(e.getMessage());
@@ -100,10 +102,10 @@ public class FilesStorageServiceImpl implements FileStorageService {
 				System.out.println(e);
 				throw new RuntimeException("Could not store the file.");
 			}
+			return url;
 		} else {
 			throw new RuntimeException("File is not a valid format");
 		}
-
 
 	}
 
