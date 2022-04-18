@@ -40,18 +40,27 @@ public class FileStorageController {
 		final HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		Gson gson = new Gson();
-
 		String message = "";
-		try {
-			String url = storageService.save(file, userid);
-			FileStorageResponse fileStorage = new FileStorageResponse("File Uploaded Correctly", HttpStatus.OK, file.getOriginalFilename(), url);
-			message = gson.toJson(fileStorage);
-			//Make http headers as json and return it
-			return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
-		} catch (Exception e) {
-			message = "Could not upload the file: " + e.getMessage();
+
+		if (!file.isEmpty()) {
+
+
+			try {
+				String url = storageService.save(file, userid);
+				FileStorageResponse fileStorage = new FileStorageResponse("File Uploaded Correctly", HttpStatus.OK, file.getOriginalFilename(), url);
+				message = gson.toJson(fileStorage);
+				//Make http headers as json and return it
+				return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
+			} catch (Exception e) {
+				message = "Could not upload the file: " + e.getMessage();
+				return new ResponseEntity<>(gson.toJson(message), httpHeaders, HttpStatus.EXPECTATION_FAILED);
+			}
+		} else {
+			message = "Could not upload the file: It's empty";
 			return new ResponseEntity<>(gson.toJson(message), httpHeaders, HttpStatus.EXPECTATION_FAILED);
+
 		}
+
 	}
 
 
@@ -103,6 +112,7 @@ public class FileStorageController {
 
 		String message = "";
 		storageService.deleteOne(filename, userid);
+		//TODO delete file from database
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
 	}
 
