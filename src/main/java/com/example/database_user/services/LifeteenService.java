@@ -81,7 +81,16 @@ public class LifeteenService {
 
 
 	//TODO: hay que encontrar la manera de que una persona pueda estar en varios repositorios, actualizando sin eliminar los anteriores
-	public ResponseEntity<String> addExistingInscription(String idPersonaExistente, InscritoNinos inscritoNinos, String idLifeteen) {
+
+
+	/**
+	 * If a user already exists in the database, it will be updated with the new information.
+	 * @param idPersonaExistente id of the user that already exists in the database
+	 * @param inscritoNinos new information of the user
+	 * @param idLifeteen  id of the lifeteen that the user is going to be added to
+	 * @return message with the result of the operation
+	 */
+	public ResponseEntity<String> addExistingUserInscription(String idPersonaExistente, InscritoNinos inscritoNinos, String idLifeteen) {
 
 		final HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -94,15 +103,7 @@ public class LifeteenService {
 		Update update = new Update();
 
 		//Escribimos los campos requeridos
-		update.set("padre", inscritoNinos.getPadre());
-		update.set("madre", inscritoNinos.getMadre());
-		update.set("comoHasConocidoParroquia", inscritoNinos.getComoHasConocidoParroquia());
-		update.set("numeroContacto", inscritoNinos.getNumeroContacto());
-		update.set("mailContacto", inscritoNinos.getMailContacto());
-		update.set("pagado", inscritoNinos.isPagado());
-		update.set("autorizado", inscritoNinos.isAutorizado());
-		update.set("colegio", inscritoNinos.getColegio());
-		update.set("cursoActual", inscritoNinos.getCursoActual());
+		update.set("infoInscripcionMenor", inscritoNinos);
 
 		mongoTemplate.updateFirst(query, update, Persona.class);
 
@@ -110,7 +111,12 @@ public class LifeteenService {
 
 		return new ResponseEntity<>(message, httpHeaders, HttpStatus.CREATED);
 
+	}
 
+
+	public ResponseEntity<String> editExistingUserInscription() {
+
+		return null;
 	}
 }
 
