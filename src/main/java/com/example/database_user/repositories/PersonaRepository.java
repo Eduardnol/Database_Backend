@@ -1,8 +1,6 @@
 package com.example.database_user.repositories;
 
-import com.example.database_user.dtos.Persona;
-import org.bson.Document;
-import org.springframework.data.mongodb.repository.Aggregation;
+import com.example.database_user.dtos.Persona.Persona;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

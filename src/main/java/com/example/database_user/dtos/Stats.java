@@ -1,7 +1,7 @@
 package com.example.database_user.dtos;
 
+import com.example.database_user.dtos.Persona.Persona;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 

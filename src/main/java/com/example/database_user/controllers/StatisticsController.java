@@ -1,6 +1,6 @@
 package com.example.database_user.controllers;
 
-import com.example.database_user.dtos.Persona;
+import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.services.StatisticsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

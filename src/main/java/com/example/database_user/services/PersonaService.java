@@ -1,6 +1,6 @@
 package com.example.database_user.services;
 
-import com.example.database_user.dtos.Persona;
+import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;

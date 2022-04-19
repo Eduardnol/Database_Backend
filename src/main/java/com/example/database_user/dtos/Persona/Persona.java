@@ -1,5 +1,8 @@
-package com.example.database_user.dtos;
+package com.example.database_user.dtos.Persona;
 
+import com.example.database_user.dtos.Custom;
+import com.example.database_user.dtos.FileStorage;
+import com.example.database_user.dtos.Sacraments;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

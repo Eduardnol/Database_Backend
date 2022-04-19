@@ -1,5 +1,8 @@
-package com.example.database_user.dtos;
+package com.example.database_user.dtos.Persona;
 
+import com.example.database_user.dtos.Custom;
+import com.example.database_user.dtos.FileStorage;
+import com.example.database_user.dtos.Sacraments;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
 
 
 @Document
-public class PersonaInscritoLifeteen extends Persona {
+public class InscritoNinos extends Persona {
 	private String padre;
 	private String madre;
 	private String comoHasConocidoParroquia;
@@ -20,7 +23,7 @@ public class PersonaInscritoLifeteen extends Persona {
 	private String cursoActual;
 
 
-	public PersonaInscritoLifeteen(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn, String padre, String madre) {
+	public InscritoNinos(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn, String padre, String madre) {
 
 		super(nombre, apellido, email, birthday, saint, dni, extras, sacraments, fileStorage, createdOn);
 		this.padre = padre;
@@ -28,7 +31,7 @@ public class PersonaInscritoLifeteen extends Persona {
 	}
 
 
-	public PersonaInscritoLifeteen(String padre, String madre, String comoHasConocidoParroquia, String numeroContacto, String mailContacto, boolean pagado, boolean autorizaciones, String colegio, String cursoActual) {
+	public InscritoNinos(String padre, String madre, String comoHasConocidoParroquia, String numeroContacto, String mailContacto, boolean pagado, boolean autorizaciones, String colegio, String cursoActual) {
 
 		this.padre = padre;
 		this.madre = madre;

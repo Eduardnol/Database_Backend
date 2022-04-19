@@ -2,7 +2,7 @@ package com.example.database_user.Model.Common;
 
 import com.example.database_user.controllers.FileStorageController;
 import com.example.database_user.dtos.FileStorage;
-import com.example.database_user.dtos.Persona;
+import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;

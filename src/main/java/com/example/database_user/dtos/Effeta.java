@@ -1,5 +1,6 @@
 package com.example.database_user.dtos;
 
+import com.example.database_user.dtos.Persona.PersonaEffeta;
 import lombok.Data;
 
 import java.time.LocalDate;
