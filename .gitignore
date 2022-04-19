@@ -32,7 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/resources/application.properties
 
 # Created by https://www.toptal.com/developers/gitignore/api/maven,intellij,windows,linux,java
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,intellij,windows,linux,java
@@ -235,3 +234,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/maven,intellij,windows,linux,java
 
 *.pdf
+*.env
