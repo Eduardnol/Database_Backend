@@ -67,7 +67,6 @@ public class LifeteenService {
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		String message = "";
 
-
 		//Insert to standard repository
 		personaRepository.insert(inscritoNinos);
 		//Insert id to Lifeteen
@@ -82,7 +81,7 @@ public class LifeteenService {
 
 	//TODO: hay que encontrar la manera de que una persona pueda estar en varios repositorios, actualizando sin eliminar los anteriores
 
-//Todo add the person to lifeteen where it wants to go
+	//Todo add the person to lifeteen where it wants to go
 
 
 	/**
@@ -114,6 +113,8 @@ public class LifeteenService {
 			lifeteen.get().getIdInscritos().add(idPersonaExistente);
 			lifeteenRepository.deleteById(idLifeteen);
 			lifeteenRepository.insert(lifeteen.get());
+		} else {
+			//error
 		}
 
 
@@ -125,6 +126,32 @@ public class LifeteenService {
 	public ResponseEntity<String> editExistingUserInscription() {
 
 		return null;
+	}
+
+
+	public void deleteExistingLifeteen(String idLifeteen) {
+
+		lifeteenRepository.deleteById(idLifeteen);
+
+	}
+
+
+	public void deleteExistingInscription(String idLifeteen, String idPersona) {
+
+		Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
+		if (lifeteen.isPresent()) {
+			lifeteen.get().getIdInscritos().remove(idPersona);
+			lifeteenRepository.insert(lifeteen.get());
+		} else {
+			//error
+		}
+		/*Optional<InscritoNinos> persona = personaRepository.findById(idPersona);
+		if (persona.isPresent()) {
+			persona.get().setInfoInscripcionMenor(null);
+		}else{
+			//error
+		}*/
+
 	}
 }
 
