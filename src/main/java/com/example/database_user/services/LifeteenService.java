@@ -82,12 +82,15 @@ public class LifeteenService {
 
 	//TODO: hay que encontrar la manera de que una persona pueda estar en varios repositorios, actualizando sin eliminar los anteriores
 
+//Todo add the person to lifeteen where it wants to go
+
 
 	/**
 	 * If a user already exists in the database, it will be updated with the new information.
+	 *
 	 * @param idPersonaExistente id of the user that already exists in the database
-	 * @param inscritoNinos new information of the user
-	 * @param idLifeteen  id of the lifeteen that the user is going to be added to
+	 * @param inscritoNinos      new information of the user
+	 * @param idLifeteen         id of the lifeteen that the user is going to be added to
 	 * @return message with the result of the operation
 	 */
 	public ResponseEntity<String> addExistingUserInscription(String idPersonaExistente, InscritoNinos inscritoNinos, String idLifeteen) {
@@ -96,18 +99,23 @@ public class LifeteenService {
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		String message = "";
 
-		//Eliminamos la persona y la introducimos de nuevo
-		personaRepository.deleteById(idPersonaExistente);
+		//Update the Person repository with the new information
 		Query query = new Query();
 		query.addCriteria(Criteria.where("id").is("idPersonaExistente"));
 		Update update = new Update();
-
-		//Escribimos los campos requeridos
+		//We write the required information
 		update.set("infoInscripcionMenor", inscritoNinos);
-
 		mongoTemplate.updateFirst(query, update, Persona.class);
-
 		message = "Person correctly inserted";
+
+		//Insert the person into the Lifeteen repository
+		Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
+		if (lifeteen.isPresent()) {
+			lifeteen.get().getIdInscritos().add(idPersonaExistente);
+			lifeteenRepository.deleteById(idLifeteen);
+			lifeteenRepository.insert(lifeteen.get());
+		}
+
 
 		return new ResponseEntity<>(message, httpHeaders, HttpStatus.CREATED);
 
