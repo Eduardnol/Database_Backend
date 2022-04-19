@@ -84,9 +84,8 @@ public class FilesStorageServiceImpl implements FileStorageService {
 				persona.ifPresent(value -> {
 
 					value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), url));
-					System.out.println(persona.get().getFileStorage().toString());
 					personaRepository.deleteById(userid);
-					personaRepository.insert(persona.get());
+					personaRepository.insert(value);
 
 					logger.info("Updated person on the database");
 
