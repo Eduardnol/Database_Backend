@@ -1,11 +1,15 @@
 package com.example.database_user.services;
 
 import com.example.database_user.dtos.Lifeteen;
-import com.example.database_user.dtos.Persona.InscritoNinos;
+import com.example.database_user.dtos.Persona.Ninos.InscritoNinos;
+import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.repositories.LifeteenRepository;
 import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -79,9 +83,33 @@ public class LifeteenService {
 	//TODO: hay que encontrar la manera de que una persona pueda estar en varios repositorios, actualizando sin eliminar los anteriores
 	public ResponseEntity<String> addExistingInscription(String idPersonaExistente, InscritoNinos inscritoNinos, String idLifeteen) {
 
+		final HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		String message = "";
+
 		//Eliminamos la persona y la introducimos de nuevo
 		personaRepository.deleteById(idPersonaExistente);
-		return this.addNewInscription(inscritoNinos, idLifeteen);
+		Query query = new Query();
+		query.addCriteria(Criteria.where("id").is("idPersonaExistente"));
+		Update update = new Update();
+
+		//Escribimos los campos requeridos
+		update.set("padre", inscritoNinos.getPadre());
+		update.set("madre", inscritoNinos.getMadre());
+		update.set("comoHasConocidoParroquia", inscritoNinos.getComoHasConocidoParroquia());
+		update.set("numeroContacto", inscritoNinos.getNumeroContacto());
+		update.set("mailContacto", inscritoNinos.getMailContacto());
+		update.set("pagado", inscritoNinos.isPagado());
+		update.set("autorizado", inscritoNinos.isAutorizado());
+		update.set("colegio", inscritoNinos.getColegio());
+		update.set("cursoActual", inscritoNinos.getCursoActual());
+
+		mongoTemplate.updateFirst(query, update, Persona.class);
+
+		message = "Person correctly inserted";
+
+		return new ResponseEntity<>(message, httpHeaders, HttpStatus.CREATED);
+
 
 	}
 }

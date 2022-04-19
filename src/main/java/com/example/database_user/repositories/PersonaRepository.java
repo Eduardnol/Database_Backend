@@ -14,5 +14,7 @@ public interface PersonaRepository extends MongoRepository<Persona, String> {
 	@Query("$expr: {$and: [{ $eq: [{ $dayOfMonth: '$dob' }, { $dayOfMonth: new Date() }] }," +
 			"{ $eq: [{ $month: '$dob' }, { $month: new Date() }] },],},}")
 	List<Persona> findCustomByRegExDomain();
+
+	
 }
 

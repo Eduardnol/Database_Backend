@@ -1,8 +1,10 @@
-package com.example.database_user.dtos.Persona;
+package com.example.database_user.dtos.Persona.Ninos;
 
 import com.example.database_user.dtos.Custom;
 import com.example.database_user.dtos.FileStorage;
+import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Sacraments;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -11,14 +13,16 @@ import java.util.ArrayList;
 
 
 @Document
+@Data
 public class InscritoNinos extends Persona {
+	//TODO puede que nos sirva mas una subclase
 	private String padre;
 	private String madre;
 	private String comoHasConocidoParroquia;
 	private String numeroContacto;
 	private String mailContacto;
 	private boolean pagado;
-	private boolean autorizaciones;
+	private boolean autorizado;
 	private String colegio;
 	private String cursoActual;
 
@@ -31,7 +35,7 @@ public class InscritoNinos extends Persona {
 	}
 
 
-	public InscritoNinos(String padre, String madre, String comoHasConocidoParroquia, String numeroContacto, String mailContacto, boolean pagado, boolean autorizaciones, String colegio, String cursoActual) {
+	public InscritoNinos(String padre, String madre, String comoHasConocidoParroquia, String numeroContacto, String mailContacto, boolean pagado, boolean autorizado, String colegio, String cursoActual) {
 
 		this.padre = padre;
 		this.madre = madre;
@@ -39,7 +43,7 @@ public class InscritoNinos extends Persona {
 		this.numeroContacto = numeroContacto;
 		this.mailContacto = mailContacto;
 		this.pagado = pagado;
-		this.autorizaciones = autorizaciones;
+		this.autorizado = autorizado;
 		this.colegio = colegio;
 		this.cursoActual = cursoActual;
 	}
