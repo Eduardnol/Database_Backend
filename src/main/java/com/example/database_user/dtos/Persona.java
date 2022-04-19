@@ -1,6 +1,9 @@
 package com.example.database_user.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.NonFinal;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +17,8 @@ import java.util.Objects;
 //TODO: verificar todos los campos que nos introducen
 @Data
 @Document
+@AllArgsConstructor
+@NoArgsConstructor
 public class Persona {
 	@Id
 	private String id;

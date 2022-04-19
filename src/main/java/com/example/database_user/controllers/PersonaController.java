@@ -23,7 +23,6 @@ import java.util.List;
 public class PersonaController {
 	private final PersonaService personaService;
 
-
 	@Operation(summary = "Get all users registered")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Found all Users",
@@ -82,8 +81,8 @@ public class PersonaController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Deleted user",
 					content = {@Content(mediaType = "application/json",
-							schema = @Schema(implementation = Persona.class))})
-	})
+							schema = @Schema(implementation = Persona.class))})})
+
 	@DeleteMapping(value = "/deletebyid")
 	public ResponseEntity<String> deleteUser(@Parameter(description = "Id of the user to be deleted") @RequestParam(name = "id") String identificador) {
 
