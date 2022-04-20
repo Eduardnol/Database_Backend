@@ -6,18 +6,19 @@ import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Sacraments;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-
-@Document
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class InscritoNinos extends Persona {
 
 	@AllArgsConstructor
+	@Data
 	public static class InnerIncritoNinos {
 		//TODO puede que nos sirva mas una subclase
 		private String padre;
@@ -45,6 +46,7 @@ public class InscritoNinos extends Persona {
 
 	//Constructor con superclase
 	public InscritoNinos(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn, InnerIncritoNinos infoInscripcionMenor) {
+
 		super(nombre, apellido, email, birthday, saint, dni, extras, sacraments, fileStorage, createdOn);
 		this.infoInscripcionMenor = infoInscripcionMenor;
 	}

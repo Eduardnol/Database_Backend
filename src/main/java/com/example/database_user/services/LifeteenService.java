@@ -185,6 +185,7 @@ public class LifeteenService {
 
 		InscritoNinos.InnerIncritoNinos innerInscritoNinos = inscritoNinos.getInfoInscripcionMenor();
 
+
 		//Update the Person repository with the new information
 		Query query = new Query();
 		query.addCriteria(Criteria.where("id").is(inscritoNinos.getId()));
