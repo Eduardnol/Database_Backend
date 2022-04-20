@@ -163,14 +163,14 @@ public class LifeteenService {
 		Update update = new Update();
 		//We write the required information by only adding the subclass fields
 		update.set("infoInscripcionMenor", inscritoNinos.getInfoInscripcionMenor());
-		mongoTemplate.updateFirst(query, update, Persona.class);
+		mongoTemplate.updateFirst(query, update, "persona");
 
 		//Insert the person into the Lifeteen repository
 		return this.addExistingUserExistingInscription(idLifeteen, idPersonaExistente);
 
 	}
 
-	//TODO: how do I know if mongotemplate is connecting to the correct database;
+
 	public ResponseEntity<String> editExistingUserInscription(InscritoNinos inscritoNinos) {
 
 		InscritoNinos.InnerIncritoNinos innerInscritoNinos = inscritoNinos.getInfoInscripcionMenor();
@@ -181,7 +181,7 @@ public class LifeteenService {
 		Update update = new Update();
 		//We write the required information by only adding the subclass fields
 		update.set("infoInscripcionMenor", inscritoNinos.getInfoInscripcionMenor());
-		mongoTemplate.updateFirst(query, update, Persona.class);
+		mongoTemplate.updateFirst(query, update, "lifeteen");
 
 		return null;
 	}
