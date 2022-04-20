@@ -7,7 +7,6 @@ import com.example.database_user.dtos.Sacraments;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,22 +15,6 @@ import java.util.ArrayList;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class InscritoNinos extends Persona {
-
-	@AllArgsConstructor
-	@Data
-	public static class InnerIncritoNinos {
-		//TODO puede que nos sirva mas una subclase
-		private String padre;
-		private String madre;
-		private String comoHasConocidoParroquia;
-		private String numeroContacto;
-		private String mailContacto;
-		private boolean pagado;
-		private boolean autorizado;
-		private String colegio;
-		private String cursoActual;
-
-	}
 
 	InnerIncritoNinos infoInscripcionMenor;
 
@@ -49,5 +32,22 @@ public class InscritoNinos extends Persona {
 
 		super(nombre, apellido, email, birthday, saint, dni, extras, sacraments, fileStorage, createdOn);
 		this.infoInscripcionMenor = infoInscripcionMenor;
+	}
+
+
+	@AllArgsConstructor
+	@Data
+	public static class InnerIncritoNinos {
+		//TODO puede que nos sirva mas una subclase
+		private String padre;
+		private String madre;
+		private String comoHasConocidoParroquia;
+		private String numeroContacto;
+		private String mailContacto;
+		private boolean pagado;
+		private boolean autorizado;
+		private String colegio;
+		private String cursoActual;
+
 	}
 }
