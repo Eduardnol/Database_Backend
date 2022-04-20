@@ -115,8 +115,9 @@ public class LifeteenService {
 
 	/**
 	 * If the user already exists in the database and has InscritoNinos information, we will add them into the Lifeteen repo by id
+	 *
 	 * @param idLifeteen the id of the lifeteen where we want the inscription
-	 * @param idPerson 	the id of the person with all the information present
+	 * @param idPerson   the id of the person with all the information present
 	 */
 	public void addExistingUserExistingInscription(String idLifeteen, String idPerson) {
 
