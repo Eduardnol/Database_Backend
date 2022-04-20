@@ -2,11 +2,9 @@ package com.example.database_user.services;
 
 import com.example.database_user.dtos.Lifeteen;
 import com.example.database_user.dtos.Persona.Ninos.InscritoNinos;
-import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.repositories.LifeteenRepository;
 import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -172,7 +170,18 @@ public class LifeteenService {
 	}
 
 
+	/**
+	 * Edit an inscription in the database
+	 *
+	 * @param inscritoNinos the new information of the inscription
+	 * @return the status of the response
+	 */
 	public ResponseEntity<String> editExistingUserInscription(InscritoNinos inscritoNinos) {
+
+		final HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		String message = "";
+		HttpStatus status = HttpStatus.CREATED;
 
 		InscritoNinos.InnerIncritoNinos innerInscritoNinos = inscritoNinos.getInfoInscripcionMenor();
 
@@ -183,26 +192,40 @@ public class LifeteenService {
 		//We write the required information by only adding the subclass fields
 		update.set("infoInscripcionMenor", inscritoNinos.getInfoInscripcionMenor());
 		mongoTemplate.updateFirst(query, update, "lifeteen");
+		message = "Inscription updated";
+		status = HttpStatus.OK;
 
-		return null;
+		return new ResponseEntity<>(message, httpHeaders, status);
 	}
 
 
-	public void deleteExistingInscription(String idLifeteen, String idPersona) {
+	/**
+	 * Delete an inscription from an specific lifeteen (kept on database)
+	 *
+	 * @param idLifeteen the id of the lifeteen where the inscription is
+	 * @param idPersona  the id of the person that is going to be deleted
+	 * @return the status of the response
+	 */
+	public ResponseEntity<String> deleteExistingInscriptionFromALifeteen(String idLifeteen, String idPersona) {
 
+		final HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		String message = "";
+		HttpStatus status = HttpStatus.CREATED;
 		Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
+
+
 		if (lifeteen.isPresent()) {
 			lifeteen.get().getIdInscritos().remove(idPersona);
 			lifeteenRepository.insert(lifeteen.get());
+			status = HttpStatus.OK;
+			message = "The user has been deleted from the specified lifeteen";
 		} else {
-			//error
+			status = HttpStatus.NOT_FOUND;
+			message = "The specified ID does not exist in this repository";
 		}
-		/*Optional<InscritoNinos> persona = personaRepository.findById(idPersona);
-		if (persona.isPresent()) {
-			persona.get().setInfoInscripcionMenor(null);
-		}else{
-			//error
-		}*/
+
+		return new ResponseEntity<>(message, httpHeaders, status);
 
 	}
 }
