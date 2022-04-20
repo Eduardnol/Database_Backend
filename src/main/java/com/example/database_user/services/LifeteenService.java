@@ -27,6 +27,11 @@ public class LifeteenService {
 	private final MongoTemplate mongoTemplate;
 
 
+	/**
+	 * Returns all the Lifeteen instances from the database
+	 *
+	 * @return The list of Lifeteen instances
+	 */
 	public ResponseEntity<List<Lifeteen>> fetchAllLifeteen() {
 
 		HttpStatus status = HttpStatus.ACCEPTED;
@@ -36,6 +41,12 @@ public class LifeteenService {
 	}
 
 
+	/**
+	 * Inserts a new Lifeteen instance into the database
+	 *
+	 * @param lifeteen the Lifeteen instance to be inserted
+	 * @return The status of the response
+	 */
 	public ResponseEntity<String> insertNewLifeteen(Lifeteen lifeteen) {
 
 		lifeteenRepository.insert(lifeteen);
@@ -44,34 +55,57 @@ public class LifeteenService {
 	}
 
 
-	public ResponseEntity<String> deleteById(String id) {
+	/**
+	 * Deletes a Lifeteen instance by id from the database
+	 *
+	 * @param id the Lifeteen's id
+	 * @return The status of the response
+	 */
+	public ResponseEntity<String> deleteLifeteenById(String id) {
 
 		lifeteenRepository.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 
+	/**
+	 * Deletes the lifeteen instance and creates it again with the new information
+	 *
+	 * @param lifeteen the new information
+	 * @return The status of the response
+	 */
 	public ResponseEntity<String> updateLifeteen(Lifeteen lifeteen) {
 
-		System.out.println("The corresponding id is:" + lifeteen.getId());
 		lifeteenRepository.deleteById(lifeteen.getId());
 		lifeteenRepository.insert(lifeteen);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 
+	/**
+	 * Adds a new inscription to the database when a user does not exist in our Person collection
+	 *
+	 * @param inscritoNinos the new inscription
+	 * @param idLifeteen    the id of the lifeteen where we want the inscription
+	 * @return The status of the response
+	 */
 	public ResponseEntity<String> addNewInscription(InscritoNinos inscritoNinos, String idLifeteen) {
 
 
 		final HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		String message = "";
-
-		//Insert to standard repository
+		//Todo does the insertion of a InscritoNinos affects when we fetch normal persons?
+		//Insert to standard Person repository
 		personaRepository.insert(inscritoNinos);
 		//Insert id to Lifeteen
 		Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
-		lifeteen.ifPresent(value -> value.getIdInscritos().add(inscritoNinos.getId()));
+
+		if (lifeteen.isPresent()) {
+			lifeteen.get().getIdInscritos().add(inscritoNinos.getId());
+			//We pass argument as null because it's already in the database
+			this.addExistingUserExistingInscription(idLifeteen, inscritoNinos.getId());
+		}
 
 		message = "Person correctly inserted";
 
@@ -79,20 +113,42 @@ public class LifeteenService {
 	}
 
 
+	/**
+	 * If the user already exists in the database and has InscritoNinos information, we will add them into the Lifeteen repo by id
+	 * @param idLifeteen the id of the lifeteen where we want the inscription
+	 * @param idPerson 	the id of the person with all the information present
+	 */
+	public void addExistingUserExistingInscription(String idLifeteen, String idPerson) {
+
+		final HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		String message = "";
+
+		//Insert the person into the Lifeteen repository
+		Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
+		if (lifeteen.isPresent()) {
+			lifeteen.get().getIdInscritos().add(idPerson);
+			lifeteenRepository.deleteById(idLifeteen);
+			lifeteenRepository.insert(lifeteen.get());
+		} else {
+			//error
+		}
+	}
+
 	//TODO: hay que encontrar la manera de que una persona pueda estar en varios repositorios, actualizando sin eliminar los anteriores
 
 	//Todo add the person to lifeteen where it wants to go
 
 
 	/**
-	 * If a user already exists in the database, it will be updated with the new information.
+	 * If a user already exists in the database and does not have InscritoNinos information, it will be updated with the new information.
 	 *
 	 * @param idPersonaExistente id of the user that already exists in the database
 	 * @param inscritoNinos      new information of the user
 	 * @param idLifeteen         id of the lifeteen that the user is going to be added to
 	 * @return message with the result of the operation
 	 */
-	public ResponseEntity<String> addExistingUserInscription(String idPersonaExistente, InscritoNinos inscritoNinos, String idLifeteen) {
+	public ResponseEntity<String> addExistingUserNewInscription(String idPersonaExistente, InscritoNinos inscritoNinos, String idLifeteen) {
 
 		final HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -108,15 +164,7 @@ public class LifeteenService {
 		message = "Person correctly inserted";
 
 		//Insert the person into the Lifeteen repository
-		Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
-		if (lifeteen.isPresent()) {
-			lifeteen.get().getIdInscritos().add(idPersonaExistente);
-			lifeteenRepository.deleteById(idLifeteen);
-			lifeteenRepository.insert(lifeteen.get());
-		} else {
-			//error
-		}
-
+		this.addExistingUserExistingInscription(idLifeteen, idPersonaExistente);
 
 		return new ResponseEntity<>(message, httpHeaders, HttpStatus.CREATED);
 
@@ -126,13 +174,6 @@ public class LifeteenService {
 	public ResponseEntity<String> editExistingUserInscription() {
 
 		return null;
-	}
-
-
-	public void deleteExistingLifeteen(String idLifeteen) {
-
-		lifeteenRepository.deleteById(idLifeteen);
-
 	}
 
 

@@ -12,10 +12,10 @@ import java.util.List;
 public class Lifeteen {
 	@Id
 	private String id;
-	private Persona responsable1;
-	private Persona responsable2;
+	private String responsable1;
+	private String responsable2;
 	private LocalDate startDate;
-	private List<Persona> monitores;
+	private List<String> idMonitores;
 	private List<String> IdInscritos;
 
 }
