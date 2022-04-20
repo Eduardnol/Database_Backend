@@ -95,6 +95,7 @@ public class LifeteenService {
 		final HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		String message = "";
+		HttpStatus status = HttpStatus.CREATED;
 		//Todo does the insertion of a InscritoNinos affects when we fetch normal persons?
 		//Insert to standard Person repository
 		personaRepository.insert(inscritoNinos);
@@ -104,12 +105,15 @@ public class LifeteenService {
 		if (lifeteen.isPresent()) {
 			lifeteen.get().getIdInscritos().add(inscritoNinos.getId());
 			//We pass argument as null because it's already in the database
-			this.addExistingUserExistingInscription(idLifeteen, inscritoNinos.getId());
+			return this.addExistingUserExistingInscription(idLifeteen, inscritoNinos.getId());
+			//message = "Person correctly inserted";
+		} else {
+			status = HttpStatus.NOT_FOUND;
+			message = "The specified ID does not exist in this repository";
 		}
 
-		message = "Person correctly inserted";
 
-		return new ResponseEntity<>(message, httpHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<>(message, httpHeaders, status);
 	}
 
 
@@ -119,21 +123,24 @@ public class LifeteenService {
 	 * @param idLifeteen the id of the lifeteen where we want the inscription
 	 * @param idPerson   the id of the person with all the information present
 	 */
-	public void addExistingUserExistingInscription(String idLifeteen, String idPerson) {
-
-		final HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-		String message = "";
+	public ResponseEntity<String> addExistingUserExistingInscription(String idLifeteen, String idPerson) {
 
 		//Insert the person into the Lifeteen repository
+		final HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
+		String message = "";
+		HttpStatus status = HttpStatus.CREATED;
 		if (lifeteen.isPresent()) {
 			lifeteen.get().getIdInscritos().add(idPerson);
 			lifeteenRepository.deleteById(idLifeteen);
 			lifeteenRepository.insert(lifeteen.get());
+			message = "User added in the specified lifeteen id";
 		} else {
-			//error
+			status = HttpStatus.NOT_FOUND;
+			message = "The specified ID does not exist in this repository";
 		}
+		return new ResponseEntity<>(message, httpHeaders, status);
 	}
 
 	//TODO: hay que encontrar la manera de que una persona pueda estar en varios repositorios, actualizando sin eliminar los anteriores
@@ -165,9 +172,9 @@ public class LifeteenService {
 		message = "Person correctly inserted";
 
 		//Insert the person into the Lifeteen repository
-		this.addExistingUserExistingInscription(idLifeteen, idPersonaExistente);
+		return this.addExistingUserExistingInscription(idLifeteen, idPersonaExistente);
 
-		return new ResponseEntity<>(message, httpHeaders, HttpStatus.CREATED);
+		//return new ResponseEntity<>(message, httpHeaders, HttpStatus.CREATED);
 
 	}
 
