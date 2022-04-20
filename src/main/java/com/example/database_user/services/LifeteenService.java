@@ -145,8 +145,6 @@ public class LifeteenService {
 
 	//TODO: hay que encontrar la manera de que una persona pueda estar en varios repositorios, actualizando sin eliminar los anteriores
 
-	//Todo add the person to lifeteen where it wants to go
-
 
 	/**
 	 * If a user already exists in the database and does not have InscritoNinos information, it will be updated with the new information.
@@ -158,28 +156,32 @@ public class LifeteenService {
 	 */
 	public ResponseEntity<String> addExistingUserNewInscription(String idPersonaExistente, InscritoNinos inscritoNinos, String idLifeteen) {
 
-		final HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-		String message = "";
 
 		//Update the Person repository with the new information
 		Query query = new Query();
-		query.addCriteria(Criteria.where("id").is("idPersonaExistente"));
+		query.addCriteria(Criteria.where("id").is(idPersonaExistente));
 		Update update = new Update();
-		//We write the required information
-		update.set("infoInscripcionMenor", inscritoNinos);
+		//We write the required information by only adding the subclass fields
+		update.set("infoInscripcionMenor", inscritoNinos.getInfoInscripcionMenor());
 		mongoTemplate.updateFirst(query, update, Persona.class);
-		message = "Person correctly inserted";
 
 		//Insert the person into the Lifeteen repository
 		return this.addExistingUserExistingInscription(idLifeteen, idPersonaExistente);
 
-		//return new ResponseEntity<>(message, httpHeaders, HttpStatus.CREATED);
-
 	}
 
+	//TODO: how do I know if mongotemplate is connecting to the correct database;
+	public ResponseEntity<String> editExistingUserInscription(InscritoNinos inscritoNinos) {
 
-	public ResponseEntity<String> editExistingUserInscription() {
+		InscritoNinos.InnerIncritoNinos innerInscritoNinos = inscritoNinos.getInfoInscripcionMenor();
+
+		//Update the Person repository with the new information
+		Query query = new Query();
+		query.addCriteria(Criteria.where("id").is(inscritoNinos.getId()));
+		Update update = new Update();
+		//We write the required information by only adding the subclass fields
+		update.set("infoInscripcionMenor", inscritoNinos.getInfoInscripcionMenor());
+		mongoTemplate.updateFirst(query, update, Persona.class);
 
 		return null;
 	}
