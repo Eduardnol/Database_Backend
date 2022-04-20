@@ -6,6 +6,7 @@ import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.repositories.LifeteenRepository;
 import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
