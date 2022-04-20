@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
-import org.springdoc.core.annotations.RouterOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,12 +51,12 @@ public class LifeteenController {
         return lifeteenService.updateLifeteen(lifeteen);
     }
 
-    @RouterOperation(beanClass = LifeteenController.class, beanMethod = "inserNewInscription", operation = @Operation(operationId = "inserNewInscription", summary = "Insert a new inscription to one lifeteen", tags = {"Lifeteen"},
+    @Operation(operationId = "inserNewInscription", summary = "Insert a new inscription to one lifeteen", tags = {"Lifeteen"},
             parameters = {@Parameter(in = ParameterIn.PATH, name = "inscritoNinos", description = "The one to be inserted"),
                     @Parameter(name = "idlifeteen", description = "Id of the Lifeteen where we want to insert it")},
             responses = {@ApiResponse(responseCode = "200", description = "User correctly inscribed", content = @Content(schema = @Schema(implementation = InscritoNinos.class))),
                     @ApiResponse(responseCode = "404", description = "Employee not found")}
-    ))
+    )
     @PostMapping("/insert-inscription/{idlifeteen}")
     public ResponseEntity<String> inserNewInscription(@RequestBody @Valid InscritoNinos inscritoNinos, @PathVariable String idlifeteen) {
 
