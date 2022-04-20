@@ -108,7 +108,7 @@ public class LifeteenService {
 			//message = "Person correctly inserted";
 		} else {
 			status = HttpStatus.NOT_FOUND;
-			message = "The specified ID does not exist in this repository";
+			message = "The specified lifeteen ID does not exist in this repository";
 		}
 
 
