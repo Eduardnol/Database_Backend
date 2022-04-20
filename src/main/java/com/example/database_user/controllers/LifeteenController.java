@@ -60,7 +60,7 @@ public class LifeteenController {
 	@PostMapping("/insert-inscription/{idlifeteen}")
 	public ResponseEntity<String> inserNewInscription(@Parameter(description = "The one to be inserted")@RequestBody @Valid InscritoNinos inscritoNinos, @Parameter(description = "Id of the Lifeteen where we want to insert it") @PathVariable String idlifeteen) {
 
-		return lifeteenService.addNewInscription(inscritoNinos, idlifeteen);
+		return lifeteenService.addNewUserNewInsciption(inscritoNinos, idlifeteen);
 	}
 
 

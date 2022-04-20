@@ -88,7 +88,7 @@ public class LifeteenService {
 	 * @param idLifeteen    the id of the lifeteen where we want the inscription
 	 * @return The status of the response
 	 */
-	public ResponseEntity<String> addNewInscription(InscritoNinos inscritoNinos, String idLifeteen) {
+	public ResponseEntity<String> addNewUserNewInsciption(InscritoNinos inscritoNinos, String idLifeteen) {
 
 
 		final HttpHeaders httpHeaders = new HttpHeaders();

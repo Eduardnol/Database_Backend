@@ -6,7 +6,6 @@ import com.example.database_user.dtos.Sacraments;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.NonFinal;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -50,10 +49,11 @@ public class Persona {
 	private LocalDateTime createdOn;
 
 
-	public Persona(String nombre, String apellido, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {
+	public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {
 
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.apellido2 = apellido2;
 		this.email = email;
 		this.birthday = birthday;
 		this.saint = saint;
