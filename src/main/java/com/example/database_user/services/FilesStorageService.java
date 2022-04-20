@@ -1,5 +1,6 @@
-package com.example.database_user.Model.Common;
+package com.example.database_user.services;
 
+import com.example.database_user.Model.Common.FileStorageService;
 import com.example.database_user.controllers.FileStorageController;
 import com.example.database_user.dtos.FileStorage;
 import com.example.database_user.dtos.Persona.Persona;
@@ -28,23 +29,23 @@ import java.util.stream.Stream;
 //TODO : Verificar el formato en que nos entregan los ficheros
 @Service
 @AllArgsConstructor
-public class FilesStorageServiceImpl implements FileStorageService {
-	private static final Logger logger = LogManager.getLogger(FilesStorageServiceImpl.class);
-	private final Path root = Paths.get("uploads");
-	private final PersonaRepository personaRepository;
+public class FilesStorageService implements FileStorageService {
+    private static final Logger logger = LogManager.getLogger(FilesStorageService.class);
+    private final Path root = Paths.get("uploads");
+    private final PersonaRepository personaRepository;
 
 
-	@Override
-	public void init() {
+    @Override
+    public void init() {
 
-		try {
-			Files.createDirectory(root);
-		} catch (IOException e) {
+        try {
+            Files.createDirectory(root);
+        } catch (IOException e) {
 
-			logger.warn("Could not initialize folder for upload");
-			throw new RuntimeException("Could not initialize folder for upload!");
-		}
-	}
+            logger.warn("Could not initialize folder for upload");
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
+    }
 
 
 	/**
