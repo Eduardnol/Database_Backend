@@ -51,6 +51,7 @@ public class LifeteenController {
 		return lifeteenService.updateLifeteen(lifeteen);
 	}
 
+
 	@Operation(summary = "Insert a new inscription to one lifeteen")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "User correctly inscribed",
@@ -58,11 +59,36 @@ public class LifeteenController {
 							schema = @Schema(implementation = InscritoNinos.class))})
 	})
 	@PostMapping("/insert-inscription/{idlifeteen}")
-	public ResponseEntity<String> inserNewInscription(@Parameter(description = "The one to be inserted")@RequestBody @Valid InscritoNinos inscritoNinos, @Parameter(description = "Id of the Lifeteen where we want to insert it") @PathVariable String idlifeteen) {
+	public ResponseEntity<String> inserNewInscription(@Parameter(description = "The one to be inserted") @RequestBody @Valid InscritoNinos inscritoNinos, @Parameter(description = "Id of the Lifeteen where we want to insert it") @PathVariable String idlifeteen) {
 
 		return lifeteenService.addNewInscription(inscritoNinos, idlifeteen);
 	}
 
 
+	@Operation(summary = "Add a new inscription to Lifeteen when user is already on our database")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "User correctly added",
+					content = {@Content(mediaType = "application/json",
+							schema = @Schema(implementation = InscritoNinos.class))})
+	})
+	@PostMapping("/existing-user-new-inscription/{idlifeteen}/{iduser}")
+	public ResponseEntity<String> addExistingUserNewInscription(@RequestBody @Valid InscritoNinos inscritoNinos, @PathVariable String idlifeteen, @PathVariable String iduser) {
+
+		return lifeteenService.addExistingUserNewInscription(iduser, inscritoNinos, idlifeteen);
+	}
+
+
+	@PutMapping("/edit-existing-user-inscription")
+	public ResponseEntity<String> editExistingUserInscription(@RequestBody @Valid InscritoNinos inscritoNinos) {
+
+		return lifeteenService.editExistingUserInscription(inscritoNinos);
+	}
+
+
+	@DeleteMapping("/delete-inscription-from-lifeteen/{idinscription}/{idlifeteen}")
+	public ResponseEntity<String> deleteInscriptionFromLifeteen(@PathVariable String idinscription, @PathVariable String idlifeteen) {
+
+		return lifeteenService.deleteExistingInscriptionFromALifeteen(idlifeteen, idinscription);
+	}
 
 }
