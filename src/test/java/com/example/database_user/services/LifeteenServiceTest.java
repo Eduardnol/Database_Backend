@@ -80,25 +80,6 @@ class LifeteenServiceTest {
 
     }
 
-//    @Test
-//    @Order(6)
-//    void deleteLifeteenById() {
-//
-//        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
-//        assertEquals(HttpStatus.OK, back.getStatusCode());
-//
-//    }
-
-
-    //    @Test
-//    void addExistingUserExistingInscription() {
-//        personaService.insertNewPerson(persona);
-//
-//        lifeteenService.addExistingUserExistingInscription()
-//
-//    }
-//
-//
     @Test
     @Order(5)
     void addExistingUserNewInscription() {
@@ -108,17 +89,42 @@ class LifeteenServiceTest {
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
 
     }
-//
-//
+
+    @Test
+    @Order(6)
+    void deleteExistingInscriptionFromALifeteen() {
+        ResponseEntity<String> back = lifeteenService.deleteExistingInscriptionFromALifeteen(ltid, persona.getId());
+        assertEquals("The user has been deleted from the specified lifeteen", back.getBody());
+    }
+
+    @Test
+    @Order(7)
+    void addExistingUserExistingInscription() {
+
+        ResponseEntity<String> back = lifeteenService.addExistingUserExistingInscription(ltid, persona.getId());
+        assertEquals("User added in the specified lifeteen id", back.getBody());
+
+    }
+
+    @Test
+    @Order(8)
+    void editExistingUserInscription() {
+        InscritoNinos incritoNinos = new InscritoNinos(new InscritoNinos.InnerIncritoNinos("padre", "madre",
+                "de unos amigos", "123412", "de@dw.com", true, true, "Xaloc", "bachi"));
+        ResponseEntity<String> back = lifeteenService.editExistingUserInscription(persona.getId(), incritoNinos);
+
+        assertEquals("Inscription updated", back.getBody());
+
+    }
+
 //    @Test
-//    void editExistingUserInscription() {
+//    @Order(9)
+//    void deleteLifeteenById() {
+//
+//        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
+//        assertEquals(HttpStatus.OK, back.getStatusCode());
 //
 //    }
-//
-//
-//    @Test
-//    void deleteExistingInscription() {
-//
-//    }
+
 
 }
