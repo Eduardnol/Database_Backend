@@ -26,8 +26,6 @@ class LifeteenServiceTest {
     static String ltid = "6260506b77ffab0f071ad075";
     @Autowired
     private LifeteenService lifeteenService;
-    @Autowired
-    private PersonaService personaService;
 
     @BeforeAll
     static void beforeAll() {
@@ -117,14 +115,14 @@ class LifeteenServiceTest {
 
     }
 
-//    @Test
-//    @Order(9)
-//    void deleteLifeteenById() {
-//
-//        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
-//        assertEquals(HttpStatus.OK, back.getStatusCode());
-//
-//    }
+    @Test
+    @Order(9)
+    void deleteLifeteenById() {
+
+        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
+        assertEquals(HttpStatus.OK, back.getStatusCode());
+
+    }
 
 
 }
