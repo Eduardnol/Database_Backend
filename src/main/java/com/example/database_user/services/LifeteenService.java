@@ -35,6 +35,7 @@ public class LifeteenService {
 
         HttpStatus status = HttpStatus.ACCEPTED;
         List<Lifeteen> posts = lifeteenRepository.findAll();
+        status = HttpStatus.OK;
         return new ResponseEntity<>(posts, status);
 
     }
