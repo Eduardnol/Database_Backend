@@ -20,9 +20,9 @@ public class InscritoNinos extends Persona {
 
 
     //Constructor solo esta clase
-    public InscritoNinos(String padre, String madre, String comoHasConocidoParroquia, String numeroContacto, String mailContacto, boolean pagado, boolean autorizado, String colegio, String cursoActual) {
+    public InscritoNinos(InnerIncritoNinos infoInscripcionMenor) {
 
-        this.infoInscripcionMenor = new InnerIncritoNinos(padre, madre, comoHasConocidoParroquia, numeroContacto, mailContacto, pagado, autorizado, colegio, cursoActual);
+        this.infoInscripcionMenor = infoInscripcionMenor;
 
     }
 

@@ -158,7 +158,7 @@ public class LifeteenService {
 
 		//Update the Person repository with the new information
 		Query query = new Query();
-		query.addCriteria(Criteria.where("id").is(idPersonaExistente));
+		query.addCriteria(Criteria.where("_id").is(idPersonaExistente));
 		Update update = new Update();
 		//We write the required information by only adding the subclass fields
 		update.set("infoInscripcionMenor", inscritoNinos.getInfoInscripcionMenor());

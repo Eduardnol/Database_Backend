@@ -80,26 +80,34 @@ class LifeteenServiceTest {
 
     }
 
-    @Test
-    @Order(4)
-    void deleteLifeteenById() {
+//    @Test
+//    @Order(6)
+//    void deleteLifeteenById() {
+//
+//        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
+//        assertEquals(HttpStatus.OK, back.getStatusCode());
+//
+//    }
 
-        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
-        assertEquals(HttpStatus.OK, back.getStatusCode());
+
+    //    @Test
+//    void addExistingUserExistingInscription() {
+//        personaService.insertNewPerson(persona);
+//
+//        lifeteenService.addExistingUserExistingInscription()
+//
+//    }
+//
+//
+    @Test
+    @Order(5)
+    void addExistingUserNewInscription() {
+        InscritoNinos incritoNinos = new InscritoNinos(new InscritoNinos.InnerIncritoNinos("padre", "madre",
+                "de unos amigos", "123412", "de@dw.com", true, true, "Xaxa", "bachi"));
+        ResponseEntity<String> back = lifeteenService.addExistingUserNewInscription(persona.getId(), incritoNinos, ltid);
+        assertEquals(HttpStatus.CREATED, back.getStatusCode());
 
     }
-
-
-//    @Test
-//    void addExistingUserExistingInscription() {
-//
-//    }
-//
-//
-//    @Test
-//    void addExistingUserNewInscription() {
-//
-//    }
 //
 //
 //    @Test
