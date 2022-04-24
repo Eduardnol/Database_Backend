@@ -42,7 +42,9 @@ class LifeteenServiceTest {
     @Order(1)
     void insertNewLifeteen() {
 
-        Lifeteen lifeteen = new Lifeteen(ltid, persona.getId(), persona2.getId(), LocalDate.now(), null, Collections.singletonList(persona3.getId()));
+        Integer inscritos = lifeteenService.countInscritos(ltid);
+
+        Lifeteen lifeteen = new Lifeteen(ltid, "Lifeteen 2020", persona.getId(), persona2.getId(), LocalDate.now(), inscritos, null, Collections.singletonList(persona3.getId()));
         ResponseEntity<String> back = lifeteenService.insertNewLifeteen(lifeteen);
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
     }
@@ -60,8 +62,9 @@ class LifeteenServiceTest {
     @Test
     @Order(3)
     void updateLifeteen() {
-
-        Lifeteen lifeteen = new Lifeteen(ltid, persona.getId(), persona2.getId(), LocalDate.now(), Collections.singletonList("elmoni"), Collections.singletonList(persona3.getId()));
+        Integer inscritos = lifeteenService.countInscritos(ltid);
+        Lifeteen lifeteen = new Lifeteen(ltid, "Lifeteen 2020", persona.getId(), persona2.getId(), LocalDate.now(), inscritos,
+                Collections.singletonList("elmoni"), Collections.singletonList(persona3.getId()));
         ResponseEntity<String> back = lifeteenService.updateLifeteen(lifeteen);
         assertEquals(HttpStatus.OK, back.getStatusCode());
 

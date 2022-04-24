@@ -15,12 +15,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Lifeteen {
-	@Id
-	private String id;
-	private String responsable1;
-	private String responsable2;
-	private LocalDate startDate;
-	private List<String> idMonitores;
-	private List<String> idInscritos;
+    @Id
+    private String id;
+    private String title;
+    private String responsable1;
+    private String responsable2;
+    private LocalDate startDate;
+    private Integer numInscritos;
+    private List<String> idMonitores;
+    private List<String> idInscritos;
 
 }

@@ -230,5 +230,10 @@ public class LifeteenService {
         return new ResponseEntity<>(message, httpHeaders, status);
 
     }
+
+    public Integer countInscritos(String idLifeteen) {
+        Optional<Lifeteen> lifeteens = lifeteenRepository.findById(idLifeteen);
+        return lifeteens.map(lifeteen -> lifeteen.getIdInscritos().size()).orElse(0);
+    }
 }
 
