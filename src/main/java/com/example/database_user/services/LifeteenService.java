@@ -34,7 +34,18 @@ public class LifeteenService {
     public ResponseEntity<List<Lifeteen>> fetchAllLifeteen() {
 
         HttpStatus status = HttpStatus.ACCEPTED;
+        String name1 = "";
+        String name2 = "";
         List<Lifeteen> posts = lifeteenRepository.findAll();
+
+        //Change the ID by the actual name
+        for (Lifeteen post : posts) {
+            name1 = personaRepository.findById(posts.get(0).getResponsable1()).get().getNombre();
+            name2 = personaRepository.findById(posts.get(0).getResponsable2()).get().getNombre();
+            post.setResponsable1(name1);
+            post.setResponsable2(name2);
+        }
+
         status = HttpStatus.OK;
         return new ResponseEntity<>(posts, status);
 
