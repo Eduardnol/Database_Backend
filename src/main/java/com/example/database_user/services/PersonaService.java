@@ -35,6 +35,12 @@ public class PersonaService {
 
     }
 
+    //Find a person by id
+    public ResponseEntity<Persona> findPersonById(String id) {
+        Persona persona = personaRepository.findById(id).get();
+        return new ResponseEntity<>(persona, HttpStatus.OK);
+    }
+
 
     public ResponseEntity<List<Persona>> fetchPeopleByName(String name) {
 

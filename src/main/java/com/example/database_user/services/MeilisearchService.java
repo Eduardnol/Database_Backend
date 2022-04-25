@@ -37,7 +37,7 @@ public class MeilisearchService {
 
     private void importDocuments() {
         Path fileName = Path.of("movies.json");
-        Path fileNameUsers = Path.of("users.json");
+        Path fileNameUsers = Path.of("users_meili.json");
         String moviesJson = null;
         String usersJson = null;
         try {

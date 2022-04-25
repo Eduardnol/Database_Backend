@@ -34,6 +34,11 @@ public class PersonaController {
         return ResponseEntity.status(HttpStatus.OK).body(personaService.fetchAllPeople());
     }
 
+    @GetMapping("/getbyid/{id}")
+    public ResponseEntity<Persona> getById(@PathVariable("id") String id) {
+        return personaService.findPersonById(id);
+    }
+
 
     @Operation(summary = "Search for users with specific name")
     @ApiResponses(value = {

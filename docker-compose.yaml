@@ -31,5 +31,5 @@ services:
       - MEILI_NO_ANALYTICS=false
       - MEILI_NO_SENTRY=true
     volumes:
-      - ./users.json:/app/resources/users.json
+      - ./users_meili.json:/app/resources/users.json
       - ./movies.json:/app/resources/movies.json
