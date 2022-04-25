@@ -83,6 +83,9 @@ public class PersonaService {
 
         personaRepository.insert(person);
 
+        MeilisearchService meilisearchService = MeilisearchService.getInstance();
+        meilisearchService.addUserDocument(person);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
