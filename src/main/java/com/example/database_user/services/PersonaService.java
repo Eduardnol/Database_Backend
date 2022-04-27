@@ -5,11 +5,10 @@ import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bson.Document;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.TextCriteria;
-import org.springframework.data.mongodb.core.query.TextQuery;
+import org.springframework.data.mongodb.core.query.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -101,6 +100,8 @@ public class PersonaService {
 
         try {
             personaRepository.deleteById(personID);
+            MeilisearchService meilisearchService = MeilisearchService.getInstance();
+            meilisearchService.deleteDocument(personID);
         } catch (HttpMessageNotReadableException e) {
             System.out.println("Data Access");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -110,12 +111,29 @@ public class PersonaService {
 
     }
 
-
+    //Todo this method does not work well when having other fields in the same document that are not in the same class
     public ResponseEntity<String> updatePerson(Persona person) {
 
-        System.out.println("The corresponding id is:" + person.getId());
-        personaRepository.deleteById(person.getId());
-        personaRepository.insert(person);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(person.getId()));
+//        Update update = new Update()
+//                .set("nombre", person.getNombre())
+//                .set("apellido", person.getApellido())
+//                .set("apellido2", person.getApellido2())
+//                .set("email", person.getEmail())
+//                .set("birthday", person.getBirthday())
+//                .set("saint", person.getSaint())
+//                .set("dni", person.getDni())
+//                .set("sacraments", person.getSacraments());
+        Document document = new Document();
+        mongoTemplate.getConverter().write(person, document);
+        Update update = Update.fromDocument(document);
+        //We write the required information by only adding the subclass fields
+        mongoTemplate.updateFirst(query, update, "persona");
+        //personaRepository.deleteById(person.getId());
+        //personaRepository.save(person);
+        MeilisearchService meilisearchService = MeilisearchService.getInstance();
+        meilisearchService.updateDocument(person);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

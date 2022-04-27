@@ -72,5 +72,25 @@ public class MeilisearchService {
 
     }
 
+    public void updateDocument(Persona persona) {
+        ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
+
+        try {
+            index1.updateDocuments(mapper.writeValueAsString(persona));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void deleteDocument(String id) {
+        try {
+            index1.deleteDocument(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
 }

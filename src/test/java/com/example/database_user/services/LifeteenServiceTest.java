@@ -27,6 +27,9 @@ class LifeteenServiceTest {
     @Autowired
     private LifeteenService lifeteenService;
 
+    @Autowired
+    private PersonaService personaService;
+
     @BeforeAll
     static void beforeAll() {
         Sacraments sacraments = new Sacraments();
@@ -36,11 +39,16 @@ class LifeteenServiceTest {
                 "12121212D", null, sacraments, null, LocalDateTime.now());
         persona3 = new Persona("sdfgjksdfgjkq34", "Ign", "Nunez", "NNUNU", "ign.nunez@gmail.com", LocalDate.now(), LocalDate.now(),
                 "12121212D", null, sacraments, null, LocalDateTime.now());
+
+
     }
 
     @Test
     @Order(1)
     void insertNewLifeteen() {
+        personaService.insertNewPerson(persona);
+        personaService.insertNewPerson(persona2);
+        personaService.insertNewPerson(persona3);
 
         Integer inscritos = lifeteenService.countInscritos(ltid);
 
@@ -56,7 +64,7 @@ class LifeteenServiceTest {
         //when
         List<Lifeteen> lifeteenList = lifeteenService.fetchAllLifeteen().getBody();
         //then
-        assertEquals(persona.getId(), lifeteenList.get(0).getResponsable1());
+        assertEquals(persona.getNombre() + " " + persona.getApellido(), lifeteenList.get(0).getResponsable1());
     }
 
     @Test
@@ -118,14 +126,14 @@ class LifeteenServiceTest {
 
     }
 
-    @Test
-    @Order(9)
-    void deleteLifeteenById() {
-
-        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
-        assertEquals(HttpStatus.OK, back.getStatusCode());
-
-    }
+//    @Test
+//    @Order(9)
+//    void deleteLifeteenById() {
+//
+//        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
+//        assertEquals(HttpStatus.OK, back.getStatusCode());
+//
+//    }
 
 
 }
