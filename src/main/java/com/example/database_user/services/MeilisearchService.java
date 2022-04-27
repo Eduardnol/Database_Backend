@@ -60,7 +60,6 @@ public class MeilisearchService {
         }
     }
 
-
     public void addUserDocument(Persona persona) {
         ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
 

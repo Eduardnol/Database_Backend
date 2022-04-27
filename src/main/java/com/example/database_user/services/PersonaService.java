@@ -5,7 +5,6 @@ import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bson.Document;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.*;
@@ -116,18 +115,20 @@ public class PersonaService {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(person.getId()));
-//        Update update = new Update()
-//                .set("nombre", person.getNombre())
-//                .set("apellido", person.getApellido())
-//                .set("apellido2", person.getApellido2())
-//                .set("email", person.getEmail())
-//                .set("birthday", person.getBirthday())
-//                .set("saint", person.getSaint())
-//                .set("dni", person.getDni())
-//                .set("sacraments", person.getSacraments());
-        Document document = new Document();
-        mongoTemplate.getConverter().write(person, document);
-        Update update = Update.fromDocument(document);
+        Update update = new Update()
+                .set("nombre", person.getNombre())
+                .set("apellido", person.getApellido())
+                .set("apellido2", person.getApellido2())
+                .set("email", person.getEmail())
+                .set("birthday", person.getBirthday())
+                .set("saint", person.getSaint())
+                .set("dni", person.getDni())
+                .set("extras", person.getExtras())
+                .set("fileStorage", person.getFileStorage())
+                .set("sacraments", person.getSacraments());
+        // Document document = new Document();
+        // mongoTemplate.getConverter().write(person, document);
+        // Update update = Update.fromDocument(document);
         //We write the required information by only adding the subclass fields
         mongoTemplate.updateFirst(query, update, "persona");
         //personaRepository.deleteById(person.getId());
