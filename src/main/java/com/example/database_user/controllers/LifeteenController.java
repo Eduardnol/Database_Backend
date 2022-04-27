@@ -6,10 +6,10 @@ import com.example.database_user.dtos.Persona.Ninos.InscritoNinos;
 import com.example.database_user.services.LifeteenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,74 +21,47 @@ import java.util.List;
 @RequestMapping(path = "api/v1/lifeteen")
 @AllArgsConstructor
 public class LifeteenController {
-	private final LifeteenService lifeteenService;
+    private final LifeteenService lifeteenService;
 
 
-	@GetMapping("/all")
-	public ResponseEntity<List<Lifeteen>> fetchAllLifeteen() {
+    @GetMapping("/all")
+    public ResponseEntity<List<Lifeteen>> fetchAllLifeteen() {
 
-		return lifeteenService.fetchAllLifeteen();
-	}
-
-
-	@PostMapping("/insert")
-	public ResponseEntity<String> insertNewLifeteen(@RequestBody @Valid Lifeteen lifeteen) {
-
-		return lifeteenService.insertNewLifeteen(lifeteen);
-	}
+        return lifeteenService.fetchAllLifeteen();
+    }
 
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteLifeteen(@PathVariable String id) {
+    @PostMapping("/insert")
+    public ResponseEntity<String> insertNewLifeteen(@RequestBody @Valid Lifeteen lifeteen) {
 
-		return lifeteenService.deleteLifeteenById(id);
-	}
-
-
-	@PutMapping("/update")
-	public ResponseEntity<String> updateLifeteen(@RequestBody @Valid Lifeteen lifeteen) {
-
-		return lifeteenService.updateLifeteen(lifeteen);
-	}
+        return lifeteenService.insertNewLifeteen(lifeteen);
+    }
 
 
-	@Operation(summary = "Insert a new inscription to one lifeteen")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "User correctly inscribed",
-					content = {@Content(mediaType = "application/json",
-							schema = @Schema(implementation = InscritoNinos.class))})
-	})
-	@PostMapping("/insert-inscription/{idlifeteen}")
-	public ResponseEntity<String> inserNewInscription(@Parameter(description = "The one to be inserted") @RequestBody @Valid InscritoNinos inscritoNinos, @Parameter(description = "Id of the Lifeteen where we want to insert it") @PathVariable String idlifeteen) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteLifeteen(@PathVariable String id) {
 
-		return lifeteenService.addNewInscription(inscritoNinos, idlifeteen);
-	}
+        return lifeteenService.deleteLifeteenById(id);
+    }
 
 
-	@Operation(summary = "Add a new inscription to Lifeteen when user is already on our database")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "User correctly added",
-					content = {@Content(mediaType = "application/json",
-							schema = @Schema(implementation = InscritoNinos.class))})
-	})
-	@PostMapping("/existing-user-new-inscription/{idlifeteen}/{iduser}")
-	public ResponseEntity<String> addExistingUserNewInscription(@RequestBody @Valid InscritoNinos inscritoNinos, @PathVariable String idlifeteen, @PathVariable String iduser) {
+    @PutMapping("/update")
+    public ResponseEntity<String> updateLifeteen(@RequestBody @Valid Lifeteen lifeteen) {
 
-		return lifeteenService.addExistingUserNewInscription(iduser, inscritoNinos, idlifeteen);
-	}
+        return lifeteenService.updateLifeteen(lifeteen);
+    }
 
+    @Operation(operationId = "inserNewInscription", summary = "Insert a new inscription to one lifeteen", tags = {"Lifeteen"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "inscritoNinos", description = "The one to be inserted"),
+                    @Parameter(name = "idlifeteen", description = "Id of the Lifeteen where we want to insert it")},
+            responses = {@ApiResponse(responseCode = "200", description = "User correctly inscribed", content = @Content(schema = @Schema(implementation = InscritoNinos.class))),
+                    @ApiResponse(responseCode = "404", description = "Employee not found")}
+    )
+    @PostMapping("/insert-inscription/{idlifeteen}")
+    public ResponseEntity<String> inserNewInscription(@RequestBody @Valid InscritoNinos inscritoNinos, @PathVariable String idlifeteen) {
 
-	@PutMapping("/edit-existing-user-inscription")
-	public ResponseEntity<String> editExistingUserInscription(@RequestBody @Valid InscritoNinos inscritoNinos) {
+        return lifeteenService.addNewUserNewInsciption(inscritoNinos, idlifeteen);
+    }
 
-		return lifeteenService.editExistingUserInscription(inscritoNinos);
-	}
-
-
-	@DeleteMapping("/delete-inscription-from-lifeteen/{idinscription}/{idlifeteen}")
-	public ResponseEntity<String> deleteInscriptionFromLifeteen(@PathVariable String idinscription, @PathVariable String idlifeteen) {
-
-		return lifeteenService.deleteExistingInscriptionFromALifeteen(idlifeteen, idinscription);
-	}
 
 }

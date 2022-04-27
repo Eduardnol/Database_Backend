@@ -23,3 +23,13 @@ services:
       - mongo_db
     environment:
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo_db:27017/
+  meilisearch-0.20.0:
+    image: "getmeili/meilisearch:latest"
+    ports:
+      - "7720:7700"
+    environment:
+      - MEILI_NO_ANALYTICS=false
+      - MEILI_NO_SENTRY=true
+    volumes:
+      - ./users_meili.json:/app/resources/users.json
+      - ./movies.json:/app/resources/movies.json
