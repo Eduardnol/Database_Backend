@@ -101,12 +101,12 @@ class LifeteenServiceTest {
 
     }
 
-    @Test
-    @Order(6)
-    void deleteExistingInscriptionFromALifeteen() {
-        ResponseEntity<String> back = lifeteenService.deleteExistingInscriptionFromALifeteen(ltid, persona.getId());
-        assertEquals("The user has been deleted from the specified lifeteen", back.getBody());
-    }
+//    @Test
+//    @Order(6)
+//    void deleteExistingInscriptionFromALifeteen() {
+//        ResponseEntity<String> back = lifeteenService.deleteExistingInscriptionFromALifeteen(ltid, persona.getId());
+//        assertEquals("The user has been deleted from the specified lifeteen", back.getBody());
+//    }
 
     @Test
     @Order(7)

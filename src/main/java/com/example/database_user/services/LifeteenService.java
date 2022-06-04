@@ -21,7 +21,9 @@ public class LifeteenService {
     private final LifeteenRepository lifeteenRepository;
     private final PersonaRepository personaRepository;
     private final MongoTemplate mongoTemplate;
+    private final PersonaService personaService;
 
+    /***************************Lifeteen as a service***************************/
 
     /**
      * Returns all the Lifeteen instances from the database
@@ -89,6 +91,7 @@ public class LifeteenService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /***************************Lifeteen inscribed***************************/
 
     /**
      * Adds a new inscription to the database when a user does not exist in our Person collection
@@ -106,7 +109,7 @@ public class LifeteenService {
         HttpStatus status = HttpStatus.CREATED;
         //Todo does the insertion of a InscritoNinos affects when we fetch normal persons?
         //Insert to standard Person repository
-        personaRepository.insert(persona);
+        personaService.insertNewPerson(persona);
         //Insert id to Lifeteen
         Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
 
@@ -165,8 +168,7 @@ public class LifeteenService {
 
 
         //Update the Person repository with the new information
-        personaRepository.deleteById(persona.getId());
-        personaRepository.insert(persona);
+        personaService.updatePerson(persona);
         //Insert the person into the Lifeteen repository
         return this.addExistingUserExistingInscription(idLifeteen, persona.getId());
 
@@ -186,8 +188,7 @@ public class LifeteenService {
         String message = "";
         HttpStatus status = HttpStatus.CREATED;
 
-        personaRepository.deleteById(persona.getId());
-        personaRepository.insert(persona);
+        personaService.updatePerson(persona);
 
         message = "Inscription updated";
         status = HttpStatus.OK;
@@ -226,6 +227,7 @@ public class LifeteenService {
 
     }
 
+    /***************************Lifeteen Stats***************************/
     public Integer countInscritos(String idLifeteen) {
         Optional<Lifeteen> lifeteens = lifeteenRepository.findById(idLifeteen);
         return lifeteens.map(lifeteen -> lifeteen.getIdInscritos().size()).orElse(0);
