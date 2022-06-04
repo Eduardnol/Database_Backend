@@ -49,6 +49,9 @@ public class Persona {
     private ArrayList<FileStorage> fileStorage;
     private LocalDateTime createdOn;
 
+    //Optional fields
+    private PersonaNinos personaNinos = null;
+
 
     public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint,
                    String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {

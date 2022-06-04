@@ -1,8 +1,8 @@
 package com.example.database_user.services;
 
 import com.example.database_user.dtos.Lifeteen;
-import com.example.database_user.dtos.Persona.Ninos.PersonaNinos;
 import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.dtos.Persona.PersonaNinos;
 import com.example.database_user.dtos.Sacraments;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +34,11 @@ class LifeteenServiceTest {
     static void beforeAll() {
         Sacraments sacraments = new Sacraments();
         persona = new Persona("2345sdgf", "Jose", "Martinez", "Rodri", "jose.martinez@gmail.com", LocalDate.now(), LocalDate.now(),
-                "12121212D", null, sacraments, null, LocalDateTime.now());
+                "12121212D", null, sacraments, null, LocalDateTime.now(), null);
         persona2 = new Persona("dfaa22235", "Alba", "Rodriguez", "Ro", "alba.rodriguez@gmail.com", LocalDate.now(), LocalDate.now(),
-                "12121212D", null, sacraments, null, LocalDateTime.now());
+                "12121212D", null, sacraments, null, LocalDateTime.now(), null);
         persona3 = new Persona("sdfgjksdfgjkq34", "Ign", "Nunez", "NNUNU", "ign.nunez@gmail.com", LocalDate.now(), LocalDate.now(),
-                "12121212D", null, sacraments, null, LocalDateTime.now());
+                "12121212D", null, sacraments, null, LocalDateTime.now(), null);
 
 
     }
@@ -82,8 +82,9 @@ class LifeteenServiceTest {
     @Test
     @Order(4)
     void addNewUserNewInsciption() {
-        PersonaNinos.InnerIncritoNinos innerIncritoNinos = new PersonaNinos.InnerIncritoNinos("padre", "madre", "de unos amigos", "123412", "eduedu@gmail.com", true, true, "Xaloc", "Bachi");
-        PersonaNinos personaNinos = new PersonaNinos("john", "black", "perez", "john@black.es", LocalDate.now(), LocalDate.now(), "232323j", null, null, null, LocalDateTime.now(), innerIncritoNinos);
+        PersonaNinos innerIncritoNinos = new PersonaNinos("padre", "madre", "de unos amigos", "123412", "eduedu@gmail.com", true, true, "Xaloc", "Bachi");
+        Persona personaNinos = new Persona(null, "john", "black", "perez", "john@black.es", LocalDate.now(), LocalDate.now(),
+                "232323j", null, null, null, LocalDateTime.now(), innerIncritoNinos);
         ResponseEntity<String> back = lifeteenService.addNewUserNewInsciption(personaNinos, ltid);
         assertEquals("User added in the specified lifeteen id", back.getBody());
 
@@ -92,9 +93,10 @@ class LifeteenServiceTest {
     @Test
     @Order(5)
     void addExistingUserNewInscription() {
-        PersonaNinos incritoNinos = new PersonaNinos(new PersonaNinos.InnerIncritoNinos("padre", "madre",
-                "de unos amigos", "123412", "de@dw.com", true, true, "Xaxa", "bachi"));
-        ResponseEntity<String> back = lifeteenService.addExistingUserNewInscription(persona.getId(), incritoNinos, ltid);
+        PersonaNinos incritoNinos = new PersonaNinos("padre", "madre",
+                "de unos amigos", "123412", "de@dw.com", true, true, "Xaxa", "bachi");
+        persona.setPersonaNinos(incritoNinos);
+        ResponseEntity<String> back = lifeteenService.addExistingUserNewInscription(persona, ltid);
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
 
     }
@@ -118,9 +120,10 @@ class LifeteenServiceTest {
     @Test
     @Order(8)
     void editExistingUserInscription() {
-        PersonaNinos incritoNinos = new PersonaNinos(new PersonaNinos.InnerIncritoNinos("padre", "madre",
-                "de unos amigos", "123412", "de@dw.com", true, true, "Xaloc", "bachi"));
-        ResponseEntity<String> back = lifeteenService.editExistingUserInscription(persona.getId(), incritoNinos);
+        PersonaNinos incritoNinos = new PersonaNinos("padre", "madre",
+                "de unos amigos", "123412", "de@dw.com", true, true, "Xaloc", "bachi");
+        persona.setPersonaNinos(incritoNinos);
+        ResponseEntity<String> back = lifeteenService.editExistingUserInscription(persona);
 
         assertEquals("Inscription updated", back.getBody());
 

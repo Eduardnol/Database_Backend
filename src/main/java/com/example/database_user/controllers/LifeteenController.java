@@ -2,7 +2,7 @@ package com.example.database_user.controllers;
 
 
 import com.example.database_user.dtos.Lifeteen;
-import com.example.database_user.dtos.Persona.Ninos.PersonaNinos;
+import com.example.database_user.dtos.Persona.PersonaNinos;
 import com.example.database_user.services.LifeteenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -60,7 +60,8 @@ public class LifeteenController {
     @PostMapping("/insert-inscription/{idlifeteen}")
     public ResponseEntity<String> inserNewInscription(@RequestBody @Valid PersonaNinos personaNinos, @PathVariable String idlifeteen) {
 
-        return lifeteenService.addNewUserNewInsciption(personaNinos, idlifeteen);
+        //return lifeteenService.addNewUserNewInsciption(personaNinos, idlifeteen);
+        return null;
     }
 
 
