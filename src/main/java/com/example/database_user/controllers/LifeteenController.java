@@ -2,7 +2,7 @@ package com.example.database_user.controllers;
 
 
 import com.example.database_user.dtos.Lifeteen;
-import com.example.database_user.dtos.Persona.Ninos.InscritoNinos;
+import com.example.database_user.dtos.Persona.Ninos.PersonaNinos;
 import com.example.database_user.services.LifeteenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -54,13 +54,13 @@ public class LifeteenController {
     @Operation(operationId = "inserNewInscription", summary = "Insert a new inscription to one lifeteen", tags = {"Lifeteen"},
             parameters = {@Parameter(in = ParameterIn.PATH, name = "inscritoNinos", description = "The one to be inserted"),
                     @Parameter(name = "idlifeteen", description = "Id of the Lifeteen where we want to insert it")},
-            responses = {@ApiResponse(responseCode = "200", description = "User correctly inscribed", content = @Content(schema = @Schema(implementation = InscritoNinos.class))),
+            responses = {@ApiResponse(responseCode = "200", description = "User correctly inscribed", content = @Content(schema = @Schema(implementation = PersonaNinos.class))),
                     @ApiResponse(responseCode = "404", description = "Employee not found")}
     )
     @PostMapping("/insert-inscription/{idlifeteen}")
-    public ResponseEntity<String> inserNewInscription(@RequestBody @Valid InscritoNinos inscritoNinos, @PathVariable String idlifeteen) {
+    public ResponseEntity<String> inserNewInscription(@RequestBody @Valid PersonaNinos personaNinos, @PathVariable String idlifeteen) {
 
-        return lifeteenService.addNewUserNewInsciption(inscritoNinos, idlifeteen);
+        return lifeteenService.addNewUserNewInsciption(personaNinos, idlifeteen);
     }
 
 

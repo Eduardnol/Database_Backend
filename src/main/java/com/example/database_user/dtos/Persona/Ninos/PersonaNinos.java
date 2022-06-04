@@ -14,13 +14,13 @@ import java.util.ArrayList;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class InscritoNinos extends Persona {
+public class PersonaNinos extends Persona {
 
     InnerIncritoNinos infoInscripcionMenor;
 
 
     //Constructor solo esta clase
-    public InscritoNinos(InnerIncritoNinos infoInscripcionMenor) {
+    public PersonaNinos(InnerIncritoNinos infoInscripcionMenor) {
 
         this.infoInscripcionMenor = infoInscripcionMenor;
 
@@ -28,7 +28,7 @@ public class InscritoNinos extends Persona {
 
 
     //Constructor con superclase
-    public InscritoNinos(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn, InnerIncritoNinos infoInscripcionMenor) {
+    public PersonaNinos(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn, InnerIncritoNinos infoInscripcionMenor) {
 
         super(nombre, apellido, apellido2, email, birthday, saint, dni, extras, sacraments, fileStorage, createdOn);
         this.infoInscripcionMenor = infoInscripcionMenor;

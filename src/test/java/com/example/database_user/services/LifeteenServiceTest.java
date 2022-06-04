@@ -1,7 +1,7 @@
 package com.example.database_user.services;
 
 import com.example.database_user.dtos.Lifeteen;
-import com.example.database_user.dtos.Persona.Ninos.InscritoNinos;
+import com.example.database_user.dtos.Persona.Ninos.PersonaNinos;
 import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Sacraments;
 import org.junit.jupiter.api.*;
@@ -82,9 +82,9 @@ class LifeteenServiceTest {
     @Test
     @Order(4)
     void addNewUserNewInsciption() {
-        InscritoNinos.InnerIncritoNinos innerIncritoNinos = new InscritoNinos.InnerIncritoNinos("padre", "madre", "de unos amigos", "123412", "eduedu@gmail.com", true, true, "Xaloc", "Bachi");
-        InscritoNinos inscritoNinos = new InscritoNinos("john", "black", "perez", "john@black.es", LocalDate.now(), LocalDate.now(), "232323j", null, null, null, LocalDateTime.now(), innerIncritoNinos);
-        ResponseEntity<String> back = lifeteenService.addNewUserNewInsciption(inscritoNinos, ltid);
+        PersonaNinos.InnerIncritoNinos innerIncritoNinos = new PersonaNinos.InnerIncritoNinos("padre", "madre", "de unos amigos", "123412", "eduedu@gmail.com", true, true, "Xaloc", "Bachi");
+        PersonaNinos personaNinos = new PersonaNinos("john", "black", "perez", "john@black.es", LocalDate.now(), LocalDate.now(), "232323j", null, null, null, LocalDateTime.now(), innerIncritoNinos);
+        ResponseEntity<String> back = lifeteenService.addNewUserNewInsciption(personaNinos, ltid);
         assertEquals("User added in the specified lifeteen id", back.getBody());
 
     }
@@ -92,7 +92,7 @@ class LifeteenServiceTest {
     @Test
     @Order(5)
     void addExistingUserNewInscription() {
-        InscritoNinos incritoNinos = new InscritoNinos(new InscritoNinos.InnerIncritoNinos("padre", "madre",
+        PersonaNinos incritoNinos = new PersonaNinos(new PersonaNinos.InnerIncritoNinos("padre", "madre",
                 "de unos amigos", "123412", "de@dw.com", true, true, "Xaxa", "bachi"));
         ResponseEntity<String> back = lifeteenService.addExistingUserNewInscription(persona.getId(), incritoNinos, ltid);
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
@@ -118,7 +118,7 @@ class LifeteenServiceTest {
     @Test
     @Order(8)
     void editExistingUserInscription() {
-        InscritoNinos incritoNinos = new InscritoNinos(new InscritoNinos.InnerIncritoNinos("padre", "madre",
+        PersonaNinos incritoNinos = new PersonaNinos(new PersonaNinos.InnerIncritoNinos("padre", "madre",
                 "de unos amigos", "123412", "de@dw.com", true, true, "Xaloc", "bachi"));
         ResponseEntity<String> back = lifeteenService.editExistingUserInscription(persona.getId(), incritoNinos);
 

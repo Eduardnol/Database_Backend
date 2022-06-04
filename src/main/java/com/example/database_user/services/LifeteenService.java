@@ -1,7 +1,7 @@
 package com.example.database_user.services;
 
 import com.example.database_user.dtos.Lifeteen;
-import com.example.database_user.dtos.Persona.Ninos.InscritoNinos;
+import com.example.database_user.dtos.Persona.Ninos.PersonaNinos;
 import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.repositories.LifeteenRepository;
 import com.example.database_user.repositories.PersonaRepository;
@@ -97,11 +97,11 @@ public class LifeteenService {
     /**
      * Adds a new inscription to the database when a user does not exist in our Person collection
      *
-     * @param inscritoNinos the new inscription
-     * @param idLifeteen    the id of the lifeteen where we want the inscription
+     * @param personaNinos the new inscription
+     * @param idLifeteen   the id of the lifeteen where we want the inscription
      * @return The status of the response
      */
-    public ResponseEntity<String> addNewUserNewInsciption(InscritoNinos inscritoNinos, String idLifeteen) {
+    public ResponseEntity<String> addNewUserNewInsciption(PersonaNinos personaNinos, String idLifeteen) {
 
 
         final HttpHeaders httpHeaders = new HttpHeaders();
@@ -110,14 +110,14 @@ public class LifeteenService {
         HttpStatus status = HttpStatus.CREATED;
         //Todo does the insertion of a InscritoNinos affects when we fetch normal persons?
         //Insert to standard Person repository
-        personaRepository.insert(inscritoNinos);
+        personaRepository.insert(personaNinos);
         //Insert id to Lifeteen
         Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
 
         if (lifeteen.isPresent()) {
-            lifeteen.get().getIdInscritos().add(inscritoNinos.getId());
+            lifeteen.get().getIdInscritos().add(personaNinos.getId());
             //We pass argument as null because it's already in the database
-            return this.addExistingUserExistingInscription(idLifeteen, inscritoNinos.getId());
+            return this.addExistingUserExistingInscription(idLifeteen, personaNinos.getId());
             //message = "Person correctly inserted";
         } else {
             status = HttpStatus.NOT_FOUND;
@@ -162,11 +162,11 @@ public class LifeteenService {
      * If a user already exists in the database and does not have InscritoNinos information, it will be updated with the new information.
      *
      * @param idPersonaExistente id of the user that already exists in the database
-     * @param inscritoNinos      new information of the user
+     * @param personaNinos      new information of the user
      * @param idLifeteen         id of the lifeteen that the user is going to be added to
      * @return message with the result of the operation
      */
-    public ResponseEntity<String> addExistingUserNewInscription(String idPersonaExistente, InscritoNinos inscritoNinos, String idLifeteen) {
+    public ResponseEntity<String> addExistingUserNewInscription(String idPersonaExistente, PersonaNinos personaNinos, String idLifeteen) {
 
 
         //Update the Person repository with the new information
@@ -174,7 +174,7 @@ public class LifeteenService {
         query.addCriteria(Criteria.where("_id").is(idPersonaExistente));
         Update update = new Update();
         //We write the required information by only adding the subclass fields
-        update.set("infoInscripcionMenor", inscritoNinos.getInfoInscripcionMenor());
+        update.set("infoInscripcionMenor", personaNinos.getInfoInscripcionMenor());
         mongoTemplate.updateFirst(query, update, "persona");
 
         //Insert the person into the Lifeteen repository
@@ -186,17 +186,17 @@ public class LifeteenService {
     /**
      * Edit an inscription in the database
      *
-     * @param inscritoNinos the new information of the inscription
+     * @param personaNinos the new information of the inscription
      * @return the status of the response
      */
-    public ResponseEntity<String> editExistingUserInscription(String personId, InscritoNinos inscritoNinos) {
+    public ResponseEntity<String> editExistingUserInscription(String personId, PersonaNinos personaNinos) {
 
         final HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         String message = "";
         HttpStatus status = HttpStatus.CREATED;
 
-        InscritoNinos.InnerIncritoNinos innerInscritoNinos = inscritoNinos.getInfoInscripcionMenor();
+        PersonaNinos.InnerIncritoNinos innerInscritoNinos = personaNinos.getInfoInscripcionMenor();
 
 
         //Update the Person repository with the new information
@@ -204,7 +204,7 @@ public class LifeteenService {
         query.addCriteria(Criteria.where("_id").is(personId));
         Update update = new Update();
         //We write the required information by only adding the subclass fields
-        update.set("infoInscripcionMenor", inscritoNinos.getInfoInscripcionMenor());
+        update.set("infoInscripcionMenor", personaNinos.getInfoInscripcionMenor());
         mongoTemplate.updateFirst(query, update, "persona");
         message = "Inscription updated";
         status = HttpStatus.OK;

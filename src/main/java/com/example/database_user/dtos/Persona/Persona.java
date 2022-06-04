@@ -50,7 +50,8 @@ public class Persona {
     private LocalDateTime createdOn;
 
 
-    public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint, String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {
+    public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint,
+                   String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {
 
         this.nombre = nombre;
         this.apellido = apellido;
