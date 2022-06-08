@@ -2,6 +2,7 @@ package com.example.database_user.dtos.Persona;
 
 import com.example.database_user.dtos.Custom;
 import com.example.database_user.dtos.FileStorage;
+import com.example.database_user.dtos.PersonGroups;
 import com.example.database_user.dtos.Sacraments;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,6 +49,8 @@ public class Persona {
     private Sacraments sacraments;
     private ArrayList<FileStorage> fileStorage;
     private LocalDateTime createdOn;
+
+    private ArrayList<PersonGroups> personGroups;
 
     //Optional fields
     private PersonaNinos personaNinos = null;

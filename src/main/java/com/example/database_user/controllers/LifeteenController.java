@@ -30,6 +30,11 @@ public class LifeteenController {
         return lifeteenService.fetchAllLifeteen();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Lifeteen> fetchLifeteenById(@PathVariable String id) {
+
+        return lifeteenService.getLifeteenById(id);
+    }
 
     @PostMapping("/insert")
     public ResponseEntity<String> insertNewLifeteen(@RequestBody @Valid Lifeteen lifeteen) {

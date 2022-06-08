@@ -1,6 +1,7 @@
 package com.example.database_user.services;
 
 import com.example.database_user.dtos.Lifeteen;
+import com.example.database_user.dtos.PersonGroups;
 import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.repositories.LifeteenRepository;
 import com.example.database_user.repositories.PersonaRepository;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +52,36 @@ public class LifeteenService {
 
     }
 
+    /**
+     * Returns the Lifeteen instance with the given id
+     *
+     * @param id The id of the Lifeteen instance
+     * @return The Lifeteen instance
+     */
+    public ResponseEntity<Lifeteen> getLifeteenById(String id) {
+        HttpStatus status = HttpStatus.ACCEPTED;
+        Optional<Lifeteen> post = lifeteenRepository.findById(id);
+        if (post.isPresent()) {
+            status = HttpStatus.OK;
+            Lifeteen lifeteen = post.get();
+            List<String> lista = new ArrayList<>();
+            for (String idIndiv : lifeteen.getIdInscritos()) {
+                Persona persona = personaService.findPersonById(idIndiv).getBody();
+                lista.add(String.valueOf(persona));
+                //Le pasamos como un json
+            }
+            lifeteen.setIdInscritos(lista);
+            //Search for the person in responsables
+            Persona persona1 = personaService.findPersonById(lifeteen.getResponsable1()).getBody();
+            Persona persona2 = personaService.findPersonById(lifeteen.getResponsable2()).getBody();
+            lifeteen.setResponsable1(String.valueOf(persona1));
+            lifeteen.setResponsable2(String.valueOf(persona2));
+            return new ResponseEntity<>(lifeteen, status);
+        } else {
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
+        }
+    }
 
     /**
      * Inserts a new Lifeteen instance into the database
@@ -146,6 +178,9 @@ public class LifeteenService {
             lifeteen.get().getIdInscritos().add(idPerson);
             lifeteenRepository.deleteById(idLifeteen);
             lifeteenRepository.insert(lifeteen.get());
+            Persona persona = personaService.findPersonById(idPerson).getBody();
+            persona.getPersonGroups().add(new PersonGroups(idLifeteen, lifeteen.get().getTitle()));
+            personaService.updatePerson(persona);
             message = "User added in the specified lifeteen id";
         } else {
             status = HttpStatus.NOT_FOUND;
@@ -216,6 +251,7 @@ public class LifeteenService {
         if (lifeteen.isPresent()) {
             lifeteen.get().getIdInscritos().remove(idPersona);
             lifeteenRepository.save(lifeteen.get());
+            personaService.findPersonById(idPersona).getBody().getPersonGroups().removeIf(personGroups -> personGroups.getId().equals(idLifeteen));
             status = HttpStatus.OK;
             message = "The user has been deleted from the specified lifeteen";
         } else {
