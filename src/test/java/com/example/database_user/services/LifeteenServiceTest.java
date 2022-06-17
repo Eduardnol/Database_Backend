@@ -34,11 +34,11 @@ class LifeteenServiceTest {
     static void beforeAll() {
         Sacraments sacraments = new Sacraments();
         persona = new Persona("2345sdgf", "Jose", "Martinez", "Rodri", "jose.martinez@gmail.com", LocalDate.now(), LocalDate.now(),
-                "12121212D", null, sacraments, null, LocalDateTime.now(), null);
+                "12121212D", null, sacraments, null, LocalDateTime.now(), null, null);
         persona2 = new Persona("dfaa22235", "Alba", "Rodriguez", "Ro", "alba.rodriguez@gmail.com", LocalDate.now(), LocalDate.now(),
-                "12121212D", null, sacraments, null, LocalDateTime.now(), null);
+                "12121212D", null, sacraments, null, LocalDateTime.now(), null, null);
         persona3 = new Persona("sdfgjksdfgjkq34", "Ign", "Nunez", "NNUNU", "ign.nunez@gmail.com", LocalDate.now(), LocalDate.now(),
-                "12121212D", null, sacraments, null, LocalDateTime.now(), null);
+                "12121212D", null, sacraments, null, LocalDateTime.now(), null, null);
 
 
     }
@@ -84,7 +84,7 @@ class LifeteenServiceTest {
     void addNewUserNewInsciption() {
         PersonaNinos innerIncritoNinos = new PersonaNinos("padre", "madre", "de unos amigos", "123412", "eduedu@gmail.com", true, true, "Xaloc", "Bachi");
         Persona personaNinos = new Persona(null, "john", "black", "perez", "john@black.es", LocalDate.now(), LocalDate.now(),
-                "232323j", null, null, null, LocalDateTime.now(), innerIncritoNinos);
+                "232323j", null, null, null, LocalDateTime.now(), null, innerIncritoNinos);
         ResponseEntity<String> back = lifeteenService.addNewUserNewInsciption(personaNinos, ltid);
         assertEquals("User added in the specified lifeteen id", back.getBody());
 

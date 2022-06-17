@@ -53,30 +53,47 @@ public class LifeteenService {
     }
 
     /**
-     * Returns the Lifeteen instance with the given id
+     * Returns the Lifeteen Inscritos instance with the given id
      *
      * @param id The id of the Lifeteen instance
      * @return The Lifeteen instance
      */
-    public ResponseEntity<Lifeteen> getLifeteenById(String id) {
+    public ResponseEntity<List<Persona>> getLifeteenInscritosById(String id) {
         HttpStatus status = HttpStatus.ACCEPTED;
         Optional<Lifeteen> post = lifeteenRepository.findById(id);
         if (post.isPresent()) {
             status = HttpStatus.OK;
             Lifeteen lifeteen = post.get();
-            List<String> lista = new ArrayList<>();
+            List<Persona> lista = new ArrayList<>();
             for (String idIndiv : lifeteen.getIdInscritos()) {
                 Persona persona = personaService.findPersonById(idIndiv).getBody();
-                lista.add(String.valueOf(persona));
-                //Le pasamos como un json
+                lista.add(persona);
             }
-            lifeteen.setIdInscritos(lista);
-            //Search for the person in responsables
-            Persona persona1 = personaService.findPersonById(lifeteen.getResponsable1()).getBody();
-            Persona persona2 = personaService.findPersonById(lifeteen.getResponsable2()).getBody();
-            lifeteen.setResponsable1(String.valueOf(persona1));
-            lifeteen.setResponsable2(String.valueOf(persona2));
-            return new ResponseEntity<>(lifeteen, status);
+            return new ResponseEntity<>(lista, status);
+        } else {
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
+        }
+    }
+
+    /**
+     * Returns the Lifeteen Monitores instance with the given id
+     *
+     * @param id The id of the Lifeteen instance
+     * @return The Lifeteen instance
+     */
+    public ResponseEntity<List<Persona>> getLifeteenMonisById(String id) {
+        HttpStatus status = HttpStatus.ACCEPTED;
+        Optional<Lifeteen> lifeteenResult = lifeteenRepository.findById(id);
+        if (lifeteenResult.isPresent()) {
+            status = HttpStatus.OK;
+            Lifeteen lifeteen = lifeteenResult.get();
+            List<Persona> lista = new ArrayList<>();
+            for (String idIndiv : lifeteen.getIdMonitores()) {
+                Persona persona = personaService.findPersonById(idIndiv).getBody();
+                lista.add(persona);
+            }
+            return new ResponseEntity<>(lista, status);
         } else {
             status = HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(null, status);
@@ -179,8 +196,14 @@ public class LifeteenService {
             lifeteenRepository.deleteById(idLifeteen);
             lifeteenRepository.insert(lifeteen.get());
             Persona persona = personaService.findPersonById(idPerson).getBody();
-            persona.getPersonGroups().add(new PersonGroups(idLifeteen, lifeteen.get().getTitle()));
-            personaService.updatePerson(persona);
+            if (persona.getPersonGroups() != null) {
+                persona.getPersonGroups().add(new PersonGroups(idLifeteen, lifeteen.get().getTitle()));
+                personaService.updatePerson(persona);
+            } else {
+                persona.setPersonGroups(new ArrayList<>());
+                persona.getPersonGroups().add(new PersonGroups(idLifeteen, lifeteen.get().getTitle()));
+                personaService.updatePerson(persona);
+            }
             message = "User added in the specified lifeteen id";
         } else {
             status = HttpStatus.NOT_FOUND;

@@ -2,6 +2,7 @@ package com.example.database_user.controllers;
 
 
 import com.example.database_user.dtos.Lifeteen;
+import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.PersonaNinos;
 import com.example.database_user.services.LifeteenService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,10 +31,16 @@ public class LifeteenController {
         return lifeteenService.fetchAllLifeteen();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Lifeteen> fetchLifeteenById(@PathVariable String id) {
+    @GetMapping("/{id}/inscritos")
+    public ResponseEntity<List<Persona>> fetchLifeteenInscritosById(@PathVariable String id) {
 
-        return lifeteenService.getLifeteenById(id);
+        return lifeteenService.getLifeteenInscritosById(id);
+    }
+
+    @GetMapping("/{id}/monitores")
+    public ResponseEntity<List<Persona>> fetchLifeteenMonitoresById(@PathVariable String id) {
+
+        return lifeteenService.getLifeteenMonisById(id);
     }
 
     @PostMapping("/insert")
