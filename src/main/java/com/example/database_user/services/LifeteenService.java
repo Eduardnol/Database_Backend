@@ -3,6 +3,7 @@ package com.example.database_user.services;
 import com.example.database_user.dtos.Lifeteen;
 import com.example.database_user.dtos.PersonGroups;
 import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.repositories.LifeteenRepository;
 import com.example.database_user.repositories.PersonaRepository;
 import lombok.AllArgsConstructor;
@@ -35,17 +36,7 @@ public class LifeteenService {
     public ResponseEntity<List<Lifeteen>> fetchAllLifeteen() {
 
         HttpStatus status = HttpStatus.ACCEPTED;
-        Persona persona1;
-        Persona persona2;
         List<Lifeteen> posts = lifeteenRepository.findAll();
-
-        //Change the ID by the actual name
-        for (Lifeteen post : posts) {
-            persona1 = personaRepository.findById(posts.get(0).getResponsable1()).get();
-            persona2 = personaRepository.findById(posts.get(0).getResponsable2()).get();
-            post.setResponsable1(persona1.getNombre() + ' ' + persona1.getApellido());
-            post.setResponsable2(persona2.getNombre() + ' ' + persona2.getApellido());
-        }
 
         status = HttpStatus.OK;
         return new ResponseEntity<>(posts, status);
@@ -58,17 +49,13 @@ public class LifeteenService {
      * @param id The id of the Lifeteen instance
      * @return The Lifeteen instance
      */
-    public ResponseEntity<List<Persona>> getLifeteenInscritosById(String id) {
+    public ResponseEntity<List<SimplePersona>> getLifeteenInscritosById(String id) {
         HttpStatus status = HttpStatus.ACCEPTED;
         Optional<Lifeteen> post = lifeteenRepository.findById(id);
         if (post.isPresent()) {
             status = HttpStatus.OK;
-            Lifeteen lifeteen = post.get();
-            List<Persona> lista = new ArrayList<>();
-            for (String idIndiv : lifeteen.getIdInscritos()) {
-                Persona persona = personaService.findPersonById(idIndiv).getBody();
-                lista.add(persona);
-            }
+            List<SimplePersona> lista = new ArrayList<>();
+            lista = post.get().getIdInscritos();
             return new ResponseEntity<>(lista, status);
         } else {
             status = HttpStatus.NOT_FOUND;
@@ -89,10 +76,6 @@ public class LifeteenService {
             status = HttpStatus.OK;
             Lifeteen lifeteen = lifeteenResult.get();
             List<Persona> lista = new ArrayList<>();
-            for (String idIndiv : lifeteen.getIdMonitores()) {
-                Persona persona = personaService.findPersonById(idIndiv).getBody();
-                lista.add(persona);
-            }
             return new ResponseEntity<>(lista, status);
         } else {
             status = HttpStatus.NOT_FOUND;
@@ -163,7 +146,7 @@ public class LifeteenService {
         Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
 
         if (lifeteen.isPresent()) {
-            lifeteen.get().getIdInscritos().add(persona.getId());
+            lifeteen.get().getIdInscritos().add(new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()));
             //We pass argument as null because it's already in the database
             return this.addExistingUserExistingInscription(idLifeteen, persona.getId());
             //message = "Person correctly inserted";
@@ -192,10 +175,11 @@ public class LifeteenService {
         String message = "";
         HttpStatus status = HttpStatus.CREATED;
         if (lifeteen.isPresent()) {
-            lifeteen.get().getIdInscritos().add(idPerson);
+            Persona persona = personaService.findPersonById(idPerson).getBody();
+            lifeteen.get().getIdInscritos().add(new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()));
             lifeteenRepository.deleteById(idLifeteen);
             lifeteenRepository.insert(lifeteen.get());
-            Persona persona = personaService.findPersonById(idPerson).getBody();
+            //If the user is not in any group we will add them into one
             if (persona.getPersonGroups() != null) {
                 persona.getPersonGroups().add(new PersonGroups(idLifeteen, lifeteen.get().getTitle()));
                 personaService.updatePerson(persona);
@@ -270,9 +254,9 @@ public class LifeteenService {
         HttpStatus status = HttpStatus.CREATED;
         Optional<Lifeteen> lifeteen = lifeteenRepository.findById(idLifeteen);
 
-
         if (lifeteen.isPresent()) {
-            lifeteen.get().getIdInscritos().remove(idPersona);
+            //remove from the list if object id equals idlifeteen
+            lifeteen.get().getIdInscritos().removeIf(persona -> persona.getId().equals(idPersona));
             lifeteenRepository.save(lifeteen.get());
             personaService.findPersonById(idPersona).getBody().getPersonGroups().removeIf(personGroups -> personGroups.getId().equals(idLifeteen));
             status = HttpStatus.OK;

@@ -3,6 +3,7 @@ package com.example.database_user.services;
 import com.example.database_user.dtos.Lifeteen;
 import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.PersonaNinos;
+import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.dtos.Sacraments;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ class LifeteenServiceTest {
     static Persona persona;
     static Persona persona2;
     static Persona persona3;
+    static Persona persona4;
     static String ltid = "6260506b77ffab0f071ad075";
     @Autowired
     private LifeteenService lifeteenService;
@@ -39,6 +41,8 @@ class LifeteenServiceTest {
                 "12121212D", null, sacraments, null, LocalDateTime.now(), null, null);
         persona3 = new Persona("sdfgjksdfgjkq34", "Ign", "Nunez", "NNUNU", "ign.nunez@gmail.com", LocalDate.now(), LocalDate.now(),
                 "12121212D", null, sacraments, null, LocalDateTime.now(), null, null);
+        persona4 = new Persona("elmoni", "Eduardo", "Nunez", "NNUNU", "eduardo.nunez@gmail.com", LocalDate.now(), LocalDate.now(),
+                "12121212D", null, sacraments, null, LocalDateTime.now(), null, null);
 
 
     }
@@ -49,10 +53,13 @@ class LifeteenServiceTest {
         personaService.insertNewPerson(persona);
         personaService.insertNewPerson(persona2);
         personaService.insertNewPerson(persona3);
+        personaService.insertNewPerson(persona4);
 
         Integer inscritos = lifeteenService.countInscritos(ltid);
 
-        Lifeteen lifeteen = new Lifeteen(ltid, "Lifeteen 2020", persona.getId(), persona2.getId(), LocalDate.now(), inscritos, null, Collections.singletonList(persona3.getId()));
+        Lifeteen lifeteen = new Lifeteen(ltid, "Lifeteen 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
+                new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()),
+                LocalDate.now(), inscritos, null, Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())));
         ResponseEntity<String> back = lifeteenService.insertNewLifeteen(lifeteen);
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
     }
@@ -71,8 +78,9 @@ class LifeteenServiceTest {
     @Order(3)
     void updateLifeteen() {
         Integer inscritos = lifeteenService.countInscritos(ltid);
-        Lifeteen lifeteen = new Lifeteen(ltid, "Lifeteen 2020", persona.getId(), persona2.getId(), LocalDate.now(), inscritos,
-                Collections.singletonList("elmoni"), Collections.singletonList(persona3.getId()));
+        Lifeteen lifeteen = new Lifeteen(ltid, "Lifeteen 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
+                new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()), LocalDate.now(), inscritos,
+                Collections.singletonList(new SimplePersona("elmoni", persona.getNombre(), persona.getApellido())), Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())));
         ResponseEntity<String> back = lifeteenService.updateLifeteen(lifeteen);
         assertEquals(HttpStatus.OK, back.getStatusCode());
 

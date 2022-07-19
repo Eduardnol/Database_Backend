@@ -1,6 +1,7 @@
 package com.example.database_user.dtos;
 
 
+import com.example.database_user.dtos.Persona.SimplePersona;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +19,11 @@ public class Lifeteen {
     @Id
     private String id;
     private String title;
-    private String responsable1;
-    private String responsable2;
+    private SimplePersona responsable1;
+    private SimplePersona responsable2;
     private LocalDate startDate;
     private Integer numInscritos;
-    private List<String> idMonitores;
-    private List<String> idInscritos;
+    private List<SimplePersona> idMonitores;
+    private List<SimplePersona> idInscritos;
 
 }
