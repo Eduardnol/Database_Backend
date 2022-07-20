@@ -1,6 +1,6 @@
 package com.example.database_user.services;
 
-import com.example.database_user.dtos.Lifeteen;
+import com.example.database_user.dtos.DiscipuladoMenores;
 import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.PersonaNinos;
 import com.example.database_user.dtos.Persona.SimplePersona;
@@ -20,14 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class LifeteenServiceTest {
+class DiscipuladoMenoresServiceTest {
     static Persona persona;
     static Persona persona2;
     static Persona persona3;
     static Persona persona4;
     static String ltid = "6260506b77ffab0f071ad075";
     @Autowired
-    private LifeteenService lifeteenService;
+    private DiscipuladoMenoresService discipuladoMenoresService;
 
     @Autowired
     private PersonaService personaService;
@@ -49,39 +49,39 @@ class LifeteenServiceTest {
 
     @Test
     @Order(1)
-    void insertNewLifeteen() {
+    void insertNewDiscipuladoMenores() {
         personaService.insertNewPerson(persona);
         personaService.insertNewPerson(persona2);
         personaService.insertNewPerson(persona3);
         personaService.insertNewPerson(persona4);
 
-        Integer inscritos = lifeteenService.countInscritos(ltid);
+        Integer inscritos = discipuladoMenoresService.countInscritos(ltid);
 
-        Lifeteen lifeteen = new Lifeteen(ltid, "Lifeteen 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
+        DiscipuladoMenores discipuladoMenores = new DiscipuladoMenores(ltid, "Lifeteen 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
                 new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()),
                 LocalDate.now(), inscritos, null, Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())));
-        ResponseEntity<String> back = lifeteenService.insertNewLifeteen(lifeteen);
+        ResponseEntity<String> back = discipuladoMenoresService.insertNewDiscipuladoMenores(discipuladoMenores);
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
     }
 
     @Test
     @Order(2)
-    void fetchAllLifeteen() {
+    void fetchAllDiscipuladoMenores() {
         //given
         //when
-        List<Lifeteen> lifeteenList = lifeteenService.fetchAllLifeteen().getBody();
+        List<DiscipuladoMenores> discipuladoMenoresList = discipuladoMenoresService.fetchAllDiscipuladoMenores().getBody();
         //then
-        assertEquals(persona.getNombre() + " " + persona.getApellido(), lifeteenList.get(0).getResponsable1());
+        assertEquals(persona.getNombre() + " " + persona.getApellido(), discipuladoMenoresList.get(0).getResponsable1());
     }
 
     @Test
     @Order(3)
-    void updateLifeteen() {
-        Integer inscritos = lifeteenService.countInscritos(ltid);
-        Lifeteen lifeteen = new Lifeteen(ltid, "Lifeteen 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
+    void updateDiscipuladoMenores() {
+        Integer inscritos = discipuladoMenoresService.countInscritos(ltid);
+        DiscipuladoMenores discipuladoMenores = new DiscipuladoMenores(ltid, "DiscipuladoMenores 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
                 new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()), LocalDate.now(), inscritos,
                 Collections.singletonList(new SimplePersona("elmoni", persona.getNombre(), persona.getApellido())), Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())));
-        ResponseEntity<String> back = lifeteenService.updateLifeteen(lifeteen);
+        ResponseEntity<String> back = discipuladoMenoresService.updateDiscipuladoMenores(discipuladoMenores);
         assertEquals(HttpStatus.OK, back.getStatusCode());
 
     }
@@ -93,8 +93,8 @@ class LifeteenServiceTest {
         PersonaNinos innerIncritoNinos = new PersonaNinos("padre", "madre", "de unos amigos", "123412", "eduedu@gmail.com", true, true, "Xaloc", "Bachi");
         Persona personaNinos = new Persona(null, "john", "black", "perez", "john@black.es", LocalDate.now(), LocalDate.now(),
                 "232323j", null, null, null, LocalDateTime.now(), null, innerIncritoNinos);
-        ResponseEntity<String> back = lifeteenService.addNewUserNewInsciption(personaNinos, ltid);
-        assertEquals("User added in the specified lifeteen id", back.getBody());
+        ResponseEntity<String> back = discipuladoMenoresService.addNewUserNewInsciption(personaNinos, ltid);
+        assertEquals("User added in the specified discipuladoMenores id", back.getBody());
 
     }
 
@@ -104,24 +104,24 @@ class LifeteenServiceTest {
         PersonaNinos incritoNinos = new PersonaNinos("padre", "madre",
                 "de unos amigos", "123412", "de@dw.com", true, true, "Xaxa", "bachi");
         persona.setPersonaNinos(incritoNinos);
-        ResponseEntity<String> back = lifeteenService.addExistingUserNewInscription(persona, ltid);
+        ResponseEntity<String> back = discipuladoMenoresService.addExistingUserNewInscription(persona, ltid);
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
 
     }
 
 //    @Test
 //    @Order(6)
-//    void deleteExistingInscriptionFromALifeteen() {
-//        ResponseEntity<String> back = lifeteenService.deleteExistingInscriptionFromALifeteen(ltid, persona.getId());
-//        assertEquals("The user has been deleted from the specified lifeteen", back.getBody());
+//    void deleteExistingInscriptionFromAdiscipuladoMenores() {
+//        ResponseEntity<String> back = discipuladoMenoresService.deleteExistingInscriptionFromAdiscipuladoMenores(ltid, persona.getId());
+//        assertEquals("The user has been deleted from the specified discipuladoMenores", back.getBody());
 //    }
 
     @Test
     @Order(7)
     void addExistingUserExistingInscription() {
 
-        ResponseEntity<String> back = lifeteenService.addExistingUserExistingInscription(ltid, persona.getId());
-        assertEquals("User added in the specified lifeteen id", back.getBody());
+        ResponseEntity<String> back = discipuladoMenoresService.addExistingUserExistingInscription(ltid, persona.getId());
+        assertEquals("User added in the specified discipuladoMenores id", back.getBody());
 
     }
 
@@ -131,7 +131,7 @@ class LifeteenServiceTest {
         PersonaNinos incritoNinos = new PersonaNinos("padre", "madre",
                 "de unos amigos", "123412", "de@dw.com", true, true, "Xaloc", "bachi");
         persona.setPersonaNinos(incritoNinos);
-        ResponseEntity<String> back = lifeteenService.editExistingUserInscription(persona);
+        ResponseEntity<String> back = discipuladoMenoresService.editExistingUserInscription(persona);
 
         assertEquals("Inscription updated", back.getBody());
 
@@ -139,9 +139,9 @@ class LifeteenServiceTest {
 
 //    @Test
 //    @Order(9)
-//    void deleteLifeteenById() {
+//    void deleteDiscipuladoMenoresById() {
 //
-//        ResponseEntity<String> back = lifeteenService.deleteLifeteenById(ltid);
+//        ResponseEntity<String> back = DiscipuladoMenoresService.deleteDiscipuladoMenoresById(ltid);
 //        assertEquals(HttpStatus.OK, back.getStatusCode());
 //
 //    }

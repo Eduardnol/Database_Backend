@@ -1,11 +1,11 @@
 package com.example.database_user.repositories;
 
-import com.example.database_user.dtos.Lifeteen;
+import com.example.database_user.dtos.DiscipuladoMenores;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface LifeteenRepository extends MongoRepository<Lifeteen, String> {
+public interface DiscipuladoMenoresRepository extends MongoRepository<DiscipuladoMenores, String> {
     Optional<Integer> countAllBy(String id);
 
 }

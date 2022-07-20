@@ -15,7 +15,7 @@ import java.util.List;
 @Document
 @AllArgsConstructor
 @NoArgsConstructor
-public class Lifeteen {
+public class DiscipuladoMenores {
     @Id
     private String id;
     private String title;
