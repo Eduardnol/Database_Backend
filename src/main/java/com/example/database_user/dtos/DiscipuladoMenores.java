@@ -2,6 +2,7 @@ package com.example.database_user.dtos;
 
 
 import com.example.database_user.dtos.Persona.SimplePersona;
+import com.example.database_user.dtos.Subgrupo.Subgrupo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class DiscipuladoMenores {
     private Integer numInscritos;
     private List<SimplePersona> idMonitores;
     private List<SimplePersona> idInscritos;
+    private List<Subgrupo> subgrupos;
 
 }
