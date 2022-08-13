@@ -5,6 +5,7 @@ import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.PersonaNinos;
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.dtos.Sacraments;
+import com.example.database_user.dtos.Subgrupo.Subgrupo;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,7 +60,8 @@ class DiscipuladoMenoresServiceTest {
 
         DiscipuladoMenores discipuladoMenores = new DiscipuladoMenores(ltid, "Lifeteen 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
                 new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()),
-                LocalDate.now(), inscritos, null, Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())));
+                LocalDate.now(), inscritos, null, Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())),
+                Collections.singletonList(new Subgrupo("Subgrupo1", null, null, "Prueba de descripción para el subgrupo")));
         ResponseEntity<String> back = discipuladoMenoresService.insertNewDiscipuladoMenores(discipuladoMenores);
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
     }
@@ -80,7 +82,9 @@ class DiscipuladoMenoresServiceTest {
         Integer inscritos = discipuladoMenoresService.countInscritos(ltid);
         DiscipuladoMenores discipuladoMenores = new DiscipuladoMenores(ltid, "DiscipuladoMenores 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
                 new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()), LocalDate.now(), inscritos,
-                Collections.singletonList(new SimplePersona("elmoni", persona.getNombre(), persona.getApellido())), Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())));
+                Collections.singletonList(new SimplePersona("elmoni", persona.getNombre(), persona.getApellido())), Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())),
+                Collections.singletonList(new Subgrupo("Subgrupo1", null, null, "Prueba de descripción para el subgrupo")));
+
         ResponseEntity<String> back = discipuladoMenoresService.updateDiscipuladoMenores(discipuladoMenores);
         assertEquals(HttpStatus.OK, back.getStatusCode());
 
