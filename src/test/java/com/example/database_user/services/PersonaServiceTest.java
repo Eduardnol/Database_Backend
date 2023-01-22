@@ -24,8 +24,7 @@ class PersonaServiceTest {
 
         Sacraments sacraments = new Sacraments();
         Persona persona = personaService.findPersonById("2345sdgf").getBody();
-        assertEquals(persona, new Persona("2345sdgf", "Jose", "Martinez", "Rodri", "jose.martinez@gmail.com", LocalDate.now(), LocalDate.now(),
-                "12121212D", null, sacraments, null, LocalDateTime.now(), null, null));
+        assertEquals(persona, new PersonaBuilder().addId("2345sdgf").addNombre("Jose").addApellido("Martinez").addApellido2("Rodri").addEmail("jose.martinez@gmail.com").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("12121212D").addExtras(null).addSacraments(sacraments).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(null).createPersona());
 
 
     }
@@ -34,8 +33,7 @@ class PersonaServiceTest {
     void fetchPeopleByName() {
         Sacraments sacraments = new Sacraments();
         assertTrue(personaService.fetchPeopleByName("Jose").getBody().
-                contains(new Persona("2345sdgf", "Jose", "Martinez", "Rodri", "jose.martinez@gmail.com", LocalDate.now(), LocalDate.now(),
-                        "12121212D", null, sacraments, null, LocalDateTime.now(), null, null)));
+                contains(new PersonaBuilder().addId("2345sdgf").addNombre("Jose").addApellido("Martinez").addApellido2("Rodri").addEmail("jose.martinez@gmail.com").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("12121212D").addExtras(null).addSacraments(sacraments).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(null).createPersona()));
 
     }
 

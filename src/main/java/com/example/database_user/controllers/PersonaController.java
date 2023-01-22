@@ -74,9 +74,9 @@ public class PersonaController {
                             schema = @Schema(implementation = Persona.class))})
     })
     @PostMapping(value = "/insertnew/")
-    public ResponseEntity<String> insertNewUser(@RequestBody @Valid Persona persona) {
-
-        return personaService.insertNewPerson(persona);
+    public ResponseEntity<String> insertNewUser(@RequestBody @Valid Persona.PersonaBuilder person) {
+        Persona newBuiltPersona = person.build();
+        return personaService.insertNewPerson(newBuiltPersona);
 
     }
 

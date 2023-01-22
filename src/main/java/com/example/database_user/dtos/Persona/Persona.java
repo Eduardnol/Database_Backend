@@ -5,6 +5,7 @@ import com.example.database_user.dtos.FileStorage;
 import com.example.database_user.dtos.PersonGroups;
 import com.example.database_user.dtos.Sacraments;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -23,6 +24,7 @@ import java.util.Objects;
 @Document
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Persona {
     @Id
     private String id;
@@ -56,7 +58,7 @@ public class Persona {
     private PersonaNinos personaNinos = null;
 
 
-    public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint,
+    /*public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint,
                    String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {
 
         this.nombre = nombre;
@@ -70,5 +72,8 @@ public class Persona {
         this.sacraments = Objects.requireNonNullElseGet(sacraments, Sacraments::new);
         this.fileStorage = Objects.requireNonNullElseGet(fileStorage, ArrayList::new);
         this.createdOn = (createdOn == null) ? LocalDateTime.now() : createdOn;
-    }
+    }*/
+
+
+
 }
