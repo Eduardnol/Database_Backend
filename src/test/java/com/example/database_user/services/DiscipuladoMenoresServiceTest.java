@@ -2,6 +2,7 @@ package com.example.database_user.services;
 
 import com.example.database_user.dtos.DiscipuladoMenores;
 import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.dtos.Persona.Persona.PersonaBuilder;
 import com.example.database_user.dtos.Persona.PersonaNinos;
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.dtos.Sacraments;
@@ -36,10 +37,13 @@ class DiscipuladoMenoresServiceTest {
     @BeforeAll
     static void beforeAll() {
         Sacraments sacraments = new Sacraments();
-        persona = new PersonaBuilder().addId("2345sdgf").addNombre("Jose").addApellido("Martinez").addApellido2("Rodri").addEmail("jose.martinez@gmail.com").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("12121212D").addExtras(null).addSacraments(sacraments).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(null).createPersona();
-        persona2 = new PersonaBuilder().addId("dfaa22235").addNombre("Alba").addApellido("Rodriguez").addApellido2("Ro").addEmail("alba.rodriguez@gmail.com").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("12121212D").addExtras(null).addSacraments(sacraments).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(null).createPersona();
-        persona3 = new PersonaBuilder().addId("sdfgjksdfgjkq34").addNombre("Ign").addApellido("Nunez").addApellido2("NNUNU").addEmail("ign.nunez@gmail.com").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("12121212D").addExtras(null).addSacraments(sacraments).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(null).createPersona();
-        persona4 = new PersonaBuilder().addId("elmoni").addNombre("Eduardo").addApellido("Nunez").addApellido2("NNUNU").addEmail("eduardo.nunez@gmail.com").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("12121212D").addExtras(null).addSacraments(sacraments).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(null).createPersona();
+        persona = Persona.builder().id("2345sdgf").nombre("Jose").apellido("Martinez").apellido2("Rodri").email("jose.martinez@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
+
+        persona2 = Persona.builder().id("dfaa22235").nombre("Alba").apellido("Rodriguez").apellido2("Rodri").email("alba.rodriguez@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
+
+        persona3 = Persona.builder().id("2342222225sdgf").nombre("Jo2222se").apellido("Martinez").apellido2("Rodri").email("jose.martinez@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
+
+        persona4 = Persona.builder().id("elmoni").nombre("Edu").apellido("Moni").apellido2("Rodri").email("edu@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
 
 
     }
@@ -91,7 +95,7 @@ class DiscipuladoMenoresServiceTest {
     @Order(4)
     void addNewUserNewInsciption() {
         PersonaNinos innerIncritoNinos = new PersonaNinos("padre", "madre", "de unos amigos", "123412", "eduedu@gmail.com", true, true, "Xaloc", "Bachi");
-        Persona personaNinos = new PersonaBuilder().addId(null).addNombre("john").addApellido("black").addApellido2("perez").addEmail("john@black.es").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("232323j").addExtras(null).addSacraments(null).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(innerIncritoNinos).createPersona();
+        Persona personaNinos = Persona.builder().id(null).nombre("John").apellido("Black").apellido2("Rodri").email("jose.martinez@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(null).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
         ResponseEntity<String> back = discipuladoMenoresService.addNewUserNewInsciption(personaNinos, ltid);
         assertEquals("User added in the specified discipuladoMenores id", back.getBody());
 
