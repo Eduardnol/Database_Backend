@@ -74,9 +74,9 @@ public class PersonaController {
                             schema = @Schema(implementation = Persona.class))})
     })
     @PostMapping(value = "/insertnew/")
-    public ResponseEntity<String> insertNewUser(@RequestBody @Valid Persona persona) {
-
-        return personaService.insertNewPerson(persona);
+    public ResponseEntity<String> insertNewUser(@RequestBody @Valid Persona.PersonaBuilder person) {
+        Persona newBuiltPersona = person.build();
+        return personaService.insertNewPerson(newBuiltPersona);
 
     }
 
@@ -104,7 +104,7 @@ public class PersonaController {
     @PutMapping(value = "/update/")
     public ResponseEntity<String> updateExisting(@Parameter(description = "Person with the new info to be updated") @RequestBody Persona persona) {
 
-        //TODO what happens to update when we add the lifeteen fields
+        //TODO what happens to update when we add the discipuladoMenores fields
         return personaService.updatePerson(persona);
 
     }

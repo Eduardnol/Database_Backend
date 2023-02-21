@@ -89,7 +89,6 @@ public class PersonaService {
     public ResponseEntity<String> insertNewPerson(Persona person) {
 
         logger.info("Inserting new person");
-
         personaRepository.insert(person);
 
         MeilisearchService meilisearchService = MeilisearchService.getInstance();
