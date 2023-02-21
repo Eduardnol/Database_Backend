@@ -44,6 +44,7 @@ public class DiscipuladoMenoresController {
         return discipuladoMenoresService.getDiscipuladoMenoresMonisById(id);
     }
 
+    //TODO verify the valid command
     @PostMapping("/insert")
     public ResponseEntity<String> insertNewDiscipuladoMenores(@RequestBody @Valid DiscipuladoMenores discipuladoMenores) {
 
