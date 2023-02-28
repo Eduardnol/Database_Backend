@@ -20,8 +20,7 @@ public class DiscipuladoMenores {
     @Id
     private String id;
     private String title;
-    private SimplePersona responsable1;
-    private SimplePersona responsable2;
+    private List<SimplePersona> responsables;
     private LocalDate startDate;
     private Integer numInscritos;
     private List<SimplePersona> idMonitores;
