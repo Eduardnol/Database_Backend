@@ -118,6 +118,10 @@ public class DiscipuladoMenoresService {
      */
     public ResponseEntity<String> updateDiscipuladoMenores(DiscipuladoMenores discipuladoMenores) {
 
+        if (discipuladoMenores.getId() == null) {
+            this.insertNewDiscipuladoMenores(discipuladoMenores);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
         discipuladoMenoresRepository.deleteById(discipuladoMenores.getId());
         discipuladoMenoresRepository.insert(discipuladoMenores);
         return new ResponseEntity<>(HttpStatus.OK);
