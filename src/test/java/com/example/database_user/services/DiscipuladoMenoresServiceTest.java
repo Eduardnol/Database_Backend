@@ -2,7 +2,6 @@ package com.example.database_user.services;
 
 import com.example.database_user.dtos.DiscipuladoMenores;
 import com.example.database_user.dtos.Persona.Persona;
-import com.example.database_user.dtos.Persona.Persona.PersonaBuilder;
 import com.example.database_user.dtos.Persona.PersonaNinos;
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.dtos.Sacraments;
@@ -15,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,11 +59,26 @@ class DiscipuladoMenoresServiceTest {
 
         Integer inscritos = discipuladoMenoresService.countInscritos(ltid);
 
-        DiscipuladoMenores discipuladoMenores = new DiscipuladoMenores(ltid, "Lifeteen 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
-                new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()),
-                LocalDate.now(), inscritos, null, Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())),
-                Collections.singletonList(new Subgrupo("Subgrupo1", null, null, "Prueba de descripción para el subgrupo")));
+        DiscipuladoMenores discipuladoMenores = new DiscipuladoMenores(ltid, "Lifeteen 2020",
+                new ArrayList<SimplePersona>(
+                        Arrays.asList(
+                                new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
+                                new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()))),
+                LocalDate.now(),
+                inscritos,
+                null,
+                Collections.singletonList(
+                        new SimplePersona(persona3.getId(),
+                                persona3.getNombre(),
+                                persona3.getApellido())),
+                Collections.singletonList(
+                        new Subgrupo("Subgrupo1",
+                                null,
+                                null,
+                                "Prueba de descripción para el subgrupo")));
+
         ResponseEntity<String> back = discipuladoMenoresService.insertNewDiscipuladoMenores(discipuladoMenores);
+
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
     }
 
@@ -80,10 +96,33 @@ class DiscipuladoMenoresServiceTest {
     @Order(3)
     void updateDiscipuladoMenores() {
         Integer inscritos = discipuladoMenoresService.countInscritos(ltid);
-        DiscipuladoMenores discipuladoMenores = new DiscipuladoMenores(ltid, "DiscipuladoMenores 2020", new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()),
-                new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()), LocalDate.now(), inscritos,
-                Collections.singletonList(new SimplePersona("elmoni", persona.getNombre(), persona.getApellido())), Collections.singletonList(new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())),
-                Collections.singletonList(new Subgrupo("Subgrupo1", null, null, "Prueba de descripción para el subgrupo")));
+        DiscipuladoMenores discipuladoMenores = new DiscipuladoMenores(
+                ltid,
+                "DiscipuladoMenores 2020",
+                Arrays.asList(
+                        new SimplePersona(persona.getId(),
+                                persona.getNombre(),
+                                persona.getApellido()),
+                        new SimplePersona(persona2.getId(),
+                                persona2.getNombre(),
+                                persona2.getApellido())),
+                LocalDate.now(),
+                inscritos,
+                Collections.singletonList(new SimplePersona("elmoni",
+                        persona.getNombre(),
+                        persona.getApellido())
+                ),
+                Collections.singletonList(new SimplePersona(
+                        persona3.getId(),
+                        persona3.getNombre(),
+                        persona3.getApellido())
+                ),
+                Collections.singletonList(new Subgrupo("Subgrupo1",
+                        null,
+                        null,
+                        "Prueba de descripción para el subgrupo")
+                )
+        );
 
         ResponseEntity<String> back = discipuladoMenoresService.updateDiscipuladoMenores(discipuladoMenores);
         assertEquals(HttpStatus.OK, back.getStatusCode());
@@ -131,8 +170,16 @@ class DiscipuladoMenoresServiceTest {
     @Test
     @Order(8)
     void editExistingUserInscription() {
-        PersonaNinos incritoNinos = new PersonaNinos("padre", "madre",
-                "de unos amigos", "123412", "de@dw.com", true, true, "Xaloc", "bachi");
+        PersonaNinos incritoNinos = new PersonaNinos(
+                "padre",
+                "madre",
+                "de unos amigos",
+                "123412",
+                "de@dw.com",
+                true,
+                true,
+                "Xaloc",
+                "bachi");
         persona.setPersonaNinos(incritoNinos);
         ResponseEntity<String> back = discipuladoMenoresService.editExistingUserInscription(persona);
 
