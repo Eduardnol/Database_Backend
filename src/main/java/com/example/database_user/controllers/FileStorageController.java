@@ -5,18 +5,24 @@ import com.example.database_user.dtos.FileStorage;
 import com.example.database_user.dtos.Reponses.FileStorageResponse;
 import com.example.database_user.dtos.ResponseMessage;
 import com.google.gson.Gson;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "api/v1/files")
@@ -35,7 +41,8 @@ public class FileStorageController {
      */
 
     @PostMapping("/upload/{userid}")
-    public ResponseEntity<String> uploadFile(@PathVariable String userid, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@PathVariable String userid,
+            @RequestParam("file") MultipartFile file) {
 
         final HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -47,19 +54,21 @@ public class FileStorageController {
             try {
                 String url = storageService.save(file, userid);
                 FileStorageResponse fileStorage = new FileStorageResponse("File Uploaded Correctly",
-                                                                          HttpStatus.OK,
-                                                                          file.getOriginalFilename(),
-                                                                          url);
+                        HttpStatus.OK,
+                        file.getOriginalFilename(),
+                        url);
                 message = gson.toJson(fileStorage);
                 //Make http headers as json and return it
                 return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
             } catch (Exception e) {
                 message = "Could not upload the file: " + e.getMessage();
-                return new ResponseEntity<>(gson.toJson(message), httpHeaders, HttpStatus.EXPECTATION_FAILED);
+                return new ResponseEntity<>(gson.toJson(message), httpHeaders,
+                        HttpStatus.EXPECTATION_FAILED);
             }
         } else {
             message = "Could not upload the file: It's empty";
-            return new ResponseEntity<>(gson.toJson(message), httpHeaders, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(gson.toJson(message), httpHeaders,
+                    HttpStatus.EXPECTATION_FAILED);
 
         }
 
@@ -77,7 +86,8 @@ public class FileStorageController {
         List<FileStorage> fileInfos = storageService.loadAll().map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
-                    .fromMethodName(FileStorageController.class, "getFile", path.getFileName().toString())
+                    .fromMethodName(FileStorageController.class, "getFile",
+                            path.getFileName().toString())
                     .build()
                     .toString();
             return new FileStorage(filename, url);
@@ -95,12 +105,13 @@ public class FileStorageController {
      */
     @GetMapping("{userid}/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> getFile(@PathVariable String userid, @PathVariable String filename) {
+    public ResponseEntity<Resource> getFile(@PathVariable String userid,
+            @PathVariable String filename) {
 
         Resource file = storageService.load(filename, userid);
         return ResponseEntity.ok()
-                             .header(HttpHeaders.CONTENT_DISPOSITION,
-                                     "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
 
@@ -113,7 +124,8 @@ public class FileStorageController {
      */
     @DeleteMapping("{userid}/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String userid, @PathVariable String filename) {
+    public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String userid,
+            @PathVariable String filename) {
 
         String message = "";
         storageService.deleteOne(filename, userid);
@@ -136,7 +148,8 @@ public class FileStorageController {
         List<FileStorage> fileInfos = storageService.loadFromId(id).map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
-                    .fromMethodName(FileStorageController.class, "getFile", id, path.getFileName().toString())
+                    .fromMethodName(FileStorageController.class, "getFile", id,
+                            path.getFileName().toString())
                     .build()
                     .toString();
             return new FileStorage(filename, url);

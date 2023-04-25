@@ -6,6 +6,9 @@ import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.repositories.DiscipuladoMenoresRepository;
 import com.example.database_user.repositories.PersonaRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpHeaders;
@@ -14,13 +17,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @AllArgsConstructor
 @Service
 public class DiscipuladoMenoresService {
+
     private final DiscipuladoMenoresRepository discipuladoMenoresRepository;
     private final PersonaRepository personaRepository;
     private final MongoTemplate mongoTemplate;
@@ -71,7 +71,8 @@ public class DiscipuladoMenoresService {
      */
     public ResponseEntity<List<Persona>> getDiscipuladoMenoresMonisById(String id) {
         HttpStatus status = HttpStatus.ACCEPTED;
-        Optional<DiscipuladoMenores> discipuladoMenoresResult = discipuladoMenoresRepository.findById(id);
+        Optional<DiscipuladoMenores> discipuladoMenoresResult = discipuladoMenoresRepository.findById(
+                id);
         if (discipuladoMenoresResult.isPresent()) {
             status = HttpStatus.OK;
             DiscipuladoMenores discipuladoMenores = discipuladoMenoresResult.get();
@@ -89,7 +90,8 @@ public class DiscipuladoMenoresService {
      * @param discipuladoMenores the DiscipuladoMenores instance to be inserted
      * @return The status of the response
      */
-    public ResponseEntity<String> insertNewDiscipuladoMenores(DiscipuladoMenores discipuladoMenores) {
+    public ResponseEntity<String> insertNewDiscipuladoMenores(
+            DiscipuladoMenores discipuladoMenores) {
 
         discipuladoMenoresRepository.insert(discipuladoMenores);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -136,8 +138,8 @@ public class DiscipuladoMenoresService {
      * @param idDiscipuladoMenores the id of the discipuladoMenores where we want the inscription
      * @return The status of the response
      */
-    public ResponseEntity<String> addNewUserNewInsciption(Persona persona, String idDiscipuladoMenores) {
-
+    public ResponseEntity<String> addNewUserNewInsciption(Persona persona,
+            String idDiscipuladoMenores) {
 
         final HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -147,12 +149,14 @@ public class DiscipuladoMenoresService {
         //Insert to standard Person repository
         personaService.insertNewPerson(persona);
         //Insert id to DiscipuladoMenores
-        Optional<DiscipuladoMenores> discipuladoMenores = discipuladoMenoresRepository.findById(idDiscipuladoMenores);
+        Optional<DiscipuladoMenores> discipuladoMenores = discipuladoMenoresRepository.findById(
+                idDiscipuladoMenores);
 
         if (discipuladoMenores.isPresent()) {
             discipuladoMenores.get()
-                              .getIdInscritos()
-                              .add(new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()));
+                    .getIdInscritos()
+                    .add(new SimplePersona(persona.getId(), persona.getNombre(),
+                            persona.getApellido()));
             //We pass argument as null because it's already in the database
             return this.addExistingUserExistingInscription(idDiscipuladoMenores, persona.getId());
             //message = "Person correctly inserted";
@@ -161,42 +165,46 @@ public class DiscipuladoMenoresService {
             message = "The specified discipuladoMenores ID does not exist in this repository";
         }
 
-
         return new ResponseEntity<>(message, httpHeaders, status);
     }
 
 
     /**
-     * If the user already exists in the database and has InscritoNinos information, we will add them into the
-     * DiscipuladoMenores repo by id
+     * If the user already exists in the database and has InscritoNinos information, we will add them
+     * into the DiscipuladoMenores repo by id
      *
      * @param idDiscipuladoMenores the id of the discipuladoMenores where we want the inscription
      * @param idPerson             the id of the person with all the information present
      */
-    public ResponseEntity<String> addExistingUserExistingInscription(String idDiscipuladoMenores, String idPerson) {
+    public ResponseEntity<String> addExistingUserExistingInscription(String idDiscipuladoMenores,
+            String idPerson) {
 
         //Insert the person into the DiscipuladoMenores repository
         final HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        Optional<DiscipuladoMenores> discipuladoMenores = discipuladoMenoresRepository.findById(idDiscipuladoMenores);
+        Optional<DiscipuladoMenores> discipuladoMenores = discipuladoMenoresRepository.findById(
+                idDiscipuladoMenores);
         String message = "";
         HttpStatus status = HttpStatus.CREATED;
         if (discipuladoMenores.isPresent()) {
             Persona persona = personaService.findPersonById(idPerson).getBody();
             discipuladoMenores.get()
-                              .getIdInscritos()
-                              .add(new SimplePersona(persona.getId(), persona.getNombre(), persona.getApellido()));
+                    .getIdInscritos()
+                    .add(new SimplePersona(persona.getId(), persona.getNombre(),
+                            persona.getApellido()));
             discipuladoMenoresRepository.deleteById(idDiscipuladoMenores);
             discipuladoMenoresRepository.insert(discipuladoMenores.get());
             //If the user is not in any group we will add them into one
             if (persona.getPersonGroups() != null) {
                 persona.getPersonGroups()
-                       .add(new PersonGroups(idDiscipuladoMenores, discipuladoMenores.get().getTitle()));
+                        .add(new PersonGroups(idDiscipuladoMenores,
+                                discipuladoMenores.get().getTitle()));
                 personaService.updatePerson(persona);
             } else {
                 persona.setPersonGroups(new ArrayList<>());
                 persona.getPersonGroups()
-                       .add(new PersonGroups(idDiscipuladoMenores, discipuladoMenores.get().getTitle()));
+                        .add(new PersonGroups(idDiscipuladoMenores,
+                                discipuladoMenores.get().getTitle()));
                 personaService.updatePerson(persona);
             }
             message = "User added in the specified discipuladoMenores id";
@@ -212,15 +220,15 @@ public class DiscipuladoMenoresService {
 
 
     /**
-     * If a user already exists in the database and does not have InscritoNinos information, it will be updated with
-     * the new information.
+     * If a user already exists in the database and does not have InscritoNinos information, it will
+     * be updated with the new information.
      *
      * @param persona              new information of the user
      * @param idDiscipuladoMenores id of the discipuladoMenores that the user is going to be added to
      * @return message with the result of the operation
      */
-    public ResponseEntity<String> addExistingUserNewInscription(Persona persona, String idDiscipuladoMenores) {
-
+    public ResponseEntity<String> addExistingUserNewInscription(Persona persona,
+            String idDiscipuladoMenores) {
 
         //Update the Person repository with the new information
         personaService.updatePerson(persona);
@@ -266,16 +274,18 @@ public class DiscipuladoMenoresService {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         String message = "";
         HttpStatus status = HttpStatus.CREATED;
-        Optional<DiscipuladoMenores> discipuladoMenores = discipuladoMenoresRepository.findById(idDiscipuladoMenores);
+        Optional<DiscipuladoMenores> discipuladoMenores = discipuladoMenoresRepository.findById(
+                idDiscipuladoMenores);
 
         if (discipuladoMenores.isPresent()) {
             //remove from the list if object id equals iddiscipuladoMenores
-            discipuladoMenores.get().getIdInscritos().removeIf(persona -> persona.getId().equals(idPersona));
+            discipuladoMenores.get().getIdInscritos()
+                    .removeIf(persona -> persona.getId().equals(idPersona));
             discipuladoMenoresRepository.save(discipuladoMenores.get());
             personaService.findPersonById(idPersona)
-                          .getBody()
-                          .getPersonGroups()
-                          .removeIf(personGroups -> personGroups.getId().equals(idDiscipuladoMenores));
+                    .getBody()
+                    .getPersonGroups()
+                    .removeIf(personGroups -> personGroups.getId().equals(idDiscipuladoMenores));
             status = HttpStatus.OK;
             message = "The user has been deleted from the specified discipuladoMenores";
         } else {
@@ -289,8 +299,11 @@ public class DiscipuladoMenoresService {
 
     /***************************DiscipuladoMenores Stats***************************/
     public Integer countInscritos(String idDiscipuladoMenores) {
-        Optional<DiscipuladoMenores> discipuladosMenores = discipuladoMenoresRepository.findById(idDiscipuladoMenores);
-        return discipuladosMenores.map(discipuladoMenores -> discipuladoMenores.getIdInscritos().size()).orElse(0);
+        Optional<DiscipuladoMenores> discipuladosMenores = discipuladoMenoresRepository.findById(
+                idDiscipuladoMenores);
+        return discipuladosMenores.map(
+                        discipuladoMenores -> discipuladoMenores.getIdInscritos().size())
+                .orElse(0);
     }
 }
 

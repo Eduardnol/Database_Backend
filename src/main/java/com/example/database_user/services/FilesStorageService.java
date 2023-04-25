@@ -5,16 +5,6 @@ import com.example.database_user.controllers.FileStorageController;
 import com.example.database_user.dtos.FileStorage;
 import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.repositories.PersonaRepository;
-import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
@@ -25,11 +15,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 //TODO : Verificar el formato en que nos entregan los ficheros
 @Service
 @AllArgsConstructor
 public class FilesStorageService implements FileStorageService {
+
     private static final Logger logger = LogManager.getLogger(FilesStorageService.class);
     private final Path root = Paths.get("uploads");
     private final PersonaRepository personaRepository;
@@ -79,10 +79,9 @@ public class FilesStorageService implements FileStorageService {
 
                 url = MvcUriComponentsBuilder
                         .fromMethodName(FileStorageController.class,
-                                        "getFile",
-                                        userid,
-                                        originalFile.getFileName().toString()).build().toString();
-
+                                "getFile",
+                                userid,
+                                originalFile.getFileName().toString()).build().toString();
 
                 Optional<Persona> persona = personaRepository.findById(userid);
                 persona.ifPresent(value -> {
@@ -156,8 +155,8 @@ public class FilesStorageService implements FileStorageService {
         Optional<Persona> persona = personaRepository.findById(userid);
 
         String url = MvcUriComponentsBuilder
-                .fromMethodName(FileStorageController.class, "getFile", userid, filename).build().toString();
-
+                .fromMethodName(FileStorageController.class, "getFile", userid, filename).build()
+                .toString();
 
         persona.ifPresent(value -> {
             value.getFileStorage().remove(new FileStorage(filename, url));
@@ -174,7 +173,8 @@ public class FilesStorageService implements FileStorageService {
     public Stream<Path> loadAll() {
 
         try {
-            return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
+            return Files.walk(this.root, 1).filter(path -> !path.equals(this.root))
+                    .map(this.root::relativize);
         } catch (IOException e) {
             throw new RuntimeException("Could not load the files!");
         }
@@ -186,9 +186,9 @@ public class FilesStorageService implements FileStorageService {
 
         try {
             return Files.walk(Path.of(this.root + "/" + id), 1)
-                        .filter(path ->
-                                        !path.equals(Path.of(this.root + "/" + id)))
-                        .map(Path.of(this.root + "/" + id)::relativize);
+                    .filter(path ->
+                            !path.equals(Path.of(this.root + "/" + id)))
+                    .map(Path.of(this.root + "/" + id)::relativize);
         } catch (IOException e) {
             throw new RuntimeException("Could not load the files!");
         }
@@ -198,7 +198,8 @@ public class FilesStorageService implements FileStorageService {
     public boolean isValidType(MultipartFile file) {
 
         String content = file.getContentType();
-        final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif", "application/pdf");
+        final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif",
+                "application/pdf");
 
         return contentTypes.contains(content);
     }

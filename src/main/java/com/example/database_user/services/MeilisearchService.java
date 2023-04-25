@@ -7,7 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.meilisearch.sdk.Client;
 import com.meilisearch.sdk.Config;
 import com.meilisearch.sdk.Index;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,81 +14,81 @@ import java.nio.file.Path;
 
 public class MeilisearchService {
 
-    //Singleton
-    private static MeilisearchService instance = null;
-    private Index index1 = null;
-    private Client client = null;
+  //Singleton
+  private static MeilisearchService instance = null;
+  private Index index1 = null;
+  private Client client = null;
 
-    public static MeilisearchService getInstance() {
-        if (instance == null) {
-            instance = new MeilisearchService();
-            instance.startService();
-        }
-        return instance;
+  public static MeilisearchService getInstance() {
+    if (instance == null) {
+      instance = new MeilisearchService();
+      instance.startService();
+    }
+    return instance;
+  }
+
+  private void startService() {
+
+    client = new Client(new Config("http://127.0.0.1:7720"));
+    importDocuments();
+
+  }
+
+  private void importDocuments() {
+    Path fileName = Path.of("movies.json");
+    Path fileNameUsers = Path.of("users_meili.json");
+    String moviesJson = null;
+    String usersJson = null;
+    try {
+      moviesJson = Files.readString(fileName);
+      usersJson = Files.readString(fileNameUsers);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    Index index = null;
+    try {
+      index = client.index("movies");
+      index.addDocuments(moviesJson);
+
+      index1 = client.index("users");
+      index1.addDocuments(usersJson);
+
+
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void addUserDocument(Persona persona) {
+    ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
+
+    try {
+      index1.addDocuments(mapper.writeValueAsString(persona));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
 
-    private void startService() {
+  }
 
-        client = new Client(new Config("http://127.0.0.1:7720"));
-        importDocuments();
+  public void updateDocument(Persona persona) {
+    ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
 
+    try {
+      index1.updateDocuments(mapper.writeValueAsString(persona));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
 
-    private void importDocuments() {
-        Path fileName = Path.of("movies.json");
-        Path fileNameUsers = Path.of("users_meili.json");
-        String moviesJson = null;
-        String usersJson = null;
-        try {
-            moviesJson = Files.readString(fileName);
-            usersJson = Files.readString(fileNameUsers);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Index index = null;
-        try {
-            index = client.index("movies");
-            index.addDocuments(moviesJson);
+  }
 
-            index1 = client.index("users");
-            index1.addDocuments(usersJson);
-
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+  public void deleteDocument(String id) {
+    try {
+      index1.deleteDocument(id);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
 
-    public void addUserDocument(Persona persona) {
-        ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
-
-        try {
-            index1.addDocuments(mapper.writeValueAsString(persona));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void updateDocument(Persona persona) {
-        ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
-
-        try {
-            index1.updateDocuments(mapper.writeValueAsString(persona));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void deleteDocument(String id) {
-        try {
-            index1.deleteDocument(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
+  }
 
 
 }

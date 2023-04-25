@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class PersonGroups {
+
     private String id;
     private String name;
 }

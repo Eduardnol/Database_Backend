@@ -1,16 +1,16 @@
 package com.example.database_user.dtos;
 
 import com.example.database_user.dtos.Persona.PersonaEffeta;
-import lombok.Data;
-
 import java.time.LocalDate;
 import java.util.List;
+import lombok.Data;
 
 /**
  * Indica la informacion relativa a un retiro de Effeta
  */
 @Data
 public class Effeta {
+
     /**
      * Donde ha sido el retiro
      */

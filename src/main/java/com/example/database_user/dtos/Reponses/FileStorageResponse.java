@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import org.springframework.http.HttpStatus;
 
 public class FileStorageResponse extends MainResponse {
+
     @SerializedName("name")
     private String name;
     @SerializedName("url")

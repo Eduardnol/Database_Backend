@@ -4,6 +4,14 @@ import com.example.database_user.dtos.Custom;
 import com.example.database_user.dtos.FileStorage;
 import com.example.database_user.dtos.PersonGroups;
 import com.example.database_user.dtos.Sacraments;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +21,6 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 //TODO: verificar todos los campos que nos introducen
 @Data
 @Document
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Builder
 public class Persona {
+
     @Id
     private String id;
     @TextIndexed(weight = 3)
