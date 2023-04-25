@@ -15,20 +15,20 @@ import java.util.List;
 @RequestMapping(path = "api/v1/stats")
 @AllArgsConstructor
 public class StatisticsController {
-	private final StatisticsService statisticsService;
+    private final StatisticsService statisticsService;
 
 
-	@GetMapping("/count_persons")
-	public ResponseEntity<Integer> countAllPersons() {
+    @GetMapping("/count_persons")
+    public ResponseEntity<Integer> countAllPersons() {
 
-		return ResponseEntity.status(HttpStatus.OK).body(statisticsService.countAllPeople());
-	}
+        return ResponseEntity.status(HttpStatus.OK).body(statisticsService.countAllPeople());
+    }
 
 
-	@GetMapping("/today_birthday")
-	public ResponseEntity<List<Persona>> getTodayBirthday() {
+    @GetMapping("/today_birthday")
+    public ResponseEntity<List<Persona>> getTodayBirthday() {
 
-		return statisticsService.getTodayBirthdays();
-	}
+        return statisticsService.getTodayBirthdays();
+    }
 
 }

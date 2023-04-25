@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class Stats {
-	private int totalUsers;
-	private List<Persona> todayBirthday;
-	private List<Persona> todaySaint;
+    private int totalUsers;
+    private List<Persona> todayBirthday;
+    private List<Persona> todaySaint;
 }

@@ -14,52 +14,52 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class StatisticsService {
-	private final PersonaRepository personaRepository;
-	private MongoOperations mongoOperations;
+    private final PersonaRepository personaRepository;
+    private MongoOperations mongoOperations;
 
 
-	/*@Aggregation(pipeline = {"""
-			$match: {
-			      $expr: {
-			        $and: [
-			          { $eq: [{ $dayOfMonth: '$birthDate' }, { $dayOfMonth: new Date() }] },
-			          { $eq: [{ $month: '$birthDate' }, { $month: new Date() }] },
-			        ],
-			      },
-			    }"""})
-	List<Persona> getTodayBirthday() {
-		return null;
-	}*/
+    /*@Aggregation(pipeline = {"""
+            $match: {
+                  $expr: {
+                    $and: [
+                      { $eq: [{ $dayOfMonth: '$birthDate' }, { $dayOfMonth: new Date() }] },
+                      { $eq: [{ $month: '$birthDate' }, { $month: new Date() }] },
+                    ],
+                  },
+                }"""})
+    List<Persona> getTodayBirthday() {
+        return null;
+    }*/
 
 
-	/**
-	 * Calculates all the people inside the database
-	 *
-	 * @return Integer with value of all users in database
-	 */
-	public Integer countAllPeople() {
+    /**
+     * Calculates all the people inside the database
+     *
+     * @return Integer with value of all users in database
+     */
+    public Integer countAllPeople() {
 
-		return Math.toIntExact(personaRepository.count());
+        return Math.toIntExact(personaRepository.count());
 
-	}
-
-
-	//TODO: Implement this method
-	public ResponseEntity<List<Persona>> getTodayBirthdays() {
-
-	/*	DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-		List<Persona> queryResult = new ArrayList<>();
-		HttpStatus status;
-
-		Aggregation aggregation = Aggregation.newAggregation();*/
-		/*personaRepository.findAllByBirthdayBetween(LocalDate.now().plusDays(1),
-				LocalDate.now().plusDays(1)).ifPresent(queryResult::addAll);*/
-
-		HttpStatus status = HttpStatus.OK;
-
-		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
 
 
-		//return new ResponseEntity<>(personaRepository.findCustomByRegExDomain(), status);
-	}
+    //TODO: Implement this method
+    public ResponseEntity<List<Persona>> getTodayBirthdays() {
+
+    /*	DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+        List<Persona> queryResult = new ArrayList<>();
+        HttpStatus status;
+
+        Aggregation aggregation = Aggregation.newAggregation();*/
+        /*personaRepository.findAllByBirthdayBetween(LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(1)).ifPresent(queryResult::addAll);*/
+
+        HttpStatus status = HttpStatus.OK;
+
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+
+        //return new ResponseEntity<>(personaRepository.findCustomByRegExDomain(), status);
+    }
 }

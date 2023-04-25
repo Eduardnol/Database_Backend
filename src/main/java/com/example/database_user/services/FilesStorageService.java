@@ -48,153 +48,158 @@ public class FilesStorageService implements FileStorageService {
     }
 
 
-	/**
-	 * Uploads a file to the database and memory
-	 *
-	 * @param file   Multipart file to be uploaded
-	 * @param userid Id of the folders file location
-	 */
-	@Override
-	public String save(MultipartFile file, String userid) {
+    /**
+     * Uploads a file to the database and memory
+     *
+     * @param file   Multipart file to be uploaded
+     * @param userid Id of the folders file location
+     */
+    @Override
+    public String save(MultipartFile file, String userid) {
 
-		if (isValidType(file)) {
-			String url;
-			try {
-				Files.createDirectory(this.root);
-			} catch (IOException e) {
-				System.out.println(e);
-				logger.info("Folder already exists");
-			}
+        if (isValidType(file)) {
+            String url;
+            try {
+                Files.createDirectory(this.root);
+            } catch (IOException e) {
+                System.out.println(e);
+                logger.info("Folder already exists");
+            }
 
-			try {
-				Files.createDirectory(this.root.resolve(userid));
-			} catch (IOException e) {
-				logger.info("Folder already exists");
-			}
+            try {
+                Files.createDirectory(this.root.resolve(userid));
+            } catch (IOException e) {
+                logger.info("Folder already exists");
+            }
 
-			try {
-				Path originalFile = this.root.resolve(userid + "/" + file.getOriginalFilename());
-				Files.copy(file.getInputStream(), originalFile);
-				logger.info("Copied file into system");
+            try {
+                Path originalFile = this.root.resolve(userid + "/" + file.getOriginalFilename());
+                Files.copy(file.getInputStream(), originalFile);
+                logger.info("Copied file into system");
 
-				url = MvcUriComponentsBuilder
-						.fromMethodName(FileStorageController.class, "getFile", userid, originalFile.getFileName().toString()).build().toString();
-
-
-				Optional<Persona> persona = personaRepository.findById(userid);
-				persona.ifPresent(value -> {
-
-					value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), url));
-					personaRepository.deleteById(userid);
-					personaRepository.insert(value);
-
-					logger.info("Updated person on the database");
+                url = MvcUriComponentsBuilder
+                        .fromMethodName(FileStorageController.class,
+                                        "getFile",
+                                        userid,
+                                        originalFile.getFileName().toString()).build().toString();
 
 
-				});
+                Optional<Persona> persona = personaRepository.findById(userid);
+                persona.ifPresent(value -> {
 
-			} catch (FileAlreadyExistsException e) {
-				System.out.println("File already exists");
-				logger.warn(e.getMessage());
-				throw new RuntimeException("File Already Exists");
-			} catch (IOException e) {
-				logger.warn("Could not store the file " + Arrays.toString(e.getStackTrace()));
-				System.out.println(e);
-				throw new RuntimeException("Could not store the file.");
-			}
-			return url;
-		} else {
-			throw new RuntimeException("File is not a valid format");
-		}
+                    value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), url));
+                    personaRepository.deleteById(userid);
+                    personaRepository.insert(value);
 
-	}
+                    logger.info("Updated person on the database");
 
 
-	@Override
-	public Resource load(String filename, String userid) {
+                });
 
-		try {
-			Path file = root.resolve(userid + "/" + filename);
-			Resource resource = new UrlResource(file.toUri());
-			if (resource.exists() || resource.isReadable()) {
-				return resource;
-			} else {
+            } catch (FileAlreadyExistsException e) {
+                System.out.println("File already exists");
+                logger.warn(e.getMessage());
+                throw new RuntimeException("File Already Exists");
+            } catch (IOException e) {
+                logger.warn("Could not store the file " + Arrays.toString(e.getStackTrace()));
+                System.out.println(e);
+                throw new RuntimeException("Could not store the file.");
+            }
+            return url;
+        } else {
+            throw new RuntimeException("File is not a valid format");
+        }
 
-				logger.warn("The actual file could not be read");
-				throw new RuntimeException("Could not read the file!");
-
-			}
-		} catch (MalformedURLException e) {
-
-			logger.warn("Malformed url exception " + e.getMessage());
-			throw new RuntimeException("Error: " + e.getMessage());
-		}
-	}
+    }
 
 
-	@Override
-	public void deleteAll() {
+    @Override
+    public Resource load(String filename, String userid) {
 
-		FileSystemUtils.deleteRecursively(root.toFile());
-	}
+        try {
+            Path file = root.resolve(userid + "/" + filename);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
 
+                logger.warn("The actual file could not be read");
+                throw new RuntimeException("Could not read the file!");
 
-	/**
-	 * Deletes an specific file from the database and memory
-	 *
-	 * @param filename Name of the file to be deleted
-	 * @param userid   Id of the folders file location
-	 */
-	@Override
-	public void deleteOne(String filename, String userid) {
-		//TODO delete from the database
-		FileSystemUtils.deleteRecursively(root.resolve(userid + "/" + filename).toFile());
+            }
+        } catch (MalformedURLException e) {
 
-		Optional<Persona> persona = personaRepository.findById(userid);
-
-		String url = MvcUriComponentsBuilder
-				.fromMethodName(FileStorageController.class, "getFile", userid, filename).build().toString();
+            logger.warn("Malformed url exception " + e.getMessage());
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
+    }
 
 
-		persona.ifPresent(value -> {
-			value.getFileStorage().remove(new FileStorage(filename, url));
-			personaRepository.deleteById(userid);
-			personaRepository.insert(persona.get());
-			logger.info("Deleted file of person on the database");
-		});
+    @Override
+    public void deleteAll() {
+
+        FileSystemUtils.deleteRecursively(root.toFile());
+    }
 
 
-	}
+    /**
+     * Deletes an specific file from the database and memory
+     *
+     * @param filename Name of the file to be deleted
+     * @param userid   Id of the folders file location
+     */
+    @Override
+    public void deleteOne(String filename, String userid) {
+        //TODO delete from the database
+        FileSystemUtils.deleteRecursively(root.resolve(userid + "/" + filename).toFile());
+
+        Optional<Persona> persona = personaRepository.findById(userid);
+
+        String url = MvcUriComponentsBuilder
+                .fromMethodName(FileStorageController.class, "getFile", userid, filename).build().toString();
 
 
-	@Override
-	public Stream<Path> loadAll() {
-
-		try {
-			return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
-		} catch (IOException e) {
-			throw new RuntimeException("Could not load the files!");
-		}
-	}
+        persona.ifPresent(value -> {
+            value.getFileStorage().remove(new FileStorage(filename, url));
+            personaRepository.deleteById(userid);
+            personaRepository.insert(persona.get());
+            logger.info("Deleted file of person on the database");
+        });
 
 
-	@Override
-	public Stream<Path> loadFromId(String id) {
-
-		try {
-			return Files.walk(Path.of(this.root + "/" + id), 1).filter(path ->
-					!path.equals(Path.of(this.root + "/" + id))).map(Path.of(this.root + "/" + id)::relativize);
-		} catch (IOException e) {
-			throw new RuntimeException("Could not load the files!");
-		}
-	}
+    }
 
 
-	public boolean isValidType(MultipartFile file) {
+    @Override
+    public Stream<Path> loadAll() {
 
-		String content = file.getContentType();
-		final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif", "application/pdf");
+        try {
+            return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not load the files!");
+        }
+    }
 
-		return contentTypes.contains(content);
-	}
+
+    @Override
+    public Stream<Path> loadFromId(String id) {
+
+        try {
+            return Files.walk(Path.of(this.root + "/" + id), 1)
+                        .filter(path ->
+                                        !path.equals(Path.of(this.root + "/" + id)))
+                        .map(Path.of(this.root + "/" + id)::relativize);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not load the files!");
+        }
+    }
+
+
+    public boolean isValidType(MultipartFile file) {
+
+        String content = file.getContentType();
+        final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif", "application/pdf");
+
+        return contentTypes.contains(content);
+    }
 }

@@ -65,14 +65,22 @@ public class DiscipuladoMenoresController {
         return discipuladoMenoresService.updateDiscipuladoMenores(discipuladoMenores);
     }
 
-    @Operation(operationId = "inserNewInscription", summary = "Insert a new inscription to one discipuladomenores", tags = {"DiscipuladoMenores"},
-            parameters = {@Parameter(in = ParameterIn.PATH, name = "inscritoNinos", description = "The one to be inserted"),
-                    @Parameter(name = "iddiscipuladomenores", description = "Id of the DiscipuladoMenores where we want to insert it")},
-            responses = {@ApiResponse(responseCode = "200", description = "User correctly inscribed", content = @Content(schema = @Schema(implementation = PersonaNinos.class))),
+    @Operation(operationId = "inserNewInscription", summary = "Insert a new inscription to one discipuladomenores",
+            tags = {
+                    "DiscipuladoMenores"},
+            parameters = {
+                    @Parameter(in = ParameterIn.PATH, name = "inscritoNinos", description = "The one to be inserted"),
+                    @Parameter(name = "iddiscipuladomenores", description = "Id of the DiscipuladoMenores where we " +
+                            "want to insert it")},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "User correctly inscribed", content =
+                    @Content(schema = @Schema(implementation = PersonaNinos.class))),
                     @ApiResponse(responseCode = "404", description = "Employee not found")}
     )
     @PostMapping("/insert-inscription/{iddiscipuladomenores}")
-    public ResponseEntity<String> inserNewInscription(@RequestBody @Valid PersonaNinos personaNinos, @PathVariable String iddiscipuladomenores) {
+    public ResponseEntity<String> inserNewInscription(
+            @RequestBody @Valid PersonaNinos personaNinos,
+            @PathVariable String iddiscipuladomenores) {
 
         //return discipuladomenoresService.addNewUserNewInsciption(personaNinos, iddiscipuladomenores);
         return null;

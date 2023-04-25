@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Objects;
 
 //TODO: verificar todos los campos que nos introducen
 @Data
@@ -58,8 +57,10 @@ public class Persona {
     private PersonaNinos personaNinos = null;
 
 
-    /*public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint,
-                   String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {
+    /*public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate
+    saint,
+                   String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage,
+                   LocalDateTime createdOn) {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -73,7 +74,6 @@ public class Persona {
         this.fileStorage = Objects.requireNonNullElseGet(fileStorage, ArrayList::new);
         this.createdOn = (createdOn == null) ? LocalDateTime.now() : createdOn;
     }*/
-
 
 
 }

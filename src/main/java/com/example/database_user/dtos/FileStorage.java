@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class FileStorage {
-	@JsonProperty("name")
-	private String name;
-	@JsonProperty("url")
-	private String url;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("url")
+    private String url;
 
 }
