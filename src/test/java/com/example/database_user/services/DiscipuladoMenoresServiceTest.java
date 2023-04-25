@@ -38,13 +38,73 @@ class DiscipuladoMenoresServiceTest {
     @BeforeAll
     static void beforeAll() {
         Sacraments sacraments = new Sacraments();
-        persona = Persona.builder().id("2345sdgf").nombre("Jose").apellido("Martinez").apellido2("Rodri").email("jose.martinez@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
+        persona = Persona.builder()
+                .id("2345sdgf")
+                .nombre("Jose")
+                .apellido("Martinez")
+                .apellido2("Rodri")
+                .email("jose.martinez@gmail.com")
+                .birthday(LocalDate.now())
+                .saint(LocalDate.now())
+                .dni("12121212D")
+                .extras(null)
+                .sacraments(sacraments)
+                .fileStorage(null)
+                .createdOn(LocalDateTime.now())
+                .personGroups(null)
+                .personaNinos(null)
+                .build();
 
-        persona2 = Persona.builder().id("dfaa22235").nombre("Alba").apellido("Rodriguez").apellido2("Rodri").email("alba.rodriguez@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
+        persona2 = Persona.builder()
+                .id("dfaa22235")
+                .nombre("Alba")
+                .apellido("Rodriguez")
+                .apellido2("Rodri")
+                .email("alba.rodriguez@gmail.com")
+                .birthday(LocalDate.now())
+                .saint(LocalDate.now())
+                .dni("12121212D")
+                .extras(null)
+                .sacraments(sacraments)
+                .fileStorage(null)
+                .createdOn(LocalDateTime.now())
+                .personGroups(null)
+                .personaNinos(null)
+                .build();
 
-        persona3 = Persona.builder().id("2342222225sdgf").nombre("Jo2222se").apellido("Martinez").apellido2("Rodri").email("jose.martinez@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
+        persona3 = Persona.builder()
+                .id("2342222225sdgf")
+                .nombre("Jo2222se")
+                .apellido("Martinez")
+                .apellido2("Rodri")
+                .email("jose.martinez@gmail.com")
+                .birthday(LocalDate.now())
+                .saint(LocalDate.now())
+                .dni("12121212D")
+                .extras(null)
+                .sacraments(sacraments)
+                .fileStorage(null)
+                .createdOn(LocalDateTime.now())
+                .personGroups(null)
+                .personaNinos(null)
+                .build();
 
-        persona4 = Persona.builder().id("elmoni").nombre("Edu").apellido("Moni").apellido2("Rodri").email("edu@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
+        persona4 = Persona.builder()
+                .id("elmoni")
+                .nombre("Edu")
+                .apellido("Moni")
+                .apellido2("Rodri")
+                .email("edu@gmail.com")
+                .birthday(LocalDate.now())
+                .saint(LocalDate.now())
+                .dni("12121212D")
+                .extras(null)
+                .sacraments(sacraments)
+                .fileStorage(null)
+                .createdOn(LocalDateTime.now())
+                .personGroups(null)
+                .personaNinos(null)
+                .build();
 
 
     }
@@ -89,7 +149,7 @@ class DiscipuladoMenoresServiceTest {
         //when
         List<DiscipuladoMenores> discipuladoMenoresList = discipuladoMenoresService.fetchAllDiscipuladoMenores().getBody();
         //then
-        assertEquals(persona.getNombre() + " " + persona.getApellido(), discipuladoMenoresList.get(0).getResponsable1());
+        assertEquals(persona.getNombre(), discipuladoMenoresList.get(0).getResponsables().get(0).getNombre());
     }
 
     @Test
@@ -133,8 +193,32 @@ class DiscipuladoMenoresServiceTest {
     @Test
     @Order(4)
     void addNewUserNewInsciption() {
-        PersonaNinos innerIncritoNinos = new PersonaNinos("padre", "madre", "de unos amigos", "123412", "eduedu@gmail.com", true, true, "Xaloc", "Bachi");
-        Persona personaNinos = Persona.builder().id(null).nombre("John").apellido("Black").apellido2("Rodri").email("jose.martinez@gmail.com").birthday(LocalDate.now()).saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(null).fileStorage(null).createdOn(LocalDateTime.now()).personGroups(null).personaNinos(null).build();
+        PersonaNinos innerIncritoNinos = new PersonaNinos(
+                "padre",
+                "madre",
+                "de unos amigos",
+                "123412",
+                "eduedu@gmail.com",
+                true,
+                true,
+                "Xaloc",
+                "Bachi");
+        Persona personaNinos = Persona.builder()
+                .id(null)
+                .nombre("John")
+                .apellido("Black")
+                .apellido2("Rodri")
+                .email("jose.martinez@gmail.com")
+                .birthday(LocalDate.now())
+                .saint(LocalDate.now())
+                .dni("12121212D")
+                .extras(null)
+                .sacraments(null)
+                .fileStorage(null)
+                .createdOn(LocalDateTime.now())
+                .personGroups(null)
+                .personaNinos(null)
+                .build();
         ResponseEntity<String> back = discipuladoMenoresService.addNewUserNewInsciption(personaNinos, ltid);
         assertEquals("User added in the specified discipuladoMenores id", back.getBody());
 
@@ -143,8 +227,16 @@ class DiscipuladoMenoresServiceTest {
     @Test
     @Order(5)
     void addExistingUserNewInscription() {
-        PersonaNinos incritoNinos = new PersonaNinos("padre", "madre",
-                "de unos amigos", "123412", "de@dw.com", true, true, "Xaxa", "bachi");
+        PersonaNinos incritoNinos = new PersonaNinos(
+                "padre",
+                "madre",
+                "de unos amigos",
+                "123412",
+                "de@dw.com",
+                true,
+                true,
+                "Xaxa",
+                "bachi");
         persona.setPersonaNinos(incritoNinos);
         ResponseEntity<String> back = discipuladoMenoresService.addExistingUserNewInscription(persona, ltid);
         assertEquals(HttpStatus.CREATED, back.getStatusCode());
