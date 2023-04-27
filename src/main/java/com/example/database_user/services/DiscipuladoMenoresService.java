@@ -6,9 +6,11 @@ import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.repositories.DiscipuladoMenoresRepository;
 import com.example.database_user.repositories.PersonaRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpHeaders;
@@ -139,7 +141,7 @@ public class DiscipuladoMenoresService {
      * @return The status of the response
      */
     public ResponseEntity<String> addNewUserNewInsciption(Persona persona,
-            String idDiscipuladoMenores) {
+                                                          String idDiscipuladoMenores) {
 
         final HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -177,7 +179,7 @@ public class DiscipuladoMenoresService {
      * @param idPerson             the id of the person with all the information present
      */
     public ResponseEntity<String> addExistingUserExistingInscription(String idDiscipuladoMenores,
-            String idPerson) {
+                                                                     String idPerson) {
 
         //Insert the person into the DiscipuladoMenores repository
         final HttpHeaders httpHeaders = new HttpHeaders();
@@ -228,7 +230,7 @@ public class DiscipuladoMenoresService {
      * @return message with the result of the operation
      */
     public ResponseEntity<String> addExistingUserNewInscription(Persona persona,
-            String idDiscipuladoMenores) {
+                                                                String idDiscipuladoMenores) {
 
         //Update the Person repository with the new information
         personaService.updatePerson(persona);
