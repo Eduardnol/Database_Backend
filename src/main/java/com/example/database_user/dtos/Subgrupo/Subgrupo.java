@@ -11,6 +11,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Subgrupo {
 
+  private String id;
   private String titulo;
   private List<SimplePersona> responsables;
   private List<SimplePersona> integrantes;
