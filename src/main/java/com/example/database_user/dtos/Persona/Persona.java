@@ -4,6 +4,7 @@ import com.example.database_user.dtos.Custom;
 import com.example.database_user.dtos.FileStorage;
 import com.example.database_user.dtos.PersonGroups;
 import com.example.database_user.dtos.Sacraments;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Persona {
 
     @Id

@@ -3,6 +3,7 @@ package com.example.database_user.dtos;
 
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.dtos.Subgrupo.Subgrupo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscipuladoMenores {
 
     @Id

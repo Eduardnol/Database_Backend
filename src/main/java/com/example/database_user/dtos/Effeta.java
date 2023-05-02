@@ -1,6 +1,7 @@
 package com.example.database_user.dtos;
 
 import com.example.database_user.dtos.Persona.PersonaEffeta;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.Data;
  * Indica la informacion relativa a un retiro de Effeta
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Effeta {
 
     /**

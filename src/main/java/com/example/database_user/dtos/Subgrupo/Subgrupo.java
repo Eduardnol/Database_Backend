@@ -1,12 +1,14 @@
 package com.example.database_user.dtos.Subgrupo;
 
 import com.example.database_user.dtos.Persona.SimplePersona;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Subgrupo {
 
   private String titulo;

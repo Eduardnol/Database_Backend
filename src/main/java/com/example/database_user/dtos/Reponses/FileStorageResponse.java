@@ -1,8 +1,10 @@
 package com.example.database_user.dtos.Reponses;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.annotations.SerializedName;
 import org.springframework.http.HttpStatus;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FileStorageResponse extends MainResponse {
 
     @SerializedName("name")
