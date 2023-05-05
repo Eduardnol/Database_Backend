@@ -93,20 +93,32 @@ public class DiscipuladoMenoresService {
   public ResponseEntity<String> insertNewDiscipuladoMenores(
       DiscipuladoMenores discipuladoMenores) {
 
-    if (discipuladoMenores.getIdInscritos().size() == 0
-        || discipuladoMenores.getIdInscritos().get(0).getId() == null) {
+    try {
+      if (discipuladoMenores.getIdInscritos().isEmpty()) {
+        discipuladoMenores.setIdInscritos(null);
+      }
+    } catch (Exception e) {
       discipuladoMenores.setIdInscritos(null);
     }
-    if (discipuladoMenores.getIdMonitores().size() == 0
-        || discipuladoMenores.getIdMonitores().get(0).getId() == null) {
+    try {
+      if (discipuladoMenores.getIdMonitores().isEmpty()) {
+        discipuladoMenores.setIdMonitores(null);
+      }
+    } catch (Exception e) {
       discipuladoMenores.setIdMonitores(null);
     }
-    if (discipuladoMenores.getResponsables().size() == 0
-        || discipuladoMenores.getResponsables().get(0).getId() == null) {
+    try {
+      if (discipuladoMenores.getResponsables().isEmpty()) {
+        discipuladoMenores.setResponsables(null);
+      }
+    } catch (Exception e) {
       discipuladoMenores.setResponsables(null);
     }
-    if (discipuladoMenores.getSubgrupos().size() == 0
-        || discipuladoMenores.getSubgrupos().get(0).getId() == null) {
+    try {
+      if (discipuladoMenores.getSubgrupos().isEmpty()) {
+        discipuladoMenores.setSubgrupos(null);
+      }
+    } catch (Exception e) {
       discipuladoMenores.setSubgrupos(null);
     }
 
