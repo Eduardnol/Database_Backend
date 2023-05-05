@@ -98,7 +98,7 @@ public class PersonaService {
   }
 
 
-  public ResponseEntity<String> deletePerson(String personID) {
+  public ResponseEntity<String> deletePersonById(String personID) {
 
     try {
       personaRepository.deleteById(personID);

@@ -8,10 +8,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import java.util.List;
 import javax.validation.Valid;
-
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -110,7 +108,7 @@ public class PersonaController {
     public ResponseEntity<String> deleteUser(
             @Parameter(description = "Id of the user to be deleted") @RequestParam(name = "id") String identificador) {
 
-        return personaService.deletePerson(identificador);
+        return personaService.deletePersonById(identificador);
     }
 
 
