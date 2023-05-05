@@ -7,7 +7,6 @@ import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.PersonaNinos;
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.dtos.Sacraments;
-import com.example.database_user.dtos.Subgrupo.Subgrupo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -84,8 +83,7 @@ class DiscipuladoMenoresServiceTest {
             new SimplePersona(persona2.getId(), persona2.getNombre(), persona2.getApellido()))),
         LocalDate.now(), inscritos, null, Collections.singletonList(
         new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())),
-        Collections.singletonList(new Subgrupo("Subgrupo1", null, null,
-            "Prueba de descripción " + "para el " + "subgrupo")));
+        Collections.singletonList(null));
 
     ResponseEntity<String> back = discipuladoMenoresService.insertNewDiscipuladoMenores(
         discipuladoMenores);
@@ -117,8 +115,7 @@ class DiscipuladoMenoresServiceTest {
         new SimplePersona("elmoni", persona.getNombre(), persona.getApellido())),
         Collections.singletonList(
             new SimplePersona(persona3.getId(), persona3.getNombre(), persona3.getApellido())),
-        Collections.singletonList(new Subgrupo("Subgrupo1", null, null,
-            "Prueba de descripción " + "para el " + "subgrupo")));
+        Collections.singletonList(null));
 
     ResponseEntity<String> back = discipuladoMenoresService.updateDiscipuladoMenores(
         discipuladoMenores);
@@ -154,13 +151,13 @@ class DiscipuladoMenoresServiceTest {
 
   }
 
-//    @Test
-//    @Order(6)
-//    void deleteExistingInscriptionFromAdiscipuladoMenores() {
-//        ResponseEntity<String> back = discipuladoMenoresService.deleteExistingInscriptionFromAdiscipuladoMenores
-//        (ltid, persona.getId());
-//        assertEquals("The user has been deleted from the specified discipuladoMenores", back.getBody());
-//    }
+  @Test
+  @Order(6)
+  void deleteExistingInscriptionFromAdiscipuladoMenores() {
+    ResponseEntity<String> back = discipuladoMenoresService.deleteExistingInscriptionFromADiscipuladoMenores(
+        ltid, persona.getId());
+    assertEquals("The user has been deleted from the specified discipuladoMenores", back.getBody());
+  }
 
   @Test
   @Order(7)
@@ -184,14 +181,23 @@ class DiscipuladoMenoresServiceTest {
 
   }
 
-//    @Test
-//    @Order(9)
-//    void deleteDiscipuladoMenoresById() {
-//
-//        ResponseEntity<String> back = DiscipuladoMenoresService.deleteDiscipuladoMenoresById(ltid);
-//        assertEquals(HttpStatus.OK, back.getStatusCode());
-//
-//    }
+  @Test
+  @Order(9)
+  void deleteDiscipuladoMenoresById() {
+
+    ResponseEntity<String> back = discipuladoMenoresService.deleteDiscipuladoMenoresById(ltid);
+    assertEquals(HttpStatus.OK, back.getStatusCode());
+
+  }
+
+  @Test
+  @Order(10)
+  void deleteUsersFromDatabase() {
+    personaService.deletePersonById(persona.getId());
+    personaService.deletePersonById(persona2.getId());
+    personaService.deletePersonById(persona3.getId());
+    personaService.deletePersonById(persona4.getId());
+  }
 
 
 }
