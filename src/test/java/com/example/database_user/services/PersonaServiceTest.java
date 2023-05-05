@@ -4,9 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Sacraments;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PersonaServiceTest {
 
   @Autowired
@@ -34,27 +39,27 @@ class PersonaServiceTest {
 
   }
 
-  @Test
-  void fetchBirthRangePeople() {
-  }
-
-  @Test
-  void insertNewPerson() {
-  }
-
-  @Test
-  void deletePerson() {
-  }
-
-  @Test
-  void updatePerson() {
-  }
-
-  @Test
-  void sortPeopleByName() {
-  }
-
-  @Test
-  void sortPeopleBySurname() {
-  }
+//  @Test
+//  void fetchBirthRangePeople() {
+//  }
+//
+//  @Test
+//  void insertNewPerson() {
+//  }
+//
+//  @Test
+//  void deletePerson() {
+//  }
+//
+//  @Test
+//  void updatePerson() {
+//  }
+//
+//  @Test
+//  void sortPeopleByName() {
+//  }
+//
+//  @Test
+//  void sortPeopleBySurname() {
+//  }
 }
