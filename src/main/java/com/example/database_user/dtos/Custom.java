@@ -8,14 +8,15 @@ import lombok.Data;
  */
 @Data
 public class Custom {
-    private String selected;
-    private String name;
-    private String tagname;
+
+  private String selected;
+  private String name;
+  private String tagname;
 
 
-    public Custom() {
-        selected = "";
-        name = "";
-        tagname = "";
-    }
+  public Custom() {
+    selected = "";
+    name = "";
+    tagname = "";
+  }
 }

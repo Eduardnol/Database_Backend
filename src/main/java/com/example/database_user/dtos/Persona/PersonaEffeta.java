@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class PersonaEffeta {
-    Boolean servidor;
-    Persona persona;
+
+  Boolean servidor;
+  Persona persona;
 }

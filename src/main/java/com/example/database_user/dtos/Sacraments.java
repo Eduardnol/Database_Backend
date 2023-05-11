@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Sacraments {
+
     Boolean bautismo;
     Boolean comunion;
     Boolean confirmacion;

@@ -4,6 +4,15 @@ import com.example.database_user.dtos.Custom;
 import com.example.database_user.dtos.FileStorage;
 import com.example.database_user.dtos.PersonGroups;
 import com.example.database_user.dtos.Sacraments;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,19 +22,15 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Objects;
-
 //TODO: verificar todos los campos que nos introducen
 @Data
 @Document
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Persona {
+
     @Id
     private String id;
     @TextIndexed(weight = 3)
@@ -58,8 +63,10 @@ public class Persona {
     private PersonaNinos personaNinos = null;
 
 
-    /*public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate saint,
-                   String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage, LocalDateTime createdOn) {
+    /*public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate
+    saint,
+                   String dni, ArrayList<Custom> extras, Sacraments sacraments, ArrayList<FileStorage> fileStorage,
+                   LocalDateTime createdOn) {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -73,7 +80,6 @@ public class Persona {
         this.fileStorage = Objects.requireNonNullElseGet(fileStorage, ArrayList::new);
         this.createdOn = (createdOn == null) ? LocalDateTime.now() : createdOn;
     }*/
-
 
 
 }
