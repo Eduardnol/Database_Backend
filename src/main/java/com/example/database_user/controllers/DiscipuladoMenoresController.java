@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,13 +69,15 @@ public class DiscipuladoMenoresController {
     return discipuladoMenoresService.deleteDiscipuladoMenoresById(id);
   }
 
-
+  @Operation(summary = "Update a DiscipuladoMenores record")
+  @ApiResponse(responseCode = "200", description = "DiscipuladoMenores record updated successfully", content = @Content(mediaType = "text/plain"))
+  @ApiResponse(responseCode = "400", description = "Invalid request payload")
   @PutMapping("/update")
   public ResponseEntity<String> updateDiscipuladoMenores(
-      @RequestBody @Valid DiscipuladoMenores discipuladoMenores) {
-
+          @RequestBody @Valid DiscipuladoMenores discipuladoMenores) {
     return discipuladoMenoresService.updateDiscipuladoMenores(discipuladoMenores);
   }
+
 
   @Operation(operationId = "inserNewInscription", summary = "Insert a new inscription to one discipuladomenores",
       tags = {

@@ -105,8 +105,8 @@ public class FileStorageController {
      */
     @GetMapping("{userid}/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> getFile(@PathVariable String userid,
-            @PathVariable String filename) {
+    public ResponseEntity<Resource> getFileFromUserIdByName(@PathVariable String userid,
+                                                           @PathVariable String filename) {
 
         Resource file = storageService.load(filename, userid);
         return ResponseEntity.ok()
@@ -124,8 +124,8 @@ public class FileStorageController {
      */
     @DeleteMapping("{userid}/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<ResponseMessage> deleteFile(@PathVariable String userid,
-            @PathVariable String filename) {
+    public ResponseEntity<ResponseMessage> deleteUserFile(@PathVariable String userid,
+                                                          @PathVariable String filename) {
 
         String message = "";
         storageService.deleteOne(filename, userid);
@@ -143,7 +143,7 @@ public class FileStorageController {
 
     @GetMapping("{id}")
     @ResponseBody
-    public ResponseEntity<List<FileStorage>> getIdFiles(@PathVariable String id) {
+    public ResponseEntity<List<FileStorage>> getFileById(@PathVariable String id) {
 
         List<FileStorage> fileInfos = storageService.loadFromId(id).map(path -> {
             String filename = path.getFileName().toString();
