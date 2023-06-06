@@ -55,6 +55,7 @@ public class Persona {
     private ArrayList<Custom> extras;
     private Sacraments sacraments;
     private ArrayList<FileStorage> fileStorage;
+    @DateTimeFormat
     private LocalDateTime createdOn;
 
     private ArrayList<PersonGroups> personGroups;

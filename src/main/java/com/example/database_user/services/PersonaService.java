@@ -88,12 +88,18 @@ public class PersonaService {
   public ResponseEntity<String> insertNewPerson(Persona person) {
 
     logger.info("Inserting new person");
-    personaRepository.insert(person);
+    System.out.println(person);
 
-    MeilisearchService meilisearchService = MeilisearchService.getInstance();
-    meilisearchService.addUserDocument(person);
-
-    return new ResponseEntity<>(HttpStatus.CREATED);
+    try {
+      Persona savedPerson = personaRepository.insert(person);
+      logger.info("Person inserted");
+      MeilisearchService meilisearchService = MeilisearchService.getInstance();
+      meilisearchService.addUserDocument(person);
+      return new ResponseEntity<>("Person inserted with id:" + savedPerson,
+          HttpStatus.CREATED);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
   }
 
