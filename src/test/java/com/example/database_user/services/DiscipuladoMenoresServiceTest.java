@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.example.database_user.dtos.DiscipuladoMenores;
 import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.PersonaNinos;
+import com.example.database_user.dtos.Persona.PersonaSacraments;
 import com.example.database_user.dtos.Persona.SimplePersona;
-import com.example.database_user.dtos.Sacraments;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ class DiscipuladoMenoresServiceTest {
 
   @BeforeAll
   static void beforeAll() {
-    Sacraments sacraments = new Sacraments();
+    List<PersonaSacraments> sacraments = new ArrayList<PersonaSacraments>();
     persona = Persona.builder().id("2345sdgf").nombre("Jose").apellido("Martinez")
         .apellido2("Rodri").email("jose.martinez@gmail.com").birthday(LocalDate.now())
         .saint(LocalDate.now()).dni("12121212D").extras(null).sacraments(sacraments)
