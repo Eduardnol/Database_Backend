@@ -29,7 +29,7 @@ public class MeilisearchService {
 
   private void startService() {
 
-    client = new Client(new Config("http://127.0.0.1:7720"));
+    client = new Client(new Config("http://127.0.0.1:7720", "masterKey"));
     importDocuments();
 
   }
@@ -47,8 +47,8 @@ public class MeilisearchService {
     }
     Index index = null;
     try {
-      index = client.index("movies");
-      index.addDocuments(moviesJson);
+//      index = client.index("movies");
+//      index.addDocuments(moviesJson);
 
       index1 = client.index("users");
       index1.addDocuments(usersJson);
