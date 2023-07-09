@@ -21,6 +21,8 @@ public class WebSecurityConfig {
     //disable cors
     http.cors().disable();
 
+    http.csrf().disable();
+
 //    http
 //        .authorizeHttpRequests((requests) -> requests
 //            .requestMatchers("/", "/home").permitAll()
