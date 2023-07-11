@@ -30,11 +30,10 @@ services:
     environment:
       - MEILI_NO_ANALYTICS=false
       - MEILI_NO_SENTRY=true
+      # - MEILI_MASTER_KEY="masterKey"
     volumes:
       - ./users_meili.json:/app/resources/users.json
       - ./movies.json:/app/resources/movies.json
-    environment:
-      MEILI_MASTER_KEY: "masterKey"
       #springboot:
       # build:
       #  context: .
