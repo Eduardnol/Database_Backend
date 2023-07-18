@@ -3,6 +3,7 @@ package com.example.database_user.dtos;
 
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.dtos.Subgrupo.Subgrupo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +24,7 @@ public class DiscipuladoMenores {
     private String id;
     private String title;
     private List<SimplePersona> responsables;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
     private Integer numInscritos;
     private List<SimplePersona> idMonitores;

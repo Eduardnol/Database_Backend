@@ -6,6 +6,7 @@ import com.example.database_user.dtos.Persona.Persona;
 import com.example.database_user.dtos.Persona.SimplePersona;
 import com.example.database_user.repositories.DiscipuladoMenoresRepository;
 import com.example.database_user.repositories.PersonaRepository;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -137,7 +138,7 @@ public class DiscipuladoMenoresService {
     } catch (Exception e) {
       discipuladoMenores.setSubgrupos(null);
     }
-
+    discipuladoMenores.setStartDate(LocalDate.now());
     discipuladoMenoresRepository.insert(discipuladoMenores);
     return new ResponseEntity<>(HttpStatus.CREATED);
 
