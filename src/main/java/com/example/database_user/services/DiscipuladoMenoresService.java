@@ -27,6 +27,22 @@ public class DiscipuladoMenoresService {
   private final PersonaService personaService;
 
   /***************************DiscipuladoMenores as a service***************************/
+  public ResponseEntity<DiscipuladoMenores> getDiscipuladoMenoresById(String id) {
+    Optional<DiscipuladoMenores> discipuladoMenores = discipuladoMenoresRepository.findById(id);
+
+    final HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    HttpStatus status = HttpStatus.OK;
+    String message = "";
+
+    if (discipuladoMenores.isPresent()) {
+      return new ResponseEntity<>(discipuladoMenores.get(), httpHeaders, status);
+    } else {
+      status = HttpStatus.NOT_FOUND;
+      message = "The specified ID does not exist in this repository";
+      return new ResponseEntity<>(null, httpHeaders, status);
+    }
+  }
 
   /**
    * Returns all the DiscipuladoMenores instances from the database
@@ -334,5 +350,7 @@ public class DiscipuladoMenoresService {
             discipuladoMenores -> discipuladoMenores.getIdInscritos().size())
         .orElse(0);
   }
+
+
 }
 

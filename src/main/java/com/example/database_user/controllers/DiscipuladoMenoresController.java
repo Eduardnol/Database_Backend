@@ -32,6 +32,12 @@ public class DiscipuladoMenoresController {
 
   private final DiscipuladoMenoresService discipuladoMenoresService;
 
+  @GetMapping("/{id}")
+  public ResponseEntity<DiscipuladoMenores> fetchDiscipuladoMenoresById(@PathVariable String id) {
+
+    return discipuladoMenoresService.getDiscipuladoMenoresById(id);
+  }
+
 
   @GetMapping("/all")
   public ResponseEntity<List<DiscipuladoMenores>> fetchAllDiscipuladoMenores() {
