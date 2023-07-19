@@ -109,35 +109,6 @@ public class DiscipuladoMenoresService {
    */
   public ResponseEntity<String> insertNewDiscipuladoMenores(
       DiscipuladoMenores discipuladoMenores) {
-
-    try {
-      if (discipuladoMenores.getIdInscritos().isEmpty()) {
-        discipuladoMenores.setIdInscritos(null);
-      }
-    } catch (Exception e) {
-      discipuladoMenores.setIdInscritos(null);
-    }
-    try {
-      if (discipuladoMenores.getIdMonitores().isEmpty()) {
-        discipuladoMenores.setIdMonitores(null);
-      }
-    } catch (Exception e) {
-      discipuladoMenores.setIdMonitores(null);
-    }
-    try {
-      if (discipuladoMenores.getResponsables().isEmpty()) {
-        discipuladoMenores.setResponsables(null);
-      }
-    } catch (Exception e) {
-      discipuladoMenores.setResponsables(null);
-    }
-    try {
-      if (discipuladoMenores.getSubgrupos().isEmpty()) {
-        discipuladoMenores.setSubgrupos(null);
-      }
-    } catch (Exception e) {
-      discipuladoMenores.setSubgrupos(null);
-    }
     discipuladoMenores.setStartDate(LocalDate.now());
     discipuladoMenoresRepository.insert(discipuladoMenores);
     return new ResponseEntity<>(HttpStatus.CREATED);
