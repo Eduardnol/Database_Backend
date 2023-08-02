@@ -24,7 +24,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo_db:27017/
   meilisearch:
-    image: "getmeili/meilisearch:latest"
+    image: getmeili/meilisearch:v1.1.0
     ports:
       - "7720:7700"
     environment:
