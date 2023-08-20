@@ -38,9 +38,11 @@ public class PersonaController {
                   schema = @Schema(implementation = Persona.class))})
   })
   @GetMapping("/allpeople")
-  public ResponseEntity<List<Persona>> fetchAllPeople() {
+  public ResponseEntity<List<Persona>> fetchAllPeople(
+      @RequestParam(defaultValue = "0") Integer page,
+      @RequestParam(defaultValue = "10") Integer size) {
 
-    return ResponseEntity.status(HttpStatus.OK).body(personaService.fetchAllPeople());
+    return ResponseEntity.status(HttpStatus.OK).body(personaService.fetchAllPeople(page, size));
   }
 
   @GetMapping("/getbyid/{id}")

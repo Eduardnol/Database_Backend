@@ -9,6 +9,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -28,9 +30,10 @@ public class PersonaService {
   private final MongoTemplate mongoTemplate;
 
 
-  public List<Persona> fetchAllPeople() {
+  public List<Persona> fetchAllPeople(Integer page, Integer size) {
 
-    return personaRepository.findAll();
+    Pageable pageable = PageRequest.of(page, size);
+    return personaRepository.findAll(pageable).getContent();
 
   }
 
