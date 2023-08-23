@@ -5,6 +5,7 @@ import com.example.database_user.dtos.FileStorage;
 import com.example.database_user.dtos.PersonGroups;
 import com.example.database_user.dtos.Sacraments;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +15,12 @@ import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +29,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 //TODO: verificar todos los campos que nos introducen
@@ -56,14 +64,17 @@ public class Persona {
     @PastOrPresent(message = "The saint must be past or present")
     private LocalDate saint;
     private String dni;
-    private ArrayList<Custom> extras;
-    private Sacraments sacraments;
-    private ArrayList<FileStorage> fileStorage;
-    @DateTimeFormat(iso = ISO.DATE_TIME)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private List<Custom> extras;
+    private List<PersonaSacraments> sacraments;
+    private List<FileStorage> fileStorage;
+  @DateTimeFormat(iso = ISO.DATE_TIME)
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdOn;
 
-    private ArrayList<PersonGroups> personGroups;
+    private List<PersonGroups> personGroups;
+
+    //Home address
+    private String homeAddress;
 
     //Optional fields
     private PersonaNinos personaNinos = null;
