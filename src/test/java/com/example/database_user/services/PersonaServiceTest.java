@@ -18,7 +18,7 @@ class PersonaServiceTest {
 
   @Test
   void fetchAllPeople() {
-    assertNotEquals((long) personaService.fetchAllPeople().size(), 0);
+    assertNotEquals((long) personaService.fetchAllPeople(0, 10).size(), 0);
   }
 
   @Test
