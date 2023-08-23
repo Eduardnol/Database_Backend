@@ -7,8 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.meilisearch.sdk.Client;
 import com.meilisearch.sdk.Config;
 import com.meilisearch.sdk.Index;
-import com.meilisearch.sdk.model.Settings;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +16,7 @@ public class MeilisearchService {
 
     //Singleton
     private static MeilisearchService instance = null;
-    private Index index1 = null;
+    private final Index index1 = null;
     private Client client = null;
 
     public static MeilisearchService getInstance() {
@@ -50,14 +48,13 @@ public class MeilisearchService {
         }
         try {
 //      index = client.index("movies");
-//      index.addDocuments(moviesJson);
-            client.createIndex("users", "id");
-
-            Settings settings = client.index("users").getSettings();
+////      index.addDocuments(moviesJson);
+//            client.createIndex("users", "id");
+//            Settings settings = client.index("users").getSettings();
             client.index("users").addDocuments(usersJson);
-            settings.setFilterableAttributes(new String[]{"birthday", "saint"});
-            settings.setSortableAttributes(new String[]{"birthday", "saint"});
-            client.index("users").updateSettings(settings);
+          //settings.setFilterableAttributes(new String[]{"birthday", "saint"});
+          //settings.setSortableAttributes(new String[]{"birthday", "saint"});
+          //client.index("users").updateSettings(settings);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -32,43 +32,43 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Persona {
 
-    @Id
-    private String id;
-    @TextIndexed(weight = 3)
-    @NotNull(message = "The name is required.")
-    private String nombre;
-    @TextIndexed(weight = 2)
-    @NotNull(message = "The surname is required.")
-    private String apellido;
-    @TextIndexed(weight = 2)
-    @NotNull(message = "The surname2 is required.")
-    private String apellido2;
-    @TextIndexed
-    @Email(message = "The email address is invalid.", flags = {Pattern.Flag.CASE_INSENSITIVE})
-    private String email;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Past(message = "The date of birth must be in the past.")
-    private LocalDate birthday;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @PastOrPresent(message = "The saint must be past or present")
-    private LocalDate saint;
-    private String dni;
-    private List<Custom> extras;
-    private List<PersonaSacraments> sacraments;
-    private List<FileStorage> fileStorage;
+  @Id
+  private String id;
+  @TextIndexed(weight = 3)
+  @NotNull(message = "The name is required.")
+  private String nombre;
+  @TextIndexed(weight = 2)
+  @NotNull(message = "The surname is required.")
+  private String apellido;
+  @TextIndexed(weight = 2)
+  @NotNull(message = "The surname2 is required.")
+  private String apellido2;
+  @TextIndexed
+  @Email(message = "The email address is invalid.", flags = {Pattern.Flag.CASE_INSENSITIVE})
+  private String email;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  @Past(message = "The date of birth must be in the past.")
+  private LocalDate birthday;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  @PastOrPresent(message = "The saint must be past or present")
+  private LocalDate saint;
+  private String dni;
+  private List<Custom> extras;
+  private List<PersonaSacraments> sacraments;
+  private List<FileStorage> fileStorage;
   @DateTimeFormat(iso = ISO.DATE_TIME)
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdOn;
+  private LocalDateTime createdOn;
 
-    private List<PersonGroups> personGroups;
+  private List<PersonGroups> personGroups;
 
-    //Home address
-    private String homeAddress;
+  //Home address
+  private String homeAddress;
 
-    //Optional fields
-    private PersonaNinos personaNinos = null;
+  //Optional fields
+  private PersonaNinos personaNinos = null;
 
 
     /*public Persona(String nombre, String apellido, String apellido2, String email, LocalDate birthday, LocalDate
