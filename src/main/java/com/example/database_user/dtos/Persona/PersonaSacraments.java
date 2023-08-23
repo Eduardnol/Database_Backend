@@ -1,7 +1,7 @@
 package com.example.database_user.dtos.Persona;
 
+import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
-import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
