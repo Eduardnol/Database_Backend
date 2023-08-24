@@ -21,7 +21,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 //TODO: verificar todos los campos que nos introducen
 @Data
@@ -58,7 +57,7 @@ public class Persona {
   private List<Custom> extras;
   private List<PersonaSacraments> sacraments;
   private List<FileStorage> fileStorage;
-  @DateTimeFormat(iso = ISO.DATE_TIME)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdOn;
 

@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Document
@@ -20,15 +21,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscipuladoMenores {
 
-    @Id
-    private String id;
-    private String title;
-    private List<SimplePersona> responsables;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
-    private Integer numInscritos;
-    private List<SimplePersona> idMonitores;
-    private List<SimplePersona> idInscritos;
-    private List<Subgrupo> subgrupos;
+  @Id
+  private String id;
+  private String title;
+  private List<SimplePersona> responsables;
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  private LocalDate startDate;
+  private Integer numInscritos;
+  private List<SimplePersona> idMonitores;
+  private List<SimplePersona> idInscritos;
+  private List<Subgrupo> subgrupos;
 
 }
