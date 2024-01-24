@@ -1,14 +1,19 @@
 package com.example.database_user.services;
 
-import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.domain.model.mapper.PersonaMapper;
+import com.example.database_user.domain.service.PersonaService;
 import com.example.database_user.repositories.PersonaRepository;
+import com.example.database_user.repositories.entity.PersonaEntity;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,31 +28,34 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class PersonaService {
+public class PersonaServiceImplementation implements PersonaService {
 
-  private static final Logger logger = LogManager.getLogger(PersonaService.class);
+  private static final Logger logger = LogManager.getLogger(PersonaServiceImplementation.class);
   private final PersonaRepository personaRepository;
   private final MongoTemplate mongoTemplate;
 
+  @Autowired
+  private PersonaMapper personaMapper;
 
-  public List<Persona> fetchAllPeople(Integer page, Integer size) {
+  @Override
+  public List<PersonaDTO> fetchAllPeople(Integer page, Integer size) {
 
     Pageable pageable = PageRequest.of(page, size);
-    return personaRepository.findAll(pageable).getContent();
+    return personaRepository.findAll(pageable).map(personaMapper::toDTO).getContent();
 
   }
 
-  //Find a person by id
-  public ResponseEntity<Persona> findPersonById(String id) {
-    Persona persona = personaRepository.findById(id).orElse(null);
-    if (persona == null) {
+  @Override
+  public ResponseEntity<PersonaDTO> findPersonById(String id) {
+    PersonaDTO personaDTO = personaRepository.findById(id).map(personaMapper::toDTO).orElse(null);
+    if (personaDTO == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>(persona, HttpStatus.OK);
+    return new ResponseEntity<>(personaDTO, HttpStatus.OK);
   }
 
-
-  public ResponseEntity<List<Persona>> fetchPeopleByName(String name) {
+  @Override
+  public ResponseEntity<List<PersonaDTO>> fetchPeopleByName(String name) {
 
     HttpStatus status = HttpStatus.ACCEPTED;
     TextCriteria criteria = TextCriteria
@@ -55,20 +63,20 @@ public class PersonaService {
         .matching(name);
 
     Query query = TextQuery.queryText(criteria).sortByScore();
-    List<Persona> posts = mongoTemplate.find(query, Persona.class);
+    List<PersonaDTO> posts = mongoTemplate.find(query, PersonaDTO.class);
 
     status = HttpStatus.OK;
     logger.info("Retrieved users by name");
 
-    return new ResponseEntity<List<Persona>>(posts, status);
+    return new ResponseEntity<List<PersonaDTO>>(posts, status);
 
   }
 
-
-  public ResponseEntity<List<Persona>> fetchBirthRangePeople(String start, String end) {
+  @Override
+  public ResponseEntity<List<PersonaDTO>> fetchBirthRangePeople(String start, String end) {
 
     DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-    List<Persona> queryResult = new ArrayList<>();
+    List<PersonaDTO> queryResult = new ArrayList<>();
     LocalDate startDate = LocalDate.parse(start, formatter);
     LocalDate endDate = LocalDate.parse(end, formatter);
     HttpStatus status;
@@ -78,8 +86,8 @@ public class PersonaService {
       status = HttpStatus.BAD_REQUEST;
       logger.warn("End date is before start date");
     } else {
-      personaRepository.findAllByBirthdayBetween(startDate.minusDays(1)
-          , endDate.plusDays(1)).ifPresent(queryResult::addAll);
+     /* personaRepository.findAllByBirthdayBetween(startDate.minusDays(1)
+          , endDate.plusDays(1)).ifPresent(queryResult::addAll);*/
       status = HttpStatus.OK;
       logger.info("Retrieved users by datarange");
     }
@@ -87,14 +95,14 @@ public class PersonaService {
 
   }
 
-
-  public ResponseEntity<String> insertNewPerson(Persona person) {
+  @Override
+  public ResponseEntity<String> insertNewPerson(PersonaDTO person) {
 
     logger.info("Inserting new person");
     System.out.println(person);
 
     try {
-      Persona savedPerson = personaRepository.insert(person);
+      PersonaEntity savedPerson = personaRepository.insert(personaMapper.toEntity(person));
       logger.info("Person inserted");
       MeilisearchService meilisearchService = MeilisearchService.getInstance();
       meilisearchService.addUserDocument(person);
@@ -106,7 +114,7 @@ public class PersonaService {
 
   }
 
-
+  @Override
   public ResponseEntity<String> deletePersonById(String personID) {
 
     try {
@@ -123,9 +131,10 @@ public class PersonaService {
   }
 
   //Todo this method does not work well when having other fields in the same document that are not in the same class
-  public ResponseEntity<String> updatePerson(Persona person) {
+  @Override
+  public ResponseEntity<String> updatePerson(PersonaDTO person) {
 
-    personaRepository.save(person);
+    personaRepository.save(personaMapper.toEntity(person));
     MeilisearchService meilisearchService = MeilisearchService.getInstance();
     meilisearchService.updateDocument(person);
     return new ResponseEntity<>(HttpStatus.OK);
@@ -137,7 +146,8 @@ public class PersonaService {
    *
    * @return
    */
-  public ResponseEntity<List<Persona>> sortPeopleByName(String sort) {
+  @Override
+  public ResponseEntity<List<PersonaDTO>> sortPeopleByName(String sort) {
 
     Sort.Direction sort_dir;
     if (sort.equals("asc")) {
@@ -146,9 +156,10 @@ public class PersonaService {
       sort_dir = Sort.Direction.DESC;
     }
     HttpStatus status = HttpStatus.ACCEPTED;
-    List<Persona> persons = personaRepository.findAll(Sort.by(sort_dir, "nombre"));
+    List<PersonaDTO> persons = personaRepository.findAll(Sort.by(sort_dir, "nombre")).stream()
+        .map(personaMapper::toDTO).collect(Collectors.toList());
     status = HttpStatus.OK;
-    return new ResponseEntity<List<Persona>>(persons, status);
+    return new ResponseEntity<List<PersonaDTO>>(persons, status);
   }
 
 
@@ -157,7 +168,8 @@ public class PersonaService {
    *
    * @return
    */
-  public ResponseEntity<List<Persona>> sortPeopleBySurname(String sort) {
+  @Override
+  public ResponseEntity<List<PersonaDTO>> sortPeopleBySurname(String sort) {
 
     Sort.Direction sort_dir;
     if (sort.equals("asc")) {
@@ -167,8 +179,11 @@ public class PersonaService {
     }
 
     HttpStatus status = HttpStatus.ACCEPTED;
-    List<Persona> persons = personaRepository.findAll(Sort.by(sort_dir, "apellido"));
+    List<PersonaDTO> persons = personaRepository.findAll(Sort.by(sort_dir, "apellido"))
+        .stream()
+        .map(personaMapper::toDTO)
+        .collect(Collectors.toList());
     status = HttpStatus.OK;
-    return new ResponseEntity<List<Persona>>(persons, status);
+    return new ResponseEntity<List<PersonaDTO>>(persons, status);
   }
 }

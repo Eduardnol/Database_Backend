@@ -1,9 +1,9 @@
 package com.example.database_user.services;
 
-import com.example.database_user.dtos.DiscipuladoMenores;
-import com.example.database_user.dtos.PersonGroups;
-import com.example.database_user.dtos.Persona.Persona;
-import com.example.database_user.dtos.Persona.SimplePersona;
+import com.example.database_user.controllers.dto.DiscipuladoMenores;
+import com.example.database_user.controllers.dto.PersonGroups;
+import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.controllers.dto.Persona.SimplePersona;
 import com.example.database_user.repositories.DiscipuladoMenoresRepository;
 import com.example.database_user.repositories.PersonaRepository;
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ public class DiscipuladoMenoresService {
   private final DiscipuladoMenoresRepository discipuladoMenoresRepository;
   private final PersonaRepository personaRepository;
   private final MongoTemplate mongoTemplate;
-  private final PersonaService personaService;
+  private final PersonaServiceImplementation personaServiceImplementation;
 
   /***************************DiscipuladoMenores as a service***************************/
   public ResponseEntity<DiscipuladoMenores> getDiscipuladoMenoresById(String id) {
@@ -86,14 +86,14 @@ public class DiscipuladoMenoresService {
    * @param id The id of the DiscipuladoMenores instance
    * @return The DiscipuladoMenores instance
    */
-  public ResponseEntity<List<Persona>> getDiscipuladoMenoresMonisById(String id) {
+  public ResponseEntity<List<PersonaDTO>> getDiscipuladoMenoresMonisById(String id) {
     HttpStatus status = HttpStatus.ACCEPTED;
     Optional<DiscipuladoMenores> discipuladoMenoresResult = discipuladoMenoresRepository.findById(
         id);
     if (discipuladoMenoresResult.isPresent()) {
       status = HttpStatus.OK;
       DiscipuladoMenores discipuladoMenores = discipuladoMenoresResult.get();
-      List<Persona> lista = new ArrayList<>();
+      List<PersonaDTO> lista = new ArrayList<>();
       return new ResponseEntity<>(lista, status);
     } else {
       status = HttpStatus.NOT_FOUND;
@@ -151,11 +151,11 @@ public class DiscipuladoMenoresService {
   /**
    * Adds a new inscription to the database when a user does not exist in our Person collection
    *
-   * @param persona              the new inscription
+   * @param personaDTO              the new inscription
    * @param idDiscipuladoMenores the id of the discipuladoMenores where we want the inscription
    * @return The status of the response
    */
-  public ResponseEntity<String> addNewUserNewInsciption(Persona persona,
+  public ResponseEntity<String> addNewUserNewInsciption(PersonaDTO personaDTO,
       String idDiscipuladoMenores) {
 
     final HttpHeaders httpHeaders = new HttpHeaders();
@@ -164,7 +164,7 @@ public class DiscipuladoMenoresService {
     HttpStatus status = HttpStatus.CREATED;
     //Todo does the insertion of a InscritoNinos affects when we fetch normal persons?
     //Insert to standard Person repository
-    personaService.insertNewPerson(persona);
+    personaServiceImplementation.insertNewPerson(personaDTO);
     //Insert id to DiscipuladoMenores
     Optional<DiscipuladoMenores> discipuladoMenores = discipuladoMenoresRepository.findById(
         idDiscipuladoMenores);
@@ -172,10 +172,10 @@ public class DiscipuladoMenoresService {
     if (discipuladoMenores.isPresent()) {
       discipuladoMenores.get()
           .getIdInscritos()
-          .add(new SimplePersona(persona.getId(), persona.getNombre(),
-              persona.getApellido()));
+          .add(new SimplePersona(personaDTO.getId(), personaDTO.getNombre(),
+              personaDTO.getApellido()));
       //We pass argument as null because it's already in the database
-      return this.addExistingUserExistingInscription(idDiscipuladoMenores, persona.getId());
+      return this.addExistingUserExistingInscription(idDiscipuladoMenores, personaDTO.getId());
       //message = "Person correctly inserted";
     } else {
       status = HttpStatus.NOT_FOUND;
@@ -204,25 +204,25 @@ public class DiscipuladoMenoresService {
     String message = "";
     HttpStatus status = HttpStatus.CREATED;
     if (discipuladoMenores.isPresent()) {
-      Persona persona = personaService.findPersonById(idPerson).getBody();
+      PersonaDTO personaDTO = personaServiceImplementation.findPersonById(idPerson).getBody();
       discipuladoMenores.get()
           .getIdInscritos()
-          .add(new SimplePersona(persona.getId(), persona.getNombre(),
-              persona.getApellido()));
+          .add(new SimplePersona(personaDTO.getId(), personaDTO.getNombre(),
+              personaDTO.getApellido()));
       discipuladoMenoresRepository.deleteById(idDiscipuladoMenores);
       discipuladoMenoresRepository.insert(discipuladoMenores.get());
       //If the user is not in any group we will add them into one
-      if (persona.getPersonGroups() != null) {
-        persona.getPersonGroups()
+      if (personaDTO.getPersonGroups() != null) {
+        personaDTO.getPersonGroups()
             .add(new PersonGroups(idDiscipuladoMenores,
                 discipuladoMenores.get().getTitle()));
-        personaService.updatePerson(persona);
+        personaServiceImplementation.updatePerson(personaDTO);
       } else {
-        persona.setPersonGroups(new ArrayList<>());
-        persona.getPersonGroups()
+        personaDTO.setPersonGroups(new ArrayList<>());
+        personaDTO.getPersonGroups()
             .add(new PersonGroups(idDiscipuladoMenores,
                 discipuladoMenores.get().getTitle()));
-        personaService.updatePerson(persona);
+        personaServiceImplementation.updatePerson(personaDTO);
       }
       message = "User added in the specified discipuladoMenores id";
     } else {
@@ -240,17 +240,17 @@ public class DiscipuladoMenoresService {
    * If a user already exists in the database and does not have InscritoNinos information, it will
    * be updated with the new information.
    *
-   * @param persona              new information of the user
+   * @param personaDTO              new information of the user
    * @param idDiscipuladoMenores id of the discipuladoMenores that the user is going to be added to
    * @return message with the result of the operation
    */
-  public ResponseEntity<String> addExistingUserNewInscription(Persona persona,
+  public ResponseEntity<String> addExistingUserNewInscription(PersonaDTO personaDTO,
       String idDiscipuladoMenores) {
 
     //Update the Person repository with the new information
-    personaService.updatePerson(persona);
+    personaServiceImplementation.updatePerson(personaDTO);
     //Insert the person into the DiscipuladoMenores repository
-    return this.addExistingUserExistingInscription(idDiscipuladoMenores, persona.getId());
+    return this.addExistingUserExistingInscription(idDiscipuladoMenores, personaDTO.getId());
 
   }
 
@@ -258,17 +258,17 @@ public class DiscipuladoMenoresService {
   /**
    * Edit an inscription in the database
    *
-   * @param persona the new information of the inscription
+   * @param personaDTO the new information of the inscription
    * @return the status of the response
    */
-  public ResponseEntity<String> editExistingUserInscription(Persona persona) {
+  public ResponseEntity<String> editExistingUserInscription(PersonaDTO personaDTO) {
 
     final HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     String message = "";
     HttpStatus status = HttpStatus.CREATED;
 
-    personaService.updatePerson(persona);
+    personaServiceImplementation.updatePerson(personaDTO);
 
     message = "Inscription updated";
     status = HttpStatus.OK;
@@ -299,7 +299,7 @@ public class DiscipuladoMenoresService {
       discipuladoMenores.get().getIdInscritos()
           .removeIf(persona -> persona.getId().equals(idPersona));
       discipuladoMenoresRepository.save(discipuladoMenores.get());
-      personaService.findPersonById(idPersona)
+      personaServiceImplementation.findPersonById(idPersona)
           .getBody()
           .getPersonGroups()
           .removeIf(personGroups -> personGroups.getId().equals(idDiscipuladoMenores));

@@ -1,6 +1,6 @@
-package com.example.database_user.dtos;
+package com.example.database_user.controllers.dto;
 
-import com.example.database_user.dtos.Persona.PersonaEffeta;
+import com.example.database_user.controllers.dto.Persona.PersonaEffeta;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.List;

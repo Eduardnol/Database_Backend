@@ -1,6 +1,6 @@
 package com.example.database_user.services;
 
-import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.repositories.PersonaRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class StatisticsService {
                     ],
                   },
                 }"""})
-    List<Persona> getTodayBirthday() {
+    List<PersonaDTO> getTodayBirthday() {
         return null;
     }*/
 
@@ -45,10 +45,10 @@ public class StatisticsService {
 
 
     //TODO: Implement this method
-    public ResponseEntity<List<Persona>> getTodayBirthdays() {
+    public ResponseEntity<List<PersonaDTO>> getTodayBirthdays() {
 
     /*	DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-        List<Persona> queryResult = new ArrayList<>();
+        List<PersonaDTO> queryResult = new ArrayList<>();
         HttpStatus status;
 
         Aggregation aggregation = Aggregation.newAggregation();*/

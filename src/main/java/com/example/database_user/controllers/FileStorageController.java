@@ -1,9 +1,9 @@
 package com.example.database_user.controllers;
 
 import com.example.database_user.Model.Common.FileStorageService;
-import com.example.database_user.dtos.FileStorage;
-import com.example.database_user.dtos.Reponses.FileStorageResponse;
-import com.example.database_user.dtos.ResponseMessage;
+import com.example.database_user.controllers.dto.FileStorage;
+import com.example.database_user.controllers.dto.Reponses.FileStorageResponse;
+import com.example.database_user.controllers.dto.ResponseMessage;
 import com.google.gson.Gson;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,6 +1,6 @@
 package com.example.database_user.controllers;
 
-import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.services.StatisticsService;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class StatisticsController {
 
 
     @GetMapping("/today_birthday")
-    public ResponseEntity<List<Persona>> getTodayBirthday() {
+    public ResponseEntity<List<PersonaDTO>> getTodayBirthday() {
 
         return statisticsService.getTodayBirthdays();
     }

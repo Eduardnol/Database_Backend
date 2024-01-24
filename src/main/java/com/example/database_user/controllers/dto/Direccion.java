@@ -1,4 +1,4 @@
-package com.example.database_user.dtos;
+package com.example.database_user.controllers.dto;
 
 import lombok.Data;
 

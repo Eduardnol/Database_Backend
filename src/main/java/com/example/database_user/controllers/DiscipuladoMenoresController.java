@@ -1,10 +1,10 @@
 package com.example.database_user.controllers;
 
 
-import com.example.database_user.dtos.DiscipuladoMenores;
-import com.example.database_user.dtos.Persona.Persona;
-import com.example.database_user.dtos.Persona.PersonaNinos;
-import com.example.database_user.dtos.Persona.SimplePersona;
+import com.example.database_user.controllers.dto.DiscipuladoMenores;
+import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.controllers.dto.Persona.PersonaNinos;
+import com.example.database_user.controllers.dto.Persona.SimplePersona;
 import com.example.database_user.services.DiscipuladoMenoresService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -53,7 +53,7 @@ public class DiscipuladoMenoresController {
   }
 
   @GetMapping("/{id}/monitores")
-  public ResponseEntity<List<Persona>> fetchDiscipuladoMenoresMonitoresById(
+  public ResponseEntity<List<PersonaDTO>> fetchDiscipuladoMenoresMonitoresById(
       @PathVariable String id) {
 
     return discipuladoMenoresService.getDiscipuladoMenoresMonisById(id);

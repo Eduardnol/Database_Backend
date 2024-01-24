@@ -1,6 +1,6 @@
 package com.example.database_user.controllers;
 
-import com.example.database_user.dtos.Emaus;
+import com.example.database_user.controllers.dto.Emaus;
 import com.example.database_user.services.EmmausService;
 import java.util.List;
 import lombok.AllArgsConstructor;

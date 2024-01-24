@@ -1,6 +1,6 @@
-package com.example.database_user.dtos.Subgrupo;
+package com.example.database_user.controllers.dto.Subgrupo;
 
-import com.example.database_user.dtos.Persona.SimplePersona;
+import com.example.database_user.controllers.dto.Persona.SimplePersona;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import lombok.AllArgsConstructor;

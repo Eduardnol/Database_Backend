@@ -1,6 +1,6 @@
 package com.example.database_user.repositories;
 
-import com.example.database_user.dtos.DiscipuladoMenores;
+import com.example.database_user.controllers.dto.DiscipuladoMenores;
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

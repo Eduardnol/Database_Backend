@@ -1,4 +1,4 @@
-package com.example.database_user.dtos.Persona;
+package com.example.database_user.controllers.dto.Persona;
 
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;

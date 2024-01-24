@@ -1,4 +1,4 @@
-package com.example.database_user.dtos.Persona;
+package com.example.database_user.controllers.dto.Persona;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

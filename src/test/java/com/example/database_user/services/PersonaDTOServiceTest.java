@@ -2,7 +2,7 @@ package com.example.database_user.services;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -11,22 +11,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PersonaServiceTest {
+class PersonaDTOServiceTest {
 
   @Autowired
-  private PersonaService personaService;
+  private PersonaServiceImplementation personaServiceImplementation;
 
   @Test
   void fetchAllPeople() {
-    assertNotEquals((long) personaService.fetchAllPeople(0, 10).size(), 0);
+    assertNotEquals((long) personaServiceImplementation.fetchAllPeople(0, 10).size(), 0);
   }
 
   @Test
   void findPersonById() {
 
     Sacraments sacraments = new Sacraments();
-    Persona persona = personaService.findPersonById("2345sdgf").getBody();
-    //assertEquals(persona, new PersonaBuilder().addId("2345sdgf").addNombre("Jose").addApellido("Martinez").addApellido2("Rodri").addEmail("jose.martinez@gmail.com").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("12121212D").addExtras(null).addSacraments(sacraments).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(null).createPersona());
+    PersonaDTO personaDTO = personaServiceImplementation.findPersonById("2345sdgf").getBody();
+    //assertEquals(personaDTO, new PersonaBuilder().addId("2345sdgf").addNombre("Jose").addApellido("Martinez").addApellido2("Rodri").addEmail("jose.martinez@gmail.com").addBirthday(LocalDate.now()).addSaint(LocalDate.now()).addDni("12121212D").addExtras(null).addSacraments(sacraments).addFileStorage(null).addCreatedOn(LocalDateTime.now()).addPersonGroups(null).addPersonaNinos(null).createPersona());
 
   }
 

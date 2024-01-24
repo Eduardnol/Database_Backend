@@ -1,6 +1,6 @@
 package com.example.database_user.services;
 
-import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -61,22 +61,22 @@ public class MeilisearchService {
         }
     }
 
-    public void addUserDocument(Persona persona) {
+    public void addUserDocument(PersonaDTO personaDTO) {
         ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
 
         try {
-            index1.addDocuments(mapper.writeValueAsString(persona));
+            index1.addDocuments(mapper.writeValueAsString(personaDTO));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public void updateDocument(Persona persona) {
+    public void updateDocument(PersonaDTO personaDTO) {
         ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
 
         try {
-            index1.updateDocuments(mapper.writeValueAsString(persona));
+            index1.updateDocuments(mapper.writeValueAsString(personaDTO));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -1,4 +1,4 @@
-package com.example.database_user.dtos.Persona;
+package com.example.database_user.controllers.dto.Persona;
 
 import lombok.Data;
 
@@ -9,5 +9,5 @@ import lombok.Data;
 public class PersonaEffeta {
 
   Boolean servidor;
-  Persona persona;
+  PersonaDTO personaDTO;
 }

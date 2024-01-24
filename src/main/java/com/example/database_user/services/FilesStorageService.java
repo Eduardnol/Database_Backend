@@ -2,8 +2,9 @@ package com.example.database_user.services;
 
 import com.example.database_user.Model.Common.FileStorageService;
 import com.example.database_user.controllers.FileStorageController;
-import com.example.database_user.dtos.FileStorage;
-import com.example.database_user.dtos.Persona.Persona;
+import com.example.database_user.controllers.dto.FileStorage;
+import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.domain.model.mapper.PersonaMapper;
 import com.example.database_user.repositories.PersonaRepository;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class FilesStorageService implements FileStorageService {
     private static final Logger logger = LogManager.getLogger(FilesStorageService.class);
     private final Path root = Paths.get("uploads");
     private final PersonaRepository personaRepository;
+
+    @Autowired
+    private PersonaMapper personaMapper;
 
 
     @Override
@@ -83,12 +88,13 @@ public class FilesStorageService implements FileStorageService {
                                 userid,
                                 originalFile.getFileName().toString()).build().toString();
 
-                Optional<Persona> persona = personaRepository.findById(userid);
+                Optional<PersonaDTO> persona = personaRepository.findById(userid)
+                    .map(personaMapper::toDTO);
                 persona.ifPresent(value -> {
 
                     value.getFileStorage().add(new FileStorage(file.getOriginalFilename(), url));
                     personaRepository.deleteById(userid);
-                    personaRepository.insert(value);
+                    personaRepository.insert(personaMapper.toEntity(value));
 
                     logger.info("Updated person on the database");
 
@@ -152,7 +158,7 @@ public class FilesStorageService implements FileStorageService {
         //TODO delete from the database
         FileSystemUtils.deleteRecursively(root.resolve(userid + "/" + filename).toFile());
 
-        Optional<Persona> persona = personaRepository.findById(userid);
+        Optional<PersonaDTO> persona = personaRepository.findById(userid).map(personaMapper::toDTO);
 
         String url = MvcUriComponentsBuilder
                 .fromMethodName(FileStorageController.class, "getFile", userid, filename).build()
@@ -161,7 +167,7 @@ public class FilesStorageService implements FileStorageService {
         persona.ifPresent(value -> {
             value.getFileStorage().remove(new FileStorage(filename, url));
             personaRepository.deleteById(userid);
-            personaRepository.insert(persona.get());
+            personaRepository.insert(personaMapper.toEntity(persona.get()));
             logger.info("Deleted file of person on the database");
         });
 

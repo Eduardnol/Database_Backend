@@ -1,4 +1,4 @@
-package com.example.database_user.dtos.Reponses;
+package com.example.database_user.controllers.dto.Reponses;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
