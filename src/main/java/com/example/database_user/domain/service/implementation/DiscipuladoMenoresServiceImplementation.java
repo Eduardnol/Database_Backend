@@ -8,26 +8,21 @@ import com.example.database_user.domain.model.mapper.DiscipuladoMenoresMapper;
 import com.example.database_user.domain.service.DiscipuladoMenoresService;
 import com.example.database_user.domain.service.PersonaService;
 import com.example.database_user.repositories.DiscipuladoMenoresRepository;
-import com.example.database_user.repositories.PersonaRepository;
-import kotlin.jvm.Volatile;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class DiscipuladoMenoresServiceImplementation implements DiscipuladoMenoresService {
 
     @Autowired
