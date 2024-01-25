@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: ${DB_URI}
+      uri: 'mongodb://root:example@localhost:27017/test?authSource=admin'
       auto-index-creation: true
   servlet:
     multipart:
