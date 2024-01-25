@@ -73,7 +73,6 @@ public class PersonaController extends BaseController implements PersonaAPI {
   @PostMapping(value = "/insertnew")
   public ResponseEntity<String> insertNewUser(@RequestBody @Valid PersonaDTO person) {
     return personaServiceImplementation.insertNewPerson(person);
-
   }
 
   @Override

@@ -4,7 +4,7 @@ import com.example.database_user.controllers.dto.Custom;
 import com.example.database_user.controllers.dto.FileStorage;
 import com.example.database_user.controllers.dto.PersonGroups;
 import com.example.database_user.controllers.dto.Persona.PersonaNinos;
-import com.example.database_user.controllers.dto.Persona.PersonaSacraments;
+import com.example.database_user.controllers.dto.Persona.PersonaSacramentsDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -72,7 +71,7 @@ public class PersonaEntity {
     private List<Custom> extras;
 
     @Field("sacraments")
-    private List<PersonaSacraments> sacraments;
+    private List<PersonaSacramentsEntity> sacraments;
 
     @Field("fileStorage")
     private List<FileStorage> fileStorage;

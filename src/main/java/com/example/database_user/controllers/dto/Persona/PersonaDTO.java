@@ -27,7 +27,7 @@ public class PersonaDTO {
   private LocalDate saint;
   private String dni;
   private List<Custom> extras;
-  private List<PersonaSacraments> sacraments;
+  private List<PersonaSacramentsDTO> sacraments;
   private List<FileStorage> fileStorage;
   private LocalDateTime createdOn;
   private List<PersonGroups> personGroups;

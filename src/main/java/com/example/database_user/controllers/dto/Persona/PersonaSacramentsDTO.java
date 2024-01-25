@@ -10,11 +10,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 @Builder
 @Data
-public class PersonaSacraments {
-
-  @Pattern(regexp = "^(bautismo|confirmación|eucaristía|penitencia|unción|orden|matrimonio|)$")
+public class PersonaSacramentsDTO {
   private String name;
   private String temple;
-  @DateTimeFormat
   private LocalDate date;
 }

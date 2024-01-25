@@ -103,14 +103,16 @@ public class PersonaServiceImplementation implements PersonaService {
     log.info("Inserting new person");
     System.out.println(person);
 
+
     try {
       PersonaEntity savedPerson = personaRepository.insert(personaMapper.toEntity(person));
       log.info("Person inserted");
       MeilisearchService meilisearchService = MeilisearchService.getInstance();
-      meilisearchService.addUserDocument(person);
+      meilisearchService.updateDocument(person);
       return new ResponseEntity<>("Person inserted with id:" + savedPerson,
           HttpStatus.CREATED);
     } catch (Exception e) {
+      log.error("Error inserting person" + e.getMessage());
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
