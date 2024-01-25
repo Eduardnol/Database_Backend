@@ -11,16 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
-import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -28,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Log4j2
 @Transactional
 public class PersonaServiceImplementation implements PersonaService {
 
@@ -44,7 +41,8 @@ public class PersonaServiceImplementation implements PersonaService {
   public List<PersonaDTO> fetchAllPeople(Integer page, Integer size) {
 
     Pageable pageable = PageRequest.of(page, size);
-    return personaRepository.findAll(pageable).map(personaMapper::toDTO).getContent();
+    return personaRepository.findAll(pageable).stream().map(personaMapper::toDTO)
+        .collect(Collectors.toList());
 
   }
 
@@ -65,11 +63,16 @@ public class PersonaServiceImplementation implements PersonaService {
         .forDefaultLanguage()
         .matching(name);
 
-    Query query = TextQuery.queryText(criteria).sortByScore();
-    List<PersonaDTO> posts = mongoTemplate.find(query, PersonaDTO.class);
+    // Query query = TextQuery.queryText(criteria).sortByScore();
+    // List<PersonaDTO> posts = mongoTemplate.find(query, PersonaDTO.class);
 
+    List<PersonaDTO> posts = personaRepository
+        .findAllByNombre(name)
+        .stream()
+        .map(personaMapper::toDTO)
+        .collect(Collectors.toList());
     status = HttpStatus.OK;
-    logger.info("Retrieved users by name");
+    log.info("Retrieved users by name");
 
     return new ResponseEntity<List<PersonaDTO>>(posts, status);
 
@@ -87,12 +90,12 @@ public class PersonaServiceImplementation implements PersonaService {
     if (endDate.isBefore(startDate)) {
       //Error
       status = HttpStatus.BAD_REQUEST;
-      logger.warn("End date is before start date");
+      log.warn("End date is before start date");
     } else {
      /* personaRepository.findAllByBirthdayBetween(startDate.minusDays(1)
           , endDate.plusDays(1)).ifPresent(queryResult::addAll);*/
       status = HttpStatus.OK;
-      logger.info("Retrieved users by datarange");
+      log.info("Retrieved users by datarange");
     }
     return new ResponseEntity<>(queryResult, status);
 
@@ -101,12 +104,12 @@ public class PersonaServiceImplementation implements PersonaService {
   @Override
   public ResponseEntity<String> insertNewPerson(PersonaDTO person) {
 
-    logger.info("Inserting new person");
+    log.info("Inserting new person");
     System.out.println(person);
 
     try {
       PersonaEntity savedPerson = personaRepository.insert(personaMapper.toEntity(person));
-      logger.info("Person inserted");
+      log.info("Person inserted");
       MeilisearchService meilisearchService = MeilisearchService.getInstance();
       meilisearchService.addUserDocument(person);
       return new ResponseEntity<>("Person inserted with id:" + savedPerson,

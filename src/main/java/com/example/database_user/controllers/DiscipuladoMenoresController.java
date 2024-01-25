@@ -1,102 +1,81 @@
 package com.example.database_user.controllers;
 
 
-import com.example.database_user.controllers.dto.DiscipuladoMenores;
+import com.example.database_user.controllers.api.DiscipuladoMenoresAPI;
+import com.example.database_user.controllers.dto.DiscipuladoMenoresDTO;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.controllers.dto.Persona.PersonaNinos;
 import com.example.database_user.controllers.dto.Persona.SimplePersona;
-import com.example.database_user.services.DiscipuladoMenoresService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import com.example.database_user.domain.service.DiscipuladoMenoresService;
 import jakarta.validation.Valid;
-import java.util.List;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/discipuladomenores")
-@AllArgsConstructor
-public class DiscipuladoMenoresController {
+public class DiscipuladoMenoresController implements DiscipuladoMenoresAPI {
 
-  private final DiscipuladoMenoresService discipuladoMenoresService;
+  @Autowired
+  private DiscipuladoMenoresService discipuladoMenoresServiceImplementation;
 
+  @Override
   @GetMapping("/{id}")
-  public ResponseEntity<DiscipuladoMenores> fetchDiscipuladoMenoresById(@PathVariable String id) {
+  public ResponseEntity<DiscipuladoMenoresDTO> fetchDiscipuladoMenoresById(
+      @PathVariable String id) {
 
-    return discipuladoMenoresService.getDiscipuladoMenoresById(id);
+    return discipuladoMenoresServiceImplementation.getDiscipuladoMenoresById(id);
   }
 
-
+  @Override
   @GetMapping("/all")
-  public ResponseEntity<List<DiscipuladoMenores>> fetchAllDiscipuladoMenores() {
+  public ResponseEntity<List<DiscipuladoMenoresDTO>> fetchAllDiscipuladoMenores() {
 
-    return discipuladoMenoresService.fetchAllDiscipuladoMenores();
+    return discipuladoMenoresServiceImplementation.fetchAllDiscipuladoMenores();
   }
 
+  @Override
   @GetMapping("/{id}/inscritos")
   public ResponseEntity<List<SimplePersona>> fetchDiscipuladoMenoresInscritosById(
       @PathVariable String id) {
 
-    return discipuladoMenoresService.getDiscipuladoMenoresInscritosById(id);
+    return discipuladoMenoresServiceImplementation.getDiscipuladoMenoresInscritosById(id);
   }
 
+  @Override
   @GetMapping("/{id}/monitores")
   public ResponseEntity<List<PersonaDTO>> fetchDiscipuladoMenoresMonitoresById(
       @PathVariable String id) {
 
-    return discipuladoMenoresService.getDiscipuladoMenoresMonisById(id);
+    return discipuladoMenoresServiceImplementation.getDiscipuladoMenoresMonisById(id);
   }
 
-  //TODO verify the valid command
+  @Override
   @PostMapping("/insert")
   public ResponseEntity<String> insertNewDiscipuladoMenores(
-      @RequestBody @Valid DiscipuladoMenores discipuladoMenores) {
+      @RequestBody @Valid DiscipuladoMenoresDTO discipuladoMenoresDTO) {
 
-    return discipuladoMenoresService.insertNewDiscipuladoMenores(discipuladoMenores);
+    return discipuladoMenoresServiceImplementation.insertNewDiscipuladoMenores(
+        discipuladoMenoresDTO);
   }
 
-
+  @Override
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<String> deleteDiscipuladoMenores(@PathVariable String id) {
 
-    return discipuladoMenoresService.deleteDiscipuladoMenoresById(id);
+    return discipuladoMenoresServiceImplementation.deleteDiscipuladoMenoresById(id);
   }
 
-  @Operation(summary = "Update a DiscipuladoMenores record")
-  @ApiResponse(responseCode = "200", description = "DiscipuladoMenores record updated successfully", content = @Content(mediaType = "text/plain"))
-  @ApiResponse(responseCode = "400", description = "Invalid request payload")
+  @Override
   @PutMapping("/update")
   public ResponseEntity<String> updateDiscipuladoMenores(
-          @RequestBody @Valid DiscipuladoMenores discipuladoMenores) {
-    return discipuladoMenoresService.updateDiscipuladoMenores(discipuladoMenores);
+      @RequestBody @Valid DiscipuladoMenoresDTO discipuladoMenoresDTO) {
+    return discipuladoMenoresServiceImplementation.updateDiscipuladoMenores(discipuladoMenoresDTO);
   }
 
-
-  @Operation(operationId = "inserNewInscription", summary = "Insert a new inscription to one discipuladomenores",
-      tags = {
-          "DiscipuladoMenores"},
-      parameters = {
-          @Parameter(in = ParameterIn.PATH, name = "inscritoNinos", description = "The one to be inserted"),
-          @Parameter(name = "iddiscipuladomenores", description =
-              "Id of the DiscipuladoMenores where we " +
-                  "want to insert it")},
-      responses = {
-          @ApiResponse(responseCode = "200", description = "User correctly inscribed", content =
-          @Content(schema = @Schema(implementation = PersonaNinos.class))),
-          @ApiResponse(responseCode = "404", description = "Employee not found")}
-  )
+  @Override
   @PostMapping("/insert-inscription/{iddiscipuladomenores}")
   public ResponseEntity<String> inserNewInscription(
       @RequestBody @Valid PersonaNinos personaNinos,

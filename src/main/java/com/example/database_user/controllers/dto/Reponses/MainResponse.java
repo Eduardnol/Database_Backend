@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MainResponse {
-
     private String message;
     private HttpStatus status;
     private Object details;

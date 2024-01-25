@@ -2,6 +2,7 @@ package com.example.database_user.controllers;
 
 import com.example.database_user.controllers.api.PersonaAPI;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.domain.service.PersonaService;
 import com.example.database_user.controllers.impl.BaseController;
 import com.example.database_user.services.PersonaServiceImplementation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonaController extends BaseController implements PersonaAPI {
 
   @Autowired
-  private PersonaServiceImplementation personaServiceImplementation;
+  private PersonaService personaServiceImplementation;
 
   @Override
   @GetMapping("/allpeople")
@@ -65,8 +66,7 @@ public class PersonaController extends BaseController implements PersonaAPI {
   @Override
   @PostMapping(value = "/insertnew/")
   public ResponseEntity<String> insertNewUser(@RequestBody @Valid PersonaDTO person) {
-    PersonaDTO newBuiltPersonaDTO = person;
-    return personaServiceImplementation.insertNewPerson(newBuiltPersonaDTO);
+    return personaServiceImplementation.insertNewPerson(person);
 
   }
 
