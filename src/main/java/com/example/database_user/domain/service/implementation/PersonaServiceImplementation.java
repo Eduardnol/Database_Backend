@@ -1,16 +1,16 @@
-package com.example.database_user.services;
+package com.example.database_user.domain.service.implementation;
 
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.domain.model.mapper.PersonaMapper;
 import com.example.database_user.domain.service.PersonaService;
 import com.example.database_user.repositories.PersonaRepository;
 import com.example.database_user.repositories.entity.PersonaEntity;
+import com.example.database_user.services.MeilisearchService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -28,12 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PersonaServiceImplementation implements PersonaService {
 
-  private static final Logger logger = LogManager.getLogger(PersonaServiceImplementation.class);
   @Autowired
   private PersonaRepository personaRepository;
-  @Autowired
-  private MongoTemplate mongoTemplate;
-
   @Autowired
   private PersonaMapper personaMapper;
 

@@ -7,6 +7,7 @@ import com.example.database_user.controllers.dto.ResponseMessage;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 @AllArgsConstructor
 public class FileStorageController {
 
+    @Autowired
     private final FileStorageService storageService;
 
 

@@ -1,4 +1,4 @@
-package com.example.database_user.services;
+package com.example.database_user.domain.service.implementation;
 
 import com.example.database_user.controllers.dto.DiscipuladoMenoresDTO;
 import com.example.database_user.controllers.dto.PersonGroups;
@@ -27,14 +27,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Service
 public class DiscipuladoMenoresServiceImplementation implements DiscipuladoMenoresService {
 
-    private final DiscipuladoMenoresRepository discipuladoMenoresRepository;
-    private final PersonaService personaServiceImplementation;
     @Autowired
-    private final DiscipuladoMenoresMapper discipuladoMenoresMapper;
+    private DiscipuladoMenoresRepository discipuladoMenoresRepository;
+    @Autowired
+    private PersonaService personaServiceImplementation;
+    @Autowired
+    private DiscipuladoMenoresMapper discipuladoMenoresMapper;
 
     /***************************DiscipuladoMenoresDTO as a service***************************/
     @Override

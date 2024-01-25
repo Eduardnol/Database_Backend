@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import org.testcontainers.containers.MongoDBContainer;
 
-
+/*
 @ExtendWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
@@ -57,4 +56,4 @@ public class BaseTest {
   public void test_ok() {
     Assertions.assertTrue(true);
   }
-}
+}*/

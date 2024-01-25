@@ -7,7 +7,7 @@ import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.controllers.dto.Persona.PersonaNinos;
 import com.example.database_user.controllers.dto.Persona.SimplePersona;
 import com.example.database_user.domain.service.DiscipuladoMenoresService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

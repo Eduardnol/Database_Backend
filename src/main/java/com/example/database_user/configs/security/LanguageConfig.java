@@ -5,15 +5,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Locale;
 
+import java.util.Locale;
+/*
 @Configuration
 public class LanguageConfig implements WebMvcConfigurer {
 
@@ -47,17 +47,16 @@ public class LanguageConfig implements WebMvcConfigurer {
     return LocaleContextHolder.getLocale();
   }
 
-  private class SmartLocaleResolver implements LocaleResolver {
 
-    @Override
-    public Locale resolveLocale(final HttpServletRequest request) {
-      return request.getLocale();
-    }
+}
+ abstract class SmartLocaleResolver implements LocaleResolver {
 
-    @Override
-    public void setLocale(final HttpServletRequest request, final HttpServletResponse response, final Locale locale) {
-      LocaleContextHolder.setLocale(locale);
-    }
+  public Locale resolveLocale(HttpServletRequest request) {
+    return request.getLocale();
+  }
+
+  public void setLocale(HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Locale locale) {
+    LocaleContextHolder.setLocale(locale);
   }
 }
-}
+*/
