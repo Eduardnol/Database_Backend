@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,16 +30,18 @@ public class PersonaController extends BaseController implements PersonaAPI {
 
   @Override
   @GetMapping("/allpeople")
-  public ResponseEntity<MainResponse> fetchAllPeople(
+  public ResponseEntity<List<PersonaDTO>> fetchAllPeople(
       @RequestParam(defaultValue = "0") Integer page,
       @RequestParam(defaultValue = "10") Integer size) {
 
-    return new ResponseEntity<>(MainResponse.builder()
+    /*return new ResponseEntity<>(MainResponse.builder()
         .message("All people fetched successfully")
         .status(HttpStatus.OK)
         .details(personaServiceImplementation.fetchAllPeople(page, size))
         .build(),
-        HttpStatus.OK);
+        HttpStatus.OK);*/
+
+    return new ResponseEntity<>(personaServiceImplementation.fetchAllPeople(page, size),HttpStatus.OK);
   }
 
   @Override

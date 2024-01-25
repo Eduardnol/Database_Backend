@@ -31,7 +31,7 @@ public interface PersonaAPI {
               )})
   })
   @GetMapping("/allpeople")
-  ResponseEntity<MainResponse> fetchAllPeople(
+  ResponseEntity<List<PersonaDTO>> fetchAllPeople(
       @RequestParam(defaultValue = "0") Integer page,
       @RequestParam(defaultValue = "10") Integer size);
 
