@@ -2,6 +2,7 @@ package com.example.database_user.controllers;
 
 import com.example.database_user.controllers.api.PersonaAPI;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.controllers.impl.BaseController;
 import com.example.database_user.services.PersonaServiceImplementation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "api/v1/people")
-public class PersonaController implements PersonaAPI {
+public class PersonaController extends BaseController implements PersonaAPI {
 
   @Autowired
   private PersonaServiceImplementation personaServiceImplementation;

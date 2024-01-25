@@ -25,14 +25,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@AllArgsConstructor
 @Service
+@Transactional
 public class PersonaServiceImplementation implements PersonaService {
 
   private static final Logger logger = LogManager.getLogger(PersonaServiceImplementation.class);
-  private final PersonaRepository personaRepository;
-  private final MongoTemplate mongoTemplate;
+  @Autowired
+  private PersonaRepository personaRepository;
+  @Autowired
+  private MongoTemplate mongoTemplate;
 
   @Autowired
   private PersonaMapper personaMapper;
