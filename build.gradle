@@ -28,7 +28,8 @@ dependencies {
     api libs.org.apache.logging.log4j.log4j.core
     api libs.org.apache.logging.log4j.log4j.api
 
-    testImplementation libs.org.junit.jupiter.junit.jupiter.api
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+
 
 
     api libs.org.hibernate.validator.hibernate.validator
@@ -83,4 +84,14 @@ tasks.withType(Javadoc) {
 
 tasks.withType(JavaCompile) {
     options.compilerArgs << '-parameters'
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+
+    maxHeapSize = '1G'
+
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
 }
