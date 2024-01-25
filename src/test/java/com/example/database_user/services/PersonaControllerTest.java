@@ -44,7 +44,7 @@ public class PersonaControllerTest {
 
     @Test
     public void getById_returnsNotFoundWhenIdDoesNotExist() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID)
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID, "nonexistent")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andReturn();
@@ -54,7 +54,7 @@ public class PersonaControllerTest {
 
     @Test
     public void fetchPeopleByName_returnsNotFoundWhenNameDoesNotExist() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID)
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID, "nonexistent")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andReturn();
@@ -74,7 +74,7 @@ public class PersonaControllerTest {
 
     @Test
     public void deleteUser_returnsNotFoundWhenIdDoesNotExist() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(DELETE_BY_ID)
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(DELETE_BY_ID, "nonexistent")
                 .param("id", "nonexistent")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())

@@ -70,7 +70,7 @@ public class PersonaController extends BaseController implements PersonaAPI {
   }
 
   @Override
-  @PostMapping(value = "/insertnew/")
+  @PostMapping(value = "/insertnew")
   public ResponseEntity<String> insertNewUser(@RequestBody @Valid PersonaDTO person) {
     return personaServiceImplementation.insertNewPerson(person);
 
@@ -85,7 +85,7 @@ public class PersonaController extends BaseController implements PersonaAPI {
   }
 
   @Override
-  @PutMapping(value = "/update/")
+  @PutMapping(value = "/update")
   public ResponseEntity<String> updateExisting(
       @Parameter(description = "Person with the new info to be updated") @RequestBody PersonaDTO personaDTO) {
 
