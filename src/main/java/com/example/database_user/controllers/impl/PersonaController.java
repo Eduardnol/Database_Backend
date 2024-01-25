@@ -1,9 +1,9 @@
-package com.example.database_user.controllers;
+package com.example.database_user.controllers.impl;
 
 import com.example.database_user.controllers.api.PersonaAPI;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.controllers.dto.Reponses.MainResponse;
 import com.example.database_user.domain.service.PersonaService;
-import com.example.database_user.controllers.impl.BaseController;
 import io.swagger.v3.oas.annotations.Parameter;
 import java.util.List;
 import javax.validation.Valid;
@@ -29,12 +29,16 @@ public class PersonaController extends BaseController implements PersonaAPI {
 
   @Override
   @GetMapping("/allpeople")
-  public ResponseEntity<List<PersonaDTO>> fetchAllPeople(
+  public ResponseEntity<MainResponse> fetchAllPeople(
       @RequestParam(defaultValue = "0") Integer page,
       @RequestParam(defaultValue = "10") Integer size) {
 
-    return ResponseEntity.status(HttpStatus.OK).body(
-        personaServiceImplementation.fetchAllPeople(page, size));
+    return new ResponseEntity<>(MainResponse.builder()
+        .message("All people fetched successfully")
+        .status(HttpStatus.OK)
+        .details(personaServiceImplementation.fetchAllPeople(page, size))
+        .build(),
+        HttpStatus.OK);
   }
 
   @Override

@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      uri: ${DB_URI}
+      auto-index-creation: true
+  servlet:
+    multipart:
+      max-file-size: 5000KB
+      max-request-size: 5000KB
+## Hibernate properties
+#spring.jpa.hibernate.use-new-id-generator-mappings=false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false

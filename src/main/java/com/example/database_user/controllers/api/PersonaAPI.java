@@ -1,6 +1,7 @@
 package com.example.database_user.controllers.api;
 
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.controllers.dto.Reponses.MainResponse;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,11 +27,11 @@ public interface PersonaAPI {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Found all Users",
           content = {
-              @Content(mediaType = "application/json",
-                  schema = @Schema(implementation = PersonaDTO.class))})
+              @Content(mediaType = "application/json"
+              )})
   })
   @GetMapping("/allpeople")
-  ResponseEntity<List<PersonaDTO>> fetchAllPeople(
+  ResponseEntity<MainResponse> fetchAllPeople(
       @RequestParam(defaultValue = "0") Integer page,
       @RequestParam(defaultValue = "10") Integer size);
 
