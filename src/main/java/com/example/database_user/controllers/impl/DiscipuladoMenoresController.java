@@ -1,4 +1,4 @@
-package com.example.database_user.controllers;
+package com.example.database_user.controllers.impl;
 
 
 import com.example.database_user.controllers.api.DiscipuladoMenoresAPI;
@@ -83,7 +83,7 @@ public class DiscipuladoMenoresController implements DiscipuladoMenoresAPI {
 
   @Override
   @PostMapping("/insert-inscription/{iddiscipuladomenores}")
-  public ResponseEntity<String> inserNewInscription(
+  public ResponseEntity<String> insertNewInscription(
       @RequestBody @Valid PersonaNinos personaNinos,
       @PathVariable String iddiscipuladomenores) {
 
