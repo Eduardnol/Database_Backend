@@ -1,6 +1,7 @@
 package com.example.database_user.controllers.api;
 
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.exception.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,21 +36,26 @@ public interface PersonaAPI {
       @RequestParam(defaultValue = "10") Integer size);
 
   @Operation(summary = "Get a user by id")
-  @ApiResponses(value = {
+  @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Found the user",
           content = {
               @Content(mediaType = "application/json",
-                  schema = @Schema(implementation = PersonaDTO.class))})
+                  schema = @Schema(implementation = PersonaDTO.class))}),
+      @ApiResponse(responseCode = "404", description = "User not found",
+          content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping("/getbyid/{id}")
   ResponseEntity<PersonaDTO> getById(@PathVariable("id") String id);
 
   @Operation(summary = "Search for users with specific name")
-  @ApiResponses(value = {
+  @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Found the user",
           content = {
               @Content(mediaType = "application/json",
-                  schema = @Schema(implementation = PersonaDTO.class))})
+                  schema = @Schema(implementation = PersonaDTO.class))}),
+      @ApiResponse(responseCode = "404", description = "User not found",
+          content = @Content(schema = @Schema(implementation = ApiError.class))),
+
   })
   @GetMapping(value = "/search/{name}")
   ResponseEntity<List<PersonaDTO>> fetchPeopleByName(
@@ -69,21 +75,26 @@ public interface PersonaAPI {
       @Parameter(description = "Final value of the date") @PathVariable("final") String finalDate);
 
   @Operation(summary = "Insert a new user")
-  @ApiResponses(value = {
+  @ApiResponses({
       @ApiResponse(responseCode = "200", description = "User correctly inserted",
           content = {
               @Content(mediaType = "application/json",
-                  schema = @Schema(implementation = PersonaDTO.class))})
+                  schema = @Schema(implementation = PersonaDTO.class))}),
+      @ApiResponse(responseCode = "400", description = "Bad request",
+          content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @PostMapping(value = "/insertnew")
   ResponseEntity<String> insertNewUser(@RequestBody @Valid PersonaDTO person);
 
   @Operation(summary = "Delete a user by id")
-  @ApiResponses(value = {
+  @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Deleted user",
           content = {
               @Content(mediaType = "application/json",
-                  schema = @Schema(implementation = PersonaDTO.class))})})
+                  schema = @Schema(implementation = PersonaDTO.class))}),
+      @ApiResponse(responseCode = "400", description = "Bad request",
+          content = @Content(schema = @Schema(implementation = ApiError.class))),
+  })
 
   @DeleteMapping(value = "/deletebyid")
   ResponseEntity<String> deleteUser(
