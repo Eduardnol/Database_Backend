@@ -4,15 +4,16 @@ import com.example.database_user.controllers.dto.Custom;
 import com.example.database_user.controllers.dto.FileStorage;
 import com.example.database_user.controllers.dto.PersonGroups;
 import com.example.database_user.controllers.dto.Persona.PersonaNinos;
-import com.example.database_user.controllers.dto.Persona.PersonaSacramentsDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

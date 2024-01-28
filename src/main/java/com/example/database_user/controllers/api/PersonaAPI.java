@@ -1,16 +1,15 @@
 package com.example.database_user.controllers.api;
 
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
-import com.example.database_user.controllers.dto.Reponses.MainResponse;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +19,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Api(value = "PersonaAPI", description = "API de Persona")
+@OpenAPIDefinition(tags = {
+    @io.swagger.v3.oas.annotations.tags.Tag(name = "Persona", description = "API de Persona")
+})
 public interface PersonaAPI {
 
   @Operation(summary = "Get all users registered")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Found all Users",
           content = {
-              @Content(mediaType = "application/json"
+              @Content(mediaType = "application/json", schema = @Schema(implementation = PersonaDTO.class)
               )})
   })
   @GetMapping("/allpeople")
@@ -35,6 +36,13 @@ public interface PersonaAPI {
       @RequestParam(defaultValue = "0") Integer page,
       @RequestParam(defaultValue = "10") Integer size);
 
+  @Operation(summary = "Get a user by id")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Found the user",
+          content = {
+              @Content(mediaType = "application/json",
+                  schema = @Schema(implementation = PersonaDTO.class))})
+  })
   @GetMapping("/getbyid/{id}")
   ResponseEntity<PersonaDTO> getById(@PathVariable("id") String id);
 

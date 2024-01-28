@@ -4,14 +4,13 @@ import com.example.database_user.controllers.dto.DiscipuladoMenoresDTO;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.controllers.dto.Persona.PersonaNinos;
 import com.example.database_user.controllers.dto.Persona.SimplePersona;
-import io.swagger.annotations.ApiModel;
-import javax.validation.Valid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@ApiModel(description = "DiscipuladoMenoresDTO API")
  public interface DiscipuladoMenoresAPI {
 
   @GetMapping("/{id}")

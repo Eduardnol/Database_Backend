@@ -17,6 +17,7 @@ dependencies {
     api libs.org.springframework.boot.spring.boot.starter.actuator
     api libs.org.springframework.security.spring.security.web
     api libs.org.springframework.spring.core
+    implementation 'org.springframework.boot:spring-boot-starter-validation:3.2.2'
     testImplementation libs.org.springframework.boot.spring.boot.starter.test
     testImplementation libs.org.springframework.restdocs.spring.restdocs.mockmvc
     testImplementation libs.org.springframework.boot.spring.boot.testcontainers
@@ -35,8 +36,9 @@ dependencies {
     api libs.org.hibernate.validator.hibernate.validator
 
 
-    api libs.org.springdoc.springdoc.openapi.ui
-    api libs.org.springdoc.springdoc.openapi.data.rest
+/*    api libs.org.springdoc.springdoc.openapi.ui
+    api libs.org.springdoc.springdoc.openapi.data.rest*/
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
 
     api libs.com.meilisearch.sdk.meilisearch.java
@@ -50,9 +52,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
 
-    implementation 'io.springfox:springfox-swagger2:3.0.0'
-    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    //implementation 'io.springfox:springfox-swagger2:3.0.0'
+    //implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    //implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
 
 
