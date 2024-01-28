@@ -3,6 +3,7 @@ package com.example.database_user.domain.service.implementation;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.domain.model.mapper.PersonaMapper;
 import com.example.database_user.domain.service.PersonaService;
+import com.example.database_user.exception.UsersNotFoundException;
 import com.example.database_user.repositories.PersonaRepository;
 import com.example.database_user.repositories.entity.PersonaEntity;
 import com.example.database_user.services.MeilisearchService;
@@ -67,8 +68,13 @@ public class PersonaServiceImplementation implements PersonaService {
         .stream()
         .map(personaMapper::toDTO)
         .collect(Collectors.toList());
-    status = HttpStatus.OK;
-    log.info("Retrieved users by name");
+
+    if (posts.isEmpty()) {
+      throw new UsersNotFoundException();
+    } else {
+      status = HttpStatus.OK;
+      log.info("Retrieved users by name");
+    }
 
     return new ResponseEntity<List<PersonaDTO>>(posts, status);
 
@@ -102,7 +108,6 @@ public class PersonaServiceImplementation implements PersonaService {
 
     log.info("Inserting new person");
     System.out.println(person);
-
 
     try {
       PersonaEntity savedPerson = personaRepository.save(personaMapper.toEntity(person));
