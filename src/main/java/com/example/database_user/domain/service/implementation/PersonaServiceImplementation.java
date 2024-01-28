@@ -105,7 +105,7 @@ public class PersonaServiceImplementation implements PersonaService {
 
 
     try {
-      PersonaEntity savedPerson = personaRepository.insert(personaMapper.toEntity(person));
+      PersonaEntity savedPerson = personaRepository.save(personaMapper.toEntity(person));
       log.info("Person inserted");
       MeilisearchService meilisearchService = MeilisearchService.getInstance();
       meilisearchService.updateDocument(person);
@@ -126,7 +126,6 @@ public class PersonaServiceImplementation implements PersonaService {
       MeilisearchService meilisearchService = MeilisearchService.getInstance();
       meilisearchService.deleteDocument(personID);
     } catch (HttpMessageNotReadableException e) {
-      System.out.println("Data Access");
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
@@ -137,7 +136,6 @@ public class PersonaServiceImplementation implements PersonaService {
   //Todo this method does not work well when having other fields in the same document that are not in the same class
   @Override
   public ResponseEntity<String> updatePerson(PersonaDTO person) {
-
     personaRepository.save(personaMapper.toEntity(person));
     MeilisearchService meilisearchService = MeilisearchService.getInstance();
     meilisearchService.updateDocument(person);

@@ -14,3 +14,32 @@ spring:
       ddl-auto: update
     show-sql: false
     open-in-view: false
+  security:
+    user:
+      name: admin
+      password: admin
+    oauth2:
+      authorizationserver:
+        client:
+            client-id: client
+            client-secret: secret
+            authorized-grant-types: authorization_code,refresh_token,password,client_credentials
+            scope: read,write
+            autoapprove: true
+            redirect-uri: http://localhost:8080/login/oauth2/code/custom
+            access-token-validity-seconds: 60
+            refresh-token-validity-seconds: 120
+management:
+  endpoints:
+    web:
+      cors:
+        allowed-origins: "localhost"
+        allowed-methods: "GET, PUT, POST, DELETE, OPTIONS"
+        allow-credentials: off
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+
+

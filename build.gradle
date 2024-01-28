@@ -50,7 +50,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
 
-    api libs.io.springfox.springfox.swagger2
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+
+
     testImplementation libs.org.testcontainers.junit.jupiter
     api libs.org.apache.tomcat.embed.tomcat.embed.core
     testImplementation libs.org.testcontainers.mongodb
