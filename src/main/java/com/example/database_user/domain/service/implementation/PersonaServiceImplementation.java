@@ -3,6 +3,7 @@ package com.example.database_user.domain.service.implementation;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.domain.model.mapper.PersonaMapper;
 import com.example.database_user.domain.service.PersonaService;
+import com.example.database_user.exception.ErrorSavingIntoDBException;
 import com.example.database_user.exception.UsersNotFoundException;
 import com.example.database_user.repositories.PersonaRepository;
 import com.example.database_user.repositories.entity.PersonaEntity;
@@ -38,16 +39,20 @@ public class PersonaServiceImplementation implements PersonaService {
   public List<PersonaDTO> fetchAllPeople(Integer page, Integer size) {
 
     Pageable pageable = PageRequest.of(page, size);
-    return personaRepository.findAll(pageable).stream().map(personaMapper::toDTO)
-        .collect(Collectors.toList());
+    List<PersonaDTO> people = personaRepository.findAll(pageable).stream().map(personaMapper::toDTO)
+        .toList();
 
+    if (people.isEmpty()) {
+      throw new UsersNotFoundException();
+    }
+    return people;
   }
 
   @Override
   public ResponseEntity<PersonaDTO> findPersonById(String id) {
     PersonaDTO personaDTO = personaRepository.findById(id).map(personaMapper::toDTO).orElse(null);
     if (personaDTO == null) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new UsersNotFoundException();
     }
     return new ResponseEntity<>(personaDTO, HttpStatus.OK);
   }
@@ -118,7 +123,7 @@ public class PersonaServiceImplementation implements PersonaService {
           HttpStatus.CREATED);
     } catch (Exception e) {
       log.error("Error inserting person" + e.getMessage());
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      throw new ErrorSavingIntoDBException();
     }
 
   }

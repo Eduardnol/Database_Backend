@@ -21,4 +21,14 @@ public class GlobalExceptionHandler {
     apiError.setTimestamp(LocalDateTime.now());
     return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
   }
+
+  @ExceptionHandler(ErrorSavingIntoDBException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ResponseEntity<ApiError> handleSavingIntoDBException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    apiError.setErrorMessage("Error saving into database");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 }

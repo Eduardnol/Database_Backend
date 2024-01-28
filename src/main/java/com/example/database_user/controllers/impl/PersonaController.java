@@ -3,15 +3,15 @@ package com.example.database_user.controllers.impl;
 import com.example.database_user.controllers.api.PersonaAPI;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.domain.service.PersonaService;
-import jakarta.validation.Valid;
 import java.util.List;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Log4j2
 public class PersonaController extends BaseController implements PersonaAPI {
 
   @Autowired
@@ -54,7 +54,7 @@ public class PersonaController extends BaseController implements PersonaAPI {
   }
 
   @Override
-  public ResponseEntity<String> insertNewUser(@RequestBody @Valid PersonaDTO person) {
+  public ResponseEntity<String> insertNewUser(PersonaDTO person) {
     return personaServiceImplementation.insertNewPerson(person);
   }
 
