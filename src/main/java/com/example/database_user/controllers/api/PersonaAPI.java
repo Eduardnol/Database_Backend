@@ -1,13 +1,13 @@
 package com.example.database_user.controllers.api;
 
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@OpenAPIDefinition(tags = {
-    @io.swagger.v3.oas.annotations.tags.Tag(name = "Persona", description = "API de Persona")
-})
+@Tag(name = "Persona", description = "Obtain all information relative to the users")
 public interface PersonaAPI {
 
   @Operation(summary = "Get all users registered")
@@ -77,7 +75,7 @@ public interface PersonaAPI {
               @Content(mediaType = "application/json",
                   schema = @Schema(implementation = PersonaDTO.class))})
   })
-  @PostMapping(value = "/insertnew/")
+  @PostMapping(value = "/insertnew")
   ResponseEntity<String> insertNewUser(@RequestBody @Valid PersonaDTO person);
 
   @Operation(summary = "Delete a user by id")
@@ -100,7 +98,7 @@ public interface PersonaAPI {
                   schema = @Schema(implementation = PersonaDTO.class))})
   })
 
-  @PutMapping(value = "/update/")
+  @PutMapping(value = "/update")
   ResponseEntity<String> updateExisting(
       @Parameter(description = "Person with the new info to be updated") @RequestBody PersonaDTO personaDTO);
 

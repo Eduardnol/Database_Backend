@@ -3,7 +3,6 @@ package com.example.database_user.controllers.impl;
 import com.example.database_user.controllers.api.PersonaAPI;
 import com.example.database_user.controllers.dto.Persona.PersonaDTO;
 import com.example.database_user.domain.service.PersonaService;
-import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,8 @@ public class PersonaController extends BaseController implements PersonaAPI {
         .build(),
         HttpStatus.OK);*/
 
-    return new ResponseEntity<>(personaServiceImplementation.fetchAllPeople(page, size),HttpStatus.OK);
+    return new ResponseEntity<>(personaServiceImplementation.fetchAllPeople(page, size),
+        HttpStatus.OK);
   }
 
   @Override
@@ -51,8 +51,7 @@ public class PersonaController extends BaseController implements PersonaAPI {
   @Override
   @GetMapping(value = "/search/{name}")
   public ResponseEntity<List<PersonaDTO>> fetchPeopleByName(
-      @Parameter(description = "Name of the person to be " +
-          "searched") @PathVariable("name") String name) {
+      @PathVariable("name") String name) {
 
     return personaServiceImplementation.fetchPeopleByName(name);
   }
@@ -60,8 +59,8 @@ public class PersonaController extends BaseController implements PersonaAPI {
   @Override
   @GetMapping(value = "/daterange/{initial}/{final}")
   public ResponseEntity<List<PersonaDTO>> fetchDateRangePeople(
-      @Parameter(description = "Initial value of the date") @PathVariable("initial") String initialDate,
-      @Parameter(description = "Final value of the date") @PathVariable("final") String finalDate) {
+      @PathVariable("initial") String initialDate,
+      @PathVariable("final") String finalDate) {
 
     return personaServiceImplementation.fetchBirthRangePeople(initialDate, finalDate);
 
@@ -76,7 +75,7 @@ public class PersonaController extends BaseController implements PersonaAPI {
   @Override
   @DeleteMapping(value = "/deletebyid")
   public ResponseEntity<String> deleteUser(
-      @Parameter(description = "Id of the user to be deleted") @RequestParam(name = "id") String identificador) {
+      @RequestParam(name = "id") String identificador) {
 
     return personaServiceImplementation.deletePersonById(identificador);
   }
@@ -84,7 +83,7 @@ public class PersonaController extends BaseController implements PersonaAPI {
   @Override
   @PutMapping(value = "/update")
   public ResponseEntity<String> updateExisting(
-      @Parameter(description = "Person with the new info to be updated") @RequestBody PersonaDTO personaDTO) {
+      @RequestBody PersonaDTO personaDTO) {
 
     //TODO what happens to update when we add the discipuladoMenores fields
     return personaServiceImplementation.updatePerson(personaDTO);
@@ -94,8 +93,8 @@ public class PersonaController extends BaseController implements PersonaAPI {
   @Override
   @GetMapping(value = "/sort")
   public ResponseEntity<List<PersonaDTO>> sortPeopleByName(
-      @Parameter(description = "specify ordening field (name or surname)") @RequestParam(name = "field") String field,
-      @Parameter(description = "Specify direction (asc or desc)") @RequestParam(name = "direction") String direction) {
+      @RequestParam(name = "field") String field,
+      @RequestParam(name = "direction") String direction) {
 
     if (field.equals("name")) {
       return personaServiceImplementation.sortPeopleByName(direction);
