@@ -34,8 +34,16 @@ management:
   endpoints:
     web:
       cors:
-        allowed-origins: "localhost"
-        allowed-methods: "GET, PUT, POST, DELETE, OPTIONS"
+        allowedOrigins:
+          - localhost
+          - http://localhost:8888
+          - http://localhost:4200
+        allowedMethods:
+          - GET
+          - POST
+          - DELETE
+          - PUT
+          - OPTIONS
         allowed-origin-patterns: "*"
 springdoc:
   swagger-ui:
