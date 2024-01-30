@@ -164,8 +164,10 @@ public class PersonaServiceImplementation implements PersonaService {
     Sort.Direction sort_dir;
     if (sort.equals("asc")) {
       sort_dir = Sort.Direction.ASC;
-    } else {
+    } else if (sort.equals("desc")){
       sort_dir = Sort.Direction.DESC;
+    } else{
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     HttpStatus status = HttpStatus.ACCEPTED;
     List<PersonaDTO> persons = personaRepository.findAll(Sort.by(sort_dir, "nombre")).stream()
@@ -186,8 +188,10 @@ public class PersonaServiceImplementation implements PersonaService {
     Sort.Direction sort_dir;
     if (sort.equals("asc")) {
       sort_dir = Sort.Direction.ASC;
-    } else {
+    } else if (sort.equals("desc")){
       sort_dir = Sort.Direction.DESC;
+    } else{
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     HttpStatus status = HttpStatus.ACCEPTED;
