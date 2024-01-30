@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,22 +22,21 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import org.testcontainers.containers.MongoDBContainer;
 
-/*
-@ExtendWith(SpringRunner.class)
+
 @SpringBootTest
 @ActiveProfiles("test")
-@WithUserDetails(value = "test", userDetailsServiceBeanName = "authHelper")
+@WithMockUser(username = "admin", password = "admin")
 public class BaseTest {
 
   @Autowired
   private ClockProvider clockProvider;
-
+/*
   @ClassRule
-  public static MongoDBContainer mongoDBContainer = TestMongoDBContainer.getInstance();
+  public static MongoDBContainer mongoDBContainer = TestMongoDBContainer.getInstance();*/
 
   @BeforeAll
   static void arrancaContenedor() {
-    mongoDBContainer.start();
+   // mongoDBContainer.start();
   }
 
   @AfterEach
@@ -56,4 +58,4 @@ public class BaseTest {
   public void test_ok() {
     Assertions.assertTrue(true);
   }
-}*/
+}

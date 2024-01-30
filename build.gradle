@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'com.avast.gradle.docker-compose' version '0.14.11'
 }
 
 repositories {
@@ -21,9 +22,13 @@ dependencies {
     testImplementation libs.org.springframework.boot.spring.boot.starter.test
     testImplementation libs.org.springframework.restdocs.spring.restdocs.mockmvc
     testImplementation libs.org.springframework.boot.spring.boot.testcontainers
+    testImplementation 'org.springframework.security:spring-security-test:6.2.1'
+
     implementation 'org.springframework.hateoas:spring-hateoas:2.2.0'
     implementation 'org.springframework.plugin:spring-plugin-core:3.0.0'
     runtimeOnly libs.org.springframework.boot.spring.boot.devtools
+    implementation 'com.avast.gradle:gradle-docker-compose-plugin:0.17.6'
+
 
 
     api libs.org.apache.logging.log4j.log4j.core
@@ -101,4 +106,14 @@ tasks.named('test', Test) {
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
     }
+}
+dockerCompose {
+    useComposeFiles = ['docker-compose.yaml'] // specify the Docker Compose file
+    isRequiredBy(build as Task) // specify that Docker Compose is required by the test task
+}
+test {
+    dependsOn composeUp
+}
+build {
+    finalizedBy composeDown
 }
