@@ -19,14 +19,6 @@ public class SpringSecurityConfiguration {
   private final JwtAuthenticationFilter jwtAuthFilter;
   private final AuthenticationProvider authenticationProvider;
 
-/*  @Bean
-  public UserDetailsService singleUser() {
-    InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-    manager.createUser(
-        User.withDefaultPasswordEncoder().username("admin").password("admin").roles("ADMIN")
-            .build());
-    return manager;
-  }*/
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

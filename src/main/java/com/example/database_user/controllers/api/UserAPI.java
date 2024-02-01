@@ -17,8 +17,8 @@ public interface UserAPI {
   ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest);
 
   @PostMapping("/authenticate")
-  ResponseEntity<AuthenticationResponse> register(
-      @RequestBody AuthenticationRequest registerRequest);
+  ResponseEntity<AuthenticationResponse> authenticate(
+      @RequestBody AuthenticationRequest authenticateRequest);
 
 
 }

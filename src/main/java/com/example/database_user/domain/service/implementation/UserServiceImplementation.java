@@ -49,7 +49,6 @@ public class UserServiceImplementation implements UserService {
             request.getEmail(),
             request.getPassword()
         )
-
     );
     //They are both username and password correct at this point
     var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
