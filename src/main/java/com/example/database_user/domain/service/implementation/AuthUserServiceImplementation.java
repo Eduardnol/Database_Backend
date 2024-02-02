@@ -8,6 +8,7 @@ import com.example.database_user.controllers.dto.AuthUserDTO;
 import com.example.database_user.controllers.enums.Role;
 import com.example.database_user.domain.model.mapper.AuthUserMapper;
 import com.example.database_user.domain.service.AuthUserService;
+import com.example.database_user.exception.UserAlreadyExistsException;
 import com.example.database_user.repositories.AuthUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,7 +37,7 @@ public class AuthUserServiceImplementation implements AuthUserService {
         .role(Role.USER)
         .build();
     authUserRepository.findByEmail(registerRequest.getEmail()).ifPresent(u -> {
-      throw new IllegalArgumentException("User with email " + u.getEmail() + " already exists");
+      throw new UserAlreadyExistsException();
     });
     authUserRepository.save(authUserMapper.toEntity(user));
 

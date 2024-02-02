@@ -31,4 +31,14 @@ public class GlobalExceptionHandler {
     apiError.setTimestamp(LocalDateTime.now());
     return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
   }
+
+  @ExceptionHandler(UserAlreadyExistsException.class)
+  @ResponseStatus(HttpStatus.CONFLICT)
+  public ResponseEntity<ApiError> handleUserAlreadyExistsException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.CONFLICT.value());
+    apiError.setErrorMessage("User already exists with that email");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+  }
 }
