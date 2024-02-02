@@ -35,6 +35,9 @@ public class AuthUserServiceImplementation implements AuthUserService {
         .password(passwordEncoder.encode(registerRequest.getPassword()))
         .role(Role.USER)
         .build();
+    authUserRepository.findByEmail(registerRequest.getEmail()).ifPresent(u -> {
+      throw new IllegalArgumentException("User with email " + u.getEmail() + " already exists");
+    });
     authUserRepository.save(authUserMapper.toEntity(user));
 
     var jwtToken = jwtService.generateToken(user);
