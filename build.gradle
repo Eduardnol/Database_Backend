@@ -57,6 +57,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.4'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.4'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
 
 
     //implementation 'io.springfox:springfox-swagger2:3.0.0'
