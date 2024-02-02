@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Builder
-public class UserDTO implements UserDetails {
+public class AuthUserDTO implements UserDetails {
 
   @Required
   private String id;

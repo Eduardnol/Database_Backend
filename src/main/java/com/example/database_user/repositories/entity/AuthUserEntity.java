@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 @Builder
 @Data
-public class UserEntity {
+public class AuthUserEntity {
 
   @Id
   @Required

@@ -1,7 +1,7 @@
 package com.example.database_user.configs.security;
 
-import com.example.database_user.domain.model.mapper.UserMapper;
-import com.example.database_user.repositories.UserRepository;
+import com.example.database_user.domain.model.mapper.AuthUserMapper;
+import com.example.database_user.repositories.AuthUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,12 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-  private final UserRepository userRepository;
-  private final UserMapper userMapper;
+  private final AuthUserRepository authUserRepository;
+  private final AuthUserMapper authUserMapper;
 
   @Bean
   public UserDetailsService userDetailsService() {
-    return username -> userRepository.findByEmail(username).map(userMapper::toDTO)
+    return username -> authUserRepository.findByEmail(username).map(authUserMapper::toDTO)
         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
 

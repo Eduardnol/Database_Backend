@@ -1,23 +1,21 @@
 package com.example.database_user.controllers.impl;
 
-import com.example.database_user.configs.security.auth.AuthenticationRequest;
-import com.example.database_user.configs.security.auth.AuthenticationResponse;
-import com.example.database_user.configs.security.auth.RegisterRequest;
-import com.example.database_user.controllers.api.UserAPI;
-import com.example.database_user.domain.service.UserService;
-import com.example.database_user.domain.service.implementation.UserServiceImplementation;
+import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
+import com.example.database_user.configs.security.auth_messages.AuthenticationResponse;
+import com.example.database_user.configs.security.auth_messages.RegisterRequest;
+import com.example.database_user.controllers.api.AuthUserAPI;
+import com.example.database_user.domain.service.implementation.AuthUserServiceImplementation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
 @Log4j2
-public class UserController implements UserAPI {
+public class AuthAuthUserController implements AuthUserAPI {
 
-  private final UserServiceImplementation userService;
+  private final AuthUserServiceImplementation userService;
 
   @Override
   public ResponseEntity<AuthenticationResponse> register(RegisterRequest registerRequest) {

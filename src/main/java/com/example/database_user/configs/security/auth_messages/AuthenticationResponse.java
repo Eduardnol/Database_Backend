@@ -1,4 +1,4 @@
-package com.example.database_user.configs.security.auth;
+package com.example.database_user.configs.security.auth_messages;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
