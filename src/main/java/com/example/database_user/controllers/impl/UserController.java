@@ -5,8 +5,10 @@ import com.example.database_user.configs.security.auth.AuthenticationResponse;
 import com.example.database_user.configs.security.auth.RegisterRequest;
 import com.example.database_user.controllers.api.UserAPI;
 import com.example.database_user.domain.service.UserService;
+import com.example.database_user.domain.service.implementation.UserServiceImplementation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class UserController implements UserAPI {
 
-  UserService userService;
+  private final UserServiceImplementation userService;
 
   @Override
   public ResponseEntity<AuthenticationResponse> register(RegisterRequest registerRequest) {

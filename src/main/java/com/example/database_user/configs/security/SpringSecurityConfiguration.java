@@ -26,7 +26,7 @@ public class SpringSecurityConfiguration {
         .csrf()
         .disable()
         .authorizeRequests()
-        .requestMatchers("/api/v1/auth/**")
+        .requestMatchers("/api/v1/auth/**", "/v3/api-docs/**", "/swagger-ui/**")
         .permitAll()
         .anyRequest()
         .authenticated()
