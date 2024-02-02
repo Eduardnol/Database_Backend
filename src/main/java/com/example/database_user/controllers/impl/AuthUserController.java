@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @Log4j2
-public class AuthAuthUserController implements AuthUserAPI {
+public class AuthUserController implements AuthUserAPI {
 
-  private final AuthUserServiceImplementation userService;
+  private final AuthUserServiceImplementation authService;
 
   @Override
   public ResponseEntity<AuthenticationResponse> register(RegisterRequest registerRequest) {
     log.info("Registering user {}", registerRequest.getEmail());
-    return ResponseEntity.ok(userService.register(registerRequest));
+    return ResponseEntity.ok(authService.register(registerRequest));
   }
 
   @Override
   public ResponseEntity<AuthenticationResponse> authenticate(
       AuthenticationRequest authenticateRequest) {
     log.info("Authenticating user {}", authenticateRequest.getEmail());
-    return ResponseEntity.ok(userService.authenticate(authenticateRequest));
+    return ResponseEntity.ok(authService.authenticate(authenticateRequest));
 
   }
 }
