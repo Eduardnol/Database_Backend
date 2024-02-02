@@ -5,6 +5,7 @@ import com.example.database_user.configs.security.auth_messages.AuthenticationRe
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +19,12 @@ public interface AuthUserAPI {
 
   @Operation(summary = "Register a new user")
   @PostMapping("/register")
-  ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest);
+  ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest registerRequest);
 
   @Operation(summary = "Authenticate a user")
   @PostMapping("/authenticate")
   ResponseEntity<AuthenticationResponse> authenticate(
-      @RequestBody AuthenticationRequest authenticateRequest);
+      @RequestBody @Valid AuthenticationRequest authenticateRequest);
 
 
 }

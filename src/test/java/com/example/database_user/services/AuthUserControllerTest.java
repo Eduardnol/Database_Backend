@@ -1,9 +1,10 @@
 package com.example.database_user.services;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,9 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,7 +26,6 @@ public class AuthUserControllerTest {
   private static final String AUTHENTICATE = BASE + "/authenticate";
 
   @Test
-  @Disabled
   public void register_returnsBadRequestWhenCalledWithInvalidParameters() throws Exception {
     RegisterRequest registerRequest = new RegisterRequest();
     registerRequest.setEmail("invalidEmail");
@@ -87,7 +84,6 @@ public class AuthUserControllerTest {
   }
 
   @Test
-  @Disabled
   public void authenticate_returnsBadRequestWhenCalledWithInvalidParameters() throws Exception {
     AuthenticationRequest authenticationRequest = new AuthenticationRequest();
     authenticationRequest.setEmail("invalidEmail");
