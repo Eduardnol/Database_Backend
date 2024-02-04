@@ -36,24 +36,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return;
     }
     jwt = authHeader.substring(7);
-    userEmail = jwtService.extractUsername(jwt);
-    if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.userDetailsService.loadUserByUsername(
-          userEmail); //Get details from DB
+    try {
+      userEmail = jwtService.extractUsername(jwt);
+      if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(
+            userEmail); //Get details from DB
 
-      if (jwtService.isTokenValid(jwt, userDetails)) { //Check if token is valid
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-            userDetails,
-            null,
-            userDetails.getAuthorities()
-        );//Create authentication token
-        authToken.setDetails(
-            new WebAuthenticationDetailsSource().buildDetails(request)
-        );//Set auth token with details of our request
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+        if (jwtService.isTokenValid(jwt, userDetails)) { //Check if token is valid
+          UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+              userDetails,
+              null,
+              userDetails.getAuthorities()
+          );//Create authentication token
+          authToken.setDetails(
+              new WebAuthenticationDetailsSource().buildDetails(request)
+          );//Set auth token with details of our request
+          SecurityContextHolder.getContext().setAuthentication(authToken);
+        }
       }
+      //Pass to the next filter
+      filterChain.doFilter(request, response);
+    } catch (io.jsonwebtoken.ExpiredJwtException e) {
+      // Handle the exception here, e.g. send an error response
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT has expired");
     }
-    //Pass to the next filter
-    filterChain.doFilter(request, response);
   }
 }
