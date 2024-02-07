@@ -1,6 +1,7 @@
 package com.example.database_user.configs.security;
 
 import com.example.database_user.configs.Constants;
+import com.example.database_user.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -10,12 +11,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JWTService {
 
+  @Autowired
+  JwtProperties jwtProperties;
 
   /**
    * GENERATE
@@ -29,7 +33,7 @@ public class JWTService {
         .claims(extraClaims)
         .subject(userDetails.getUsername())
         .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis() + Constants.EXPIRATION_TIME))
+        .expiration(new Date(System.currentTimeMillis() + jwtProperties.getExpirationHours()))
         .signWith(getSignInKey())
         .compact();
   }
@@ -74,7 +78,7 @@ public class JWTService {
   }
 
   private SecretKey getSignInKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(Constants.SECRET_KEY);
+    byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getKey());
     return Keys.hmacShaKeyFor(keyBytes);
   }
 }
