@@ -40,5 +40,5 @@ public class AuthUserEntity {
   private LocalDateTime createdAt;
   private List<LocalDateTime> loginHistory;
   private List<String> loginIpHistory;
-  private String isLocked;
+  private Boolean isLocked;
 }

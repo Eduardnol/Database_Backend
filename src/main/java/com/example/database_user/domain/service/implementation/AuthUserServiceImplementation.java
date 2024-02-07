@@ -73,10 +73,10 @@ public class AuthUserServiceImplementation implements AuthUserService {
     //They are both username and password correct at this point
     AuthUserDTO user = authUserMapper.toDTO(
         authUserRepository.findByEmail(request.getEmail()).orElseThrow());
-    if (user.isLocked()) {
+    if (user.getIsLocked()) {
       throw new WrongEmailOrPasswordException();
     } else {
-      user.setLocked(false);
+      user.setIsLocked(false);
     }
 
     List<LocalDateTime> loginHistory = new ArrayList<>(user.getLoginHistory());

@@ -30,12 +30,10 @@ dependencies {
     implementation 'com.avast.gradle:gradle-docker-compose-plugin:0.17.6'
 
 
-
     api libs.org.apache.logging.log4j.log4j.core
     api libs.org.apache.logging.log4j.log4j.api
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
-
 
 
     api libs.org.hibernate.validator.hibernate.validator
@@ -60,11 +58,9 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
 
-
     //implementation 'io.springfox:springfox-swagger2:3.0.0'
     //implementation 'io.springfox:springfox-swagger-ui:3.0.0'
     //implementation 'io.springfox:springfox-boot-starter:3.0.0'
-
 
 
     testImplementation libs.org.testcontainers.junit.jupiter

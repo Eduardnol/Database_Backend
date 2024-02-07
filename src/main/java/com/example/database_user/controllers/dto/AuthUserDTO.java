@@ -42,7 +42,7 @@ public class AuthUserDTO implements UserDetails {
   private List<LocalDateTime> loginHistory;
   @Singular("loginIpHistory")
   private List<String> loginIpHistory;
-  private boolean isLocked;
+  private Boolean isLocked;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
