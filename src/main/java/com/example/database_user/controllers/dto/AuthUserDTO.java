@@ -1,11 +1,15 @@
 package com.example.database_user.controllers.dto;
 
 import com.example.database_user.controllers.enums.Role;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Singular;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,9 +27,28 @@ public class AuthUserDTO implements UserDetails {
   @Required
   private String email;
   @Required
+  private Role role;
+
+  //Password
+  @Required
   private String password;
   @Required
-  private Role role;
+  @Singular("passwordHistory")
+  private List<String> passwordHistory = new ArrayList<>();
+  @Required
+  private LocalDateTime passwordUpdatedAt;
+
+  //Login
+  @Required
+  private LocalDateTime createdAt;
+  @Required
+  @Singular("loginHistory")
+  private List<LocalDateTime> loginHistory = new ArrayList<>();;
+  @Required
+  @Singular("loginIpHistory")
+  private List<String> loginIpHistory = new ArrayList<>();;
+  @Required
+  private boolean isLocked;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
