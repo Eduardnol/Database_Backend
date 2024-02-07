@@ -12,4 +12,5 @@ public interface AuthUserService {
 
   AuthenticationResponse authenticate(AuthenticationRequest authenticaitonRequest);
 
+  AuthenticationResponse changePassword(AuthenticationRequest authenticateRequest);
 }

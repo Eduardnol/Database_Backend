@@ -30,4 +30,10 @@ public class AuthUserController implements AuthUserAPI {
     return ResponseEntity.ok(authService.authenticate(authenticateRequest));
 
   }
+
+  @Override
+  public ResponseEntity<AuthenticationResponse> changePassword(
+      AuthenticationRequest authenticateRequest) {
+    return ResponseEntity.ok(authService.changePassword(authenticateRequest));
+  }
 }

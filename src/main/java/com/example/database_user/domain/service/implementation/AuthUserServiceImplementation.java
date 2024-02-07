@@ -9,8 +9,11 @@ import com.example.database_user.controllers.enums.Role;
 import com.example.database_user.domain.model.mapper.AuthUserMapper;
 import com.example.database_user.domain.service.AuthUserService;
 import com.example.database_user.exception.UserAlreadyExistsException;
+import com.example.database_user.exception.WrongEmailOrPasswordException;
 import com.example.database_user.repositories.AuthUserRepository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -57,17 +60,28 @@ public class AuthUserServiceImplementation implements AuthUserService {
   @Override
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
-    authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(
-            request.getEmail(),
-            request.getPassword()
-        )
-    );
+    try {
+      authenticationManager.authenticate(
+          new UsernamePasswordAuthenticationToken(
+              request.getEmail(),
+              request.getPassword()
+          )
+      );
+    } catch (Exception e) {
+      throw new WrongEmailOrPasswordException();
+    }
     //They are both username and password correct at this point
     AuthUserDTO user = authUserMapper.toDTO(
         authUserRepository.findByEmail(request.getEmail()).orElseThrow());
+    if (user.isLocked()) {
+      throw new WrongEmailOrPasswordException();
+    } else {
+      user.setLocked(false);
+    }
 
-    user.getLoginHistory().add(LocalDateTime.now());
+    List<LocalDateTime> loginHistory = new ArrayList<>(user.getLoginHistory());
+    loginHistory.add(LocalDateTime.now());
+    user.setLoginHistory(loginHistory);
 
     authUserRepository.save(authUserMapper.toEntity(user));
 
@@ -75,5 +89,15 @@ public class AuthUserServiceImplementation implements AuthUserService {
     return AuthenticationResponse.builder()
         .token(jwtToken)
         .build();
+  }
+
+  @Override
+  public AuthenticationResponse changePassword(AuthenticationRequest authenticateRequest) {
+    try {
+
+    } catch (Exception e) {
+      throw new WrongEmailOrPasswordException();
+    }
+    return null;
   }
 }

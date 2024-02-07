@@ -26,5 +26,9 @@ public interface AuthUserAPI {
   ResponseEntity<AuthenticationResponse> authenticate(
       @RequestBody @Valid AuthenticationRequest authenticateRequest);
 
+  @Operation(summary = "Change password")
+  @PostMapping("/change-password")
+  ResponseEntity<AuthenticationResponse> changePassword(
+      @RequestBody @Valid AuthenticationRequest authenticateRequest);
 
 }

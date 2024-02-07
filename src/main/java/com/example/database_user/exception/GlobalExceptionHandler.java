@@ -41,4 +41,14 @@ public class GlobalExceptionHandler {
     apiError.setTimestamp(LocalDateTime.now());
     return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
   }
+
+  @ExceptionHandler(WrongEmailOrPasswordException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public ResponseEntity<ApiError> handleWrongEmailOrPasswordException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.UNAUTHORIZED.value());
+    apiError.setErrorMessage("Wrong email or password");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
+  }
 }
