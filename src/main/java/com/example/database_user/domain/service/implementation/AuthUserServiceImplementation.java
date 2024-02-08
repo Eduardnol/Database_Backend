@@ -14,15 +14,22 @@ import com.example.database_user.repositories.AuthUserRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class AuthUserServiceImplementation implements AuthUserService {
+public class AuthUserServiceImplementation implements AuthUserService, UserDetailsService {
 
   private final AuthUserRepository authUserRepository;
   private final PasswordEncoder passwordEncoder;
@@ -30,6 +37,16 @@ public class AuthUserServiceImplementation implements AuthUserService {
   private final JWTService jwtService;
   private final AuthenticationManager authenticationManager;
 
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    AuthUserDTO userDTO = authUserRepository.findByEmail(email).map(authUserMapper::toDTO)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    authorities.add(new SimpleGrantedAuthority(userDTO.getRole().name()));
+
+    return new User(userDTO.getUsername(), userDTO.getPassword(), authorities);
+  }
 
   @Override
   public AuthenticationResponse register(RegisterRequest registerRequest) {

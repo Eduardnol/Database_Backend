@@ -2,8 +2,10 @@ package com.example.database_user.controllers.dto;
 
 import com.example.database_user.controllers.enums.Role;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,7 +48,12 @@ public class AuthUserDTO implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority(role.name()));
+    Role roles = this.getRole();
+    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+    authorities.add(new SimpleGrantedAuthority(role.name()));
+
+    return authorities;
   }
 
   @Override
