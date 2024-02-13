@@ -1,6 +1,7 @@
 package com.example.database_user.controllers.impl;
 
 import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
+import com.example.database_user.configs.security.auth_messages.AuthenticationReset;
 import com.example.database_user.configs.security.auth_messages.AuthenticationResponse;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import com.example.database_user.controllers.api.AuthUserAPI;
@@ -33,7 +34,7 @@ public class AuthUserController implements AuthUserAPI {
 
   @Override
   public ResponseEntity<AuthenticationResponse> changePassword(
-      AuthenticationRequest authenticateRequest) {
-    return ResponseEntity.ok(authService.changePassword(authenticateRequest));
+      AuthenticationReset authenticationReset) {
+    return ResponseEntity.ok(authService.changePassword(authenticationReset));
   }
 }

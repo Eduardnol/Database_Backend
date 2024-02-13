@@ -1,6 +1,7 @@
 package com.example.database_user.domain.service;
 
 import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
+import com.example.database_user.configs.security.auth_messages.AuthenticationReset;
 import com.example.database_user.configs.security.auth_messages.AuthenticationResponse;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import org.springframework.stereotype.Service;
@@ -12,5 +13,5 @@ public interface AuthUserService {
 
   AuthenticationResponse authenticate(AuthenticationRequest authenticaitonRequest);
 
-  AuthenticationResponse changePassword(AuthenticationRequest authenticateRequest);
+  AuthenticationResponse changePassword(AuthenticationReset authenticationReset);
 }

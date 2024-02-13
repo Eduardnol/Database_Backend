@@ -2,6 +2,7 @@ package com.example.database_user.domain.service.implementation;
 
 import com.example.database_user.configs.security.JWTService;
 import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
+import com.example.database_user.configs.security.auth_messages.AuthenticationReset;
 import com.example.database_user.configs.security.auth_messages.AuthenticationResponse;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import com.example.database_user.controllers.dto.AuthUserDTO;
@@ -14,7 +15,6 @@ import com.example.database_user.repositories.AuthUserRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -109,8 +109,14 @@ public class AuthUserServiceImplementation implements AuthUserService, UserDetai
   }
 
   @Override
-  public AuthenticationResponse changePassword(AuthenticationRequest authenticateRequest) {
+  public AuthenticationResponse changePassword(AuthenticationReset authenticationReset) {
     try {
+      authenticationManager.authenticate(
+          new UsernamePasswordAuthenticationToken(
+              authenticationReset.getEmail(),
+              authenticationReset.getOldPassword()
+          )
+      );
 
     } catch (Exception e) {
       throw new WrongEmailOrPasswordException();

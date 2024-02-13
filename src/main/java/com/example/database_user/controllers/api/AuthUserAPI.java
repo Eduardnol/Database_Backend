@@ -1,6 +1,7 @@
 package com.example.database_user.controllers.api;
 
 import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
+import com.example.database_user.configs.security.auth_messages.AuthenticationReset;
 import com.example.database_user.configs.security.auth_messages.AuthenticationResponse;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +30,6 @@ public interface AuthUserAPI {
   @Operation(summary = "Change password")
   @PostMapping("/change-password")
   ResponseEntity<AuthenticationResponse> changePassword(
-      @RequestBody @Valid AuthenticationRequest authenticateRequest);
+      @RequestBody @Valid AuthenticationReset authenticationReset);
 
 }
