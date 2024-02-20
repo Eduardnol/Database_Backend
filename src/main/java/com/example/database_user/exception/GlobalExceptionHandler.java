@@ -51,4 +51,24 @@ public class GlobalExceptionHandler {
     apiError.setTimestamp(LocalDateTime.now());
     return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
   }
+
+  @ExceptionHandler(PasswordReusedException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<ApiError> handlePasswordReusedException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.BAD_REQUEST.value());
+    apiError.setErrorMessage("Password already used in the past");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(PasswordMismatchException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<ApiError> handlePasswordMismatchException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.BAD_REQUEST.value());
+    apiError.setErrorMessage("New passwords do not match");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+  }
 }

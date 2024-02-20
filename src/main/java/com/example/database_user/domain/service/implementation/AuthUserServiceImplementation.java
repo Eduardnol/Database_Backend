@@ -9,6 +9,8 @@ import com.example.database_user.controllers.dto.AuthUserDTO;
 import com.example.database_user.controllers.enums.Role;
 import com.example.database_user.domain.model.mapper.AuthUserMapper;
 import com.example.database_user.domain.service.AuthUserService;
+import com.example.database_user.exception.PasswordMismatchException;
+import com.example.database_user.exception.PasswordReusedException;
 import com.example.database_user.exception.UserAlreadyExistsException;
 import com.example.database_user.exception.WrongEmailOrPasswordException;
 import com.example.database_user.repositories.AuthUserRepository;
@@ -117,6 +119,24 @@ public class AuthUserServiceImplementation implements AuthUserService, UserDetai
               authenticationReset.getOldPassword()
           )
       );
+      if (authenticationReset.getOldPassword().equals(authenticationReset.getNewPassword())) {
+        throw new PasswordReusedException();
+      }
+      if (authenticationReset.getNewPassword()
+          .equals(authenticationReset.getConfirmNewPassword())) {
+        String encodedPassword = passwordEncoder.encode(authenticationReset.getNewPassword());
+        AuthUserDTO user = authUserMapper.toDTO(
+            authUserRepository.findByEmail(authenticationReset.getEmail()).orElseThrow());
+
+        user.setPassword(encodedPassword);
+        List<String> passHistory = new ArrayList<>(user.getPasswordHistory());
+        passHistory.add(encodedPassword);
+        user.setPasswordHistory(passHistory);
+        user.setPasswordUpdatedAt(LocalDateTime.now());
+        authUserRepository.save(authUserMapper.toEntity(user));
+      } else {
+        throw new PasswordMismatchException();
+      }
 
     } catch (Exception e) {
       throw new WrongEmailOrPasswordException();

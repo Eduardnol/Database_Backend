@@ -3,6 +3,7 @@ package com.example.database_user.services;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
+import com.example.database_user.configs.security.auth_messages.AuthenticationReset;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ public class AuthUserControllerTest {
   private static final String BASE = "http://localhost:8080/api/v1/auth";
   private static final String REGISTER = BASE + "/register";
   private static final String AUTHENTICATE = BASE + "/authenticate";
+  private static final String RESET_PASSWORD = BASE + "/change-password";
 
   @Test
   public void register_returnsBadRequestWhenCalledWithInvalidParameters() throws Exception {
@@ -99,5 +101,23 @@ public class AuthUserControllerTest {
         .andReturn();
 
     // Add assertions to check the response content if needed
+  }
+
+  @Test
+  public void resetPassword_returnsOkWhenCalledWithValidParameters() throws Exception {
+    AuthenticationReset authenticationReset = new AuthenticationReset();
+    authenticationReset.setEmail("test@example.com");
+    authenticationReset.setOldPassword("testPassword");
+    authenticationReset.setNewPassword("newPassword");
+    authenticationReset.setConfirmNewPassword("newPassword");
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    String authenticationResetJson = objectMapper.writeValueAsString(authenticationReset);
+
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(RESET_PASSWORD)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(authenticationResetJson))
+        .andExpect(status().isOk())
+        .andReturn();
   }
 }
