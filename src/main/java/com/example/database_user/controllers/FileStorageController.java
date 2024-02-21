@@ -1,17 +1,15 @@
 package com.example.database_user.controllers;
 
-import com.example.database_user.Model.Common.FileStorageService;
-import com.example.database_user.dtos.FileStorage;
-import com.example.database_user.dtos.Reponses.FileStorageResponse;
-import com.example.database_user.dtos.ResponseMessage;
-import com.google.gson.Gson;
+import com.example.database_user.model.FileStorageService;
+import com.example.database_user.model.dto.FileStorage;
+import com.example.database_user.model.dto.ResponseMessage;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +27,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 @AllArgsConstructor
 public class FileStorageController {
 
+    @Autowired
     private final FileStorageService storageService;
 
 
@@ -44,34 +43,32 @@ public class FileStorageController {
     public ResponseEntity<String> uploadFile(@PathVariable String userid,
             @RequestParam("file") MultipartFile file) {
 
-        final HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        Gson gson = new Gson();
-        String message = "";
-
-        if (!file.isEmpty()) {
-
-            try {
-                String url = storageService.save(file, userid);
-                FileStorageResponse fileStorage = new FileStorageResponse("File Uploaded Correctly",
-                        HttpStatus.OK,
-                        file.getOriginalFilename(),
-                        url);
-                message = gson.toJson(fileStorage);
-                //Make http headers as json and return it
-                return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
-            } catch (Exception e) {
-                message = "Could not upload the file: " + e.getMessage();
-                return new ResponseEntity<>(gson.toJson(message), httpHeaders,
-                        HttpStatus.EXPECTATION_FAILED);
-            }
-        } else {
-            message = "Could not upload the file: It's empty";
-            return new ResponseEntity<>(gson.toJson(message), httpHeaders,
-                    HttpStatus.EXPECTATION_FAILED);
-
-        }
-
+//        final HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//        String message = "";
+//
+//        if (!file.isEmpty()) {
+//
+//            try {
+//                String url = storageService.save(file, userid);
+//                FileStorageResponse fileStorage = new FileStorageResponse("File Uploaded Correctly",
+//                        HttpStatus.OK,
+//                        file.getOriginalFilename(),
+//                        url);
+//                //Make http headers as json and return it
+//                return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
+//            } catch (Exception e) {
+//                message = "Could not upload the file: " + e.getMessage();
+//                return new ResponseEntity<>(gson.toJson(message), httpHeaders,
+//                        HttpStatus.EXPECTATION_FAILED);
+//            }
+//        } else {
+//            message = "Could not upload the file: It's empty";
+//            return new ResponseEntity<>(gson.toJson(message), httpHeaders,
+//                    HttpStatus.EXPECTATION_FAILED);
+//
+//        }
+    return null;
     }
 
 
