@@ -1,9 +1,9 @@
 package com.example.database_user.repositories.entity;
 
-import com.example.database_user.controllers.dto.Custom;
-import com.example.database_user.controllers.dto.FileStorage;
-import com.example.database_user.controllers.dto.PersonGroups;
-import com.example.database_user.controllers.dto.Persona.PersonaNinos;
+import com.example.database_user.model.dto.Custom;
+import com.example.database_user.model.dto.FileStorage;
+import com.example.database_user.model.dto.PersonGroups;
+import com.example.database_user.model.dto.Persona.PersonaNinos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Email;

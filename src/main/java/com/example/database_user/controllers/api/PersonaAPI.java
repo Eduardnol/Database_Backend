@@ -1,7 +1,7 @@
 package com.example.database_user.controllers.api;
 
-import com.example.database_user.controllers.dto.Persona.PersonaDTO;
-import com.example.database_user.exception.ApiError;
+import com.example.database_user.model.dto.Persona.PersonaDTO;
+import com.example.database_user.services.exception.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -1,6 +1,6 @@
 package com.example.database_user.services;
 
-import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.model.dto.Persona.PersonaDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

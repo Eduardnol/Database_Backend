@@ -5,7 +5,7 @@ import com.example.database_user.configs.security.auth_messages.AuthenticationRe
 import com.example.database_user.configs.security.auth_messages.AuthenticationResponse;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import com.example.database_user.controllers.api.AuthUserAPI;
-import com.example.database_user.domain.service.implementation.AuthUserServiceImplementation;
+import com.example.database_user.services.implementation.AuthUserServiceImplementation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;

@@ -3,7 +3,7 @@ package com.example.database_user.services;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.database_user.configuration.BaseTest;
-import com.example.database_user.controllers.dto.Persona.PersonaDTO;
+import com.example.database_user.model.dto.Persona.PersonaDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

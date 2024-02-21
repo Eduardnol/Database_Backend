@@ -1,6 +1,6 @@
 package com.example.database_user.configs.security;
 
-import com.example.database_user.domain.model.mapper.AuthUserMapper;
+import com.example.database_user.model.mapper.AuthUserMapper;
 import com.example.database_user.repositories.AuthUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

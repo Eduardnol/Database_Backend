@@ -1,10 +1,10 @@
 package com.example.database_user.services;
 
-import com.example.database_user.Model.Common.FileStorageService;
+import com.example.database_user.model.FileStorageService;
 import com.example.database_user.controllers.FileStorageController;
-import com.example.database_user.controllers.dto.FileStorage;
-import com.example.database_user.controllers.dto.Persona.PersonaDTO;
-import com.example.database_user.domain.model.mapper.PersonaMapper;
+import com.example.database_user.model.dto.FileStorage;
+import com.example.database_user.model.dto.Persona.PersonaDTO;
+import com.example.database_user.model.mapper.PersonaMapper;
 import com.example.database_user.repositories.PersonaRepository;
 import java.io.IOException;
 import java.net.MalformedURLException;

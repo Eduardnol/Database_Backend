@@ -1,11 +1,10 @@
 package com.example.database_user.repositories.entity;
 
-import com.example.database_user.controllers.enums.Role;
+import com.example.database_user.model.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

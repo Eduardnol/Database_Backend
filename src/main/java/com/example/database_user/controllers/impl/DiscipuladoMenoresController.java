@@ -2,11 +2,11 @@ package com.example.database_user.controllers.impl;
 
 
 import com.example.database_user.controllers.api.DiscipuladoMenoresAPI;
-import com.example.database_user.controllers.dto.DiscipuladoMenoresDTO;
-import com.example.database_user.controllers.dto.Persona.PersonaDTO;
-import com.example.database_user.controllers.dto.Persona.PersonaNinos;
-import com.example.database_user.controllers.dto.Persona.SimplePersona;
-import com.example.database_user.domain.service.DiscipuladoMenoresService;
+import com.example.database_user.model.dto.DiscipuladoMenoresDTO;
+import com.example.database_user.model.dto.Persona.PersonaDTO;
+import com.example.database_user.model.dto.Persona.PersonaNinos;
+import com.example.database_user.model.dto.Persona.SimplePersona;
+import com.example.database_user.services.DiscipuladoMenoresService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

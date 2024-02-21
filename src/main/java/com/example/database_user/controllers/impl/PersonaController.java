@@ -1,8 +1,8 @@
 package com.example.database_user.controllers.impl;
 
 import com.example.database_user.controllers.api.PersonaAPI;
-import com.example.database_user.controllers.dto.Persona.PersonaDTO;
-import com.example.database_user.domain.service.PersonaService;
+import com.example.database_user.model.dto.Persona.PersonaDTO;
+import com.example.database_user.services.PersonaService;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

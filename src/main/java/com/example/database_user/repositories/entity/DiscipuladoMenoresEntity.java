@@ -1,7 +1,7 @@
 package com.example.database_user.repositories.entity;
 
-import com.example.database_user.controllers.dto.Persona.SimplePersona;
-import com.example.database_user.controllers.dto.Subgrupo.Subgrupo;
+import com.example.database_user.model.dto.Persona.SimplePersona;
+import com.example.database_user.model.dto.Subgrupo.Subgrupo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

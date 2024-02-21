@@ -1,7 +1,6 @@
 package com.example.database_user.configs.security;
 
-import com.example.database_user.configs.Constants;
-import com.example.database_user.properties.JwtProperties;
+import com.example.database_user.configs.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

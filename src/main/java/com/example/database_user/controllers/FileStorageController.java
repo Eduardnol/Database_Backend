@@ -1,9 +1,8 @@
 package com.example.database_user.controllers;
 
-import com.example.database_user.Model.Common.FileStorageService;
-import com.example.database_user.controllers.dto.FileStorage;
-import com.example.database_user.controllers.dto.Reponses.FileStorageResponse;
-import com.example.database_user.controllers.dto.ResponseMessage;
+import com.example.database_user.model.FileStorageService;
+import com.example.database_user.model.dto.FileStorage;
+import com.example.database_user.model.dto.ResponseMessage;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
