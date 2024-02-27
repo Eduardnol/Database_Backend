@@ -63,7 +63,7 @@ public interface DiscipuladoMenoresAPI {
   @PostMapping("/insert-inscription/{id-discipulado-menores}")
   ResponseEntity<String> insertNewInscription(
       @Parameter(description = "Persona Niños object") @RequestBody @Valid PersonaNinos personaNinos,
-      @Parameter(description = "Id Discipulado menores where to perform the inscription") @PathVariable String iddiscipuladomenores);
+      @Parameter(description = "Id Discipulado menores where to perform the inscription") @PathVariable("id-discipulado-menores") String iddiscipuladomenores);
 
 
 }
