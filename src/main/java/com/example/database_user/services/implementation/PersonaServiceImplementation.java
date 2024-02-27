@@ -2,12 +2,13 @@ package com.example.database_user.services.implementation;
 
 import com.example.database_user.model.dto.Persona.PersonaDTO;
 import com.example.database_user.model.mapper.PersonaMapper;
-import com.example.database_user.services.PersonaService;
-import com.example.database_user.services.exception.ErrorSavingIntoDBException;
-import com.example.database_user.services.exception.UsersNotFoundException;
 import com.example.database_user.repositories.PersonaRepository;
 import com.example.database_user.repositories.entity.PersonaEntity;
 import com.example.database_user.services.MeilisearchService;
+import com.example.database_user.services.PersonaService;
+import com.example.database_user.services.exception.ErrorSavingIntoDBException;
+import com.example.database_user.services.exception.ListIsEmptyException;
+import com.example.database_user.services.exception.UsersNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class PersonaServiceImplementation implements PersonaService {
         .toList();
 
     if (people.isEmpty()) {
-      throw new UsersNotFoundException();
+      throw new ListIsEmptyException();
     }
     return people;
   }
@@ -164,9 +165,9 @@ public class PersonaServiceImplementation implements PersonaService {
     Sort.Direction sort_dir;
     if (sort.equals("asc")) {
       sort_dir = Sort.Direction.ASC;
-    } else if (sort.equals("desc")){
+    } else if (sort.equals("desc")) {
       sort_dir = Sort.Direction.DESC;
-    } else{
+    } else {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     HttpStatus status = HttpStatus.ACCEPTED;
@@ -188,9 +189,9 @@ public class PersonaServiceImplementation implements PersonaService {
     Sort.Direction sort_dir;
     if (sort.equals("asc")) {
       sort_dir = Sort.Direction.ASC;
-    } else if (sort.equals("desc")){
+    } else if (sort.equals("desc")) {
       sort_dir = Sort.Direction.DESC;
-    } else{
+    } else {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 

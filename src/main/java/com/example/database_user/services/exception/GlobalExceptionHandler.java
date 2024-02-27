@@ -71,4 +71,14 @@ public class GlobalExceptionHandler {
     apiError.setTimestamp(LocalDateTime.now());
     return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
   }
+
+  @ExceptionHandler(ListIsEmptyException.class)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public ResponseEntity<ApiError> handleListIsEmptyException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.NO_CONTENT.value());
+    apiError.setErrorMessage("List is empty");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.NO_CONTENT);
+  }
 }
