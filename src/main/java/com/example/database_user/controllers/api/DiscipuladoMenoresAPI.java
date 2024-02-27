@@ -60,7 +60,7 @@ public interface DiscipuladoMenoresAPI {
   @ApiResponse(responseCode = "400", description = "Invalid request payload")
   @ApiResponse(responseCode = "404", description = "DiscipuladoMenoresDTO not found")
   @ApiResponse(responseCode = "500", description = "Internal server error")
-  @PostMapping("/insert-inscription/{iddiscipuladomenores}")
+  @PostMapping("/insert-inscription/{id-discipulado-menores}")
   ResponseEntity<String> insertNewInscription(
       @Parameter(description = "Persona Niños object") @RequestBody @Valid PersonaNinos personaNinos,
       @Parameter(description = "Id Discipulado menores where to perform the inscription") @PathVariable String iddiscipuladomenores);

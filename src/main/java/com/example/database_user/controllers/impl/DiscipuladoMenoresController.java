@@ -11,11 +11,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +24,6 @@ public class DiscipuladoMenoresController implements DiscipuladoMenoresAPI {
   private DiscipuladoMenoresService discipuladoMenoresServiceImplementation;
 
   @Override
-  @GetMapping("/{id}")
   public ResponseEntity<DiscipuladoMenoresDTO> fetchDiscipuladoMenoresById(
       @PathVariable String id) {
 
@@ -36,14 +31,12 @@ public class DiscipuladoMenoresController implements DiscipuladoMenoresAPI {
   }
 
   @Override
-  @GetMapping("/all")
   public ResponseEntity<List<DiscipuladoMenoresDTO>> fetchAllDiscipuladoMenores() {
 
     return discipuladoMenoresServiceImplementation.fetchAllDiscipuladoMenores();
   }
 
   @Override
-  @GetMapping("/{id}/inscritos")
   public ResponseEntity<List<SimplePersona>> fetchDiscipuladoMenoresInscritosById(
       @PathVariable String id) {
 
@@ -51,7 +44,6 @@ public class DiscipuladoMenoresController implements DiscipuladoMenoresAPI {
   }
 
   @Override
-  @GetMapping("/{id}/monitores")
   public ResponseEntity<List<PersonaDTO>> fetchDiscipuladoMenoresMonitoresById(
       @PathVariable String id) {
 
@@ -59,7 +51,6 @@ public class DiscipuladoMenoresController implements DiscipuladoMenoresAPI {
   }
 
   @Override
-  @PostMapping("/insert")
   public ResponseEntity<String> insertNewDiscipuladoMenores(
       @RequestBody @Valid DiscipuladoMenoresDTO discipuladoMenoresDTO) {
 
@@ -68,21 +59,18 @@ public class DiscipuladoMenoresController implements DiscipuladoMenoresAPI {
   }
 
   @Override
-  @DeleteMapping("/delete/{id}")
   public ResponseEntity<String> deleteDiscipuladoMenores(@PathVariable String id) {
 
     return discipuladoMenoresServiceImplementation.deleteDiscipuladoMenoresById(id);
   }
 
   @Override
-  @PutMapping("/update")
   public ResponseEntity<String> updateDiscipuladoMenores(
       @RequestBody @Valid DiscipuladoMenoresDTO discipuladoMenoresDTO) {
     return discipuladoMenoresServiceImplementation.updateDiscipuladoMenores(discipuladoMenoresDTO);
   }
 
   @Override
-  @PostMapping("/insert-inscription/{iddiscipuladomenores}")
   public ResponseEntity<String> insertNewInscription(
       @RequestBody @Valid PersonaNinos personaNinos,
       @PathVariable String iddiscipuladomenores) {
