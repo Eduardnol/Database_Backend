@@ -1,4 +1,4 @@
-package com.example.database_user.model.dto;
+package com.example.database_user.model.dto.discipulado;
 
 
 import com.example.database_user.model.dto.Persona.SimplePersona;
@@ -6,7 +6,6 @@ import com.example.database_user.model.dto.Subgrupo.Subgrupo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
