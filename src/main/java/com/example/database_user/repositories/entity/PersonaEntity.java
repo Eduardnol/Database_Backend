@@ -1,6 +1,7 @@
 package com.example.database_user.repositories.entity;
 
-import com.example.database_user.model.dto.Custom;
+
+import com.example.database_user.model.dto.custom.CustomTagDTO;
 import com.example.database_user.model.dto.FileStorage;
 import com.example.database_user.model.dto.PersonGroups;
 import com.example.database_user.model.dto.Persona.PersonaNinos;
@@ -32,64 +33,64 @@ import org.springframework.format.annotation.DateTimeFormat;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonaEntity {
 
-    @Id
-    @Field("_id")
-    private String id;
+  @Id
+  @Field("_id")
+  private String id;
 
-    @NotNull(message = "The name is required.")
-    @Field("nombre")
-    private String nombre;
+  @NotNull(message = "The name is required.")
+  @Field("nombre")
+  private String nombre;
 
-    @NotNull(message = "The surname is required.")
-    @Field("apellido")
-    private String apellido;
+  @NotNull(message = "The surname is required.")
+  @Field("apellido")
+  private String apellido;
 
-    @NotNull(message = "The surname2 is required.")
-    @Field("apellido2")
-    private String apellido2;
+  @NotNull(message = "The surname2 is required.")
+  @Field("apellido2")
+  private String apellido2;
 
-    @TextIndexed
-    @Email(message = "The email address is invalid.", flags = {Pattern.Flag.CASE_INSENSITIVE})
-    @Field("email")
-    private String email;
+  @TextIndexed
+  @Email(message = "The email address is invalid.", flags = {Pattern.Flag.CASE_INSENSITIVE})
+  @Field("email")
+  private String email;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Past(message = "The date of birth must be in the past.")
-    @Field("birthday")
-    private LocalDate birthday;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  @Past(message = "The date of birth must be in the past.")
+  @Field("birthday")
+  private LocalDate birthday;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @PastOrPresent(message = "The saint must be past or present")
-    @Field("saint")
-    private LocalDate saint;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  @PastOrPresent(message = "The saint must be past or present")
+  @Field("saint")
+  private LocalDate saint;
 
-    @Field("dni")
-    private String dni;
+  @Field("dni")
+  private String dni;
 
-    @Field("extras")
-    private List<Custom> extras;
+  @Field("extras")
+  private List<CustomTagDTO> extras;
 
-    @Field("sacraments")
-    private List<PersonaSacramentsEntity> sacraments;
+  @Field("sacraments")
+  private List<PersonaSacramentsEntity> sacraments;
 
-    @Field("fileStorage")
-    private List<FileStorage> fileStorage;
+  @Field("fileStorage")
+  private List<FileStorage> fileStorage;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Field("createdOn")
-    private LocalDateTime createdOn;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @Field("createdOn")
+  private LocalDateTime createdOn;
 
-    @Field("personGroups")
-    private List<PersonGroups> personGroups;
+  @Field("personGroups")
+  private List<PersonGroups> personGroups;
 
-    //Home address
-    @Field("homeAddress")
-    private String homeAddress;
+  //Home address
+  @Field("homeAddress")
+  private String homeAddress;
 
-    //Optional fields
-    @Field("personaNinos")
-    private PersonaNinos personaNinos;
+  //Optional fields
+  @Field("personaNinos")
+  private PersonaNinos personaNinos;
 }

@@ -1,7 +1,6 @@
-package com.example.database_user.model.dto;
+package com.example.database_user.model.dto.discipulado;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
