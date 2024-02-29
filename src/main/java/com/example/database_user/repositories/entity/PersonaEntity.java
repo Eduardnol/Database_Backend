@@ -1,6 +1,7 @@
 package com.example.database_user.repositories.entity;
 
-import com.example.database_user.model.dto.Custom.CustomTagDTO;
+
+import com.example.database_user.model.dto.custom.CustomTagDTO;
 import com.example.database_user.model.dto.FileStorage;
 import com.example.database_user.model.dto.PersonGroups;
 import com.example.database_user.model.dto.Persona.PersonaNinos;

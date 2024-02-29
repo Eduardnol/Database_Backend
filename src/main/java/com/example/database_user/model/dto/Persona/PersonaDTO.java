@@ -1,6 +1,6 @@
 package com.example.database_user.model.dto.Persona;
 
-import com.example.database_user.model.dto.Custom.CustomTagDTO;
+import com.example.database_user.model.dto.custom.CustomTagDTO;
 import com.example.database_user.model.dto.FileStorage;
 import com.example.database_user.model.dto.PersonGroups;
 import java.time.LocalDate;
