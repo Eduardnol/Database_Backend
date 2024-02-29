@@ -1,4 +1,4 @@
-package com.example.database_user.model.dto.Custom;
+package com.example.database_user.model.dto.custom;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

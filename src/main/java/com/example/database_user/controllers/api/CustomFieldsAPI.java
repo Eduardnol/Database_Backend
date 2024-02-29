@@ -1,8 +1,10 @@
 package com.example.database_user.controllers.api;
 
 import com.example.database_user.model.dto.Reponses.MainResponse;
+import com.example.database_user.model.dto.custom.CustomFieldsDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "CustomTagManager", description = "Manage custom tags")
-@RestController
 @RequestMapping("/api/v1/custom-tag")
-public interface CustomTagManagerAPI {
+public interface CustomFieldsAPI {
 
   @Operation(summary = "Create a new custom tag")
-  @PostMapping("/create")
-  ResponseEntity<MainResponse> createCustomTag(String tagName);
+  @PostMapping(value = "/create", produces = "application/json", consumes = "application/json")
+  ResponseEntity<MainResponse> createCustomTag(@RequestBody @Valid CustomFieldsDTO customFieldsDTO);
 
   @Operation(summary = "Delete a custom tag")
   @DeleteMapping("/delete/{tagId}")
