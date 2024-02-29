@@ -34,7 +34,7 @@ public interface CustomFieldsAPI {
   @GetMapping("/get-by-id/{tagId}")
   ResponseEntity<MainResponse> getCustomTagById(@PathVariable String tagId);
 
-  @Operation(summary = "Update a custom tag")
+  @Operation(summary = "Update a custom tag by id and request body tagname")
   @PutMapping("/update/{tagId}")
   ResponseEntity<MainResponse> updateCustomTag(@PathVariable String tagId,
       @RequestBody String tagName);
