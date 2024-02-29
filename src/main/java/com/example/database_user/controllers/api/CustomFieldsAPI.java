@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "CustomTagManager", description = "Manage custom tags")
 @RequestMapping("/api/v1/custom-tag")
@@ -23,7 +22,7 @@ public interface CustomFieldsAPI {
   @PostMapping(value = "/create", produces = "application/json", consumes = "application/json")
   ResponseEntity<MainResponse> createCustomTag(@RequestBody @Valid CustomFieldsDTO customFieldsDTO);
 
-  @Operation(summary = "Delete a custom tag")
+  @Operation(summary = "Delete a custom tag by its id")
   @DeleteMapping("/delete/{tagId}")
   ResponseEntity<MainResponse> deleteCustomTag(@PathVariable String tagId);
 
