@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomFieldsRepository extends MongoRepository<CustomFieldsEntity, String> {
 
-  List<CustomFieldsEntity> getAll();
+  CustomFieldsEntity getCustomFieldsEntitiesById(String name);
+
+  void deleteById(String id);
 
 
 }
