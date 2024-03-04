@@ -1,7 +1,7 @@
 package com.example.database_user.repositories;
 
 import com.example.database_user.repositories.entity.CustomFieldsEntity;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,7 @@ public interface CustomFieldsRepository extends MongoRepository<CustomFieldsEnti
 
   CustomFieldsEntity getCustomFieldsEntitiesById(String name);
 
-  void deleteById(String id);
+  void deleteById(@NotNull String id);
 
 
 }

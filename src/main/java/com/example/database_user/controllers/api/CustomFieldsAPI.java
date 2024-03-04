@@ -2,6 +2,7 @@ package com.example.database_user.controllers.api;
 
 import com.example.database_user.model.dto.Reponses.MainResponse;
 import com.example.database_user.model.dto.custom.CustomFieldsDTO;
+import com.example.database_user.model.dto.custom.CustomTagDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,23 +21,34 @@ public interface CustomFieldsAPI {
 
   @Operation(summary = "Create a new custom tag")
   @PostMapping(value = "/create", produces = "application/json", consumes = "application/json")
-  ResponseEntity<MainResponse> createCustomTag(@RequestBody @Valid CustomFieldsDTO customFieldsDTO);
+  ResponseEntity<MainResponse> createCustomField(
+      @RequestBody @Valid CustomFieldsDTO customFieldsDTO);
 
   @Operation(summary = "Delete a custom tag by its id")
-  @DeleteMapping("/delete/{tagId}")
-  ResponseEntity<MainResponse> deleteCustomTag(@PathVariable String tagId);
+  @DeleteMapping("/delete/{fieldId}")
+  ResponseEntity<MainResponse> deleteCustomField(@PathVariable String fieldId);
 
   @Operation(summary = "Get all custom tags")
   @GetMapping("/get-all")
-  ResponseEntity<MainResponse> getAllCustomTags();
+  ResponseEntity<MainResponse> getAllCustomFields();
 
-  @Operation(summary = "Get a custom tag by id")
-  @GetMapping("/get-by-id/{tagId}")
-  ResponseEntity<MainResponse> getCustomTagById(@PathVariable String tagId);
+  @Operation(summary = "Get a custom field by id")
+  @GetMapping("/get-by-id/{field}")
+  ResponseEntity<MainResponse> getCustomFieldById(@PathVariable String field);
 
-  @Operation(summary = "Update a custom tag")
-  @PutMapping("/update/{tagId}")
-  ResponseEntity<MainResponse> updateCustomTag(@PathVariable String tagId,
+  @Operation(summary = "Update a custom field")
+  @PutMapping("/update/{fieldId}")
+  ResponseEntity<MainResponse> updateCustomField(@PathVariable String fieldId,
+      @RequestBody String fieldName);
+
+  @Operation(summary = "Add a tag to a custom field")
+  @PutMapping("/add-tag/{fieldId}")
+  ResponseEntity<MainResponse> addTagToCustomField(@PathVariable String fieldId,
+      @RequestBody CustomTagDTO tagDTO);
+
+  @Operation(summary = "Delete a tag from a custom field")
+  @DeleteMapping("/delete-tag/{fieldId}")
+  ResponseEntity<MainResponse> deleteTagFromCustomField(@PathVariable String fieldId,
       @RequestBody String tagName);
 
 }

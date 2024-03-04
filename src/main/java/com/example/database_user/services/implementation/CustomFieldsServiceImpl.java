@@ -1,6 +1,7 @@
 package com.example.database_user.services.implementation;
 
 import com.example.database_user.model.dto.custom.CustomFieldsDTO;
+import com.example.database_user.model.dto.custom.CustomTagDTO;
 import com.example.database_user.model.mapper.CustomFieldsMapper;
 import com.example.database_user.repositories.CustomFieldsRepository;
 import com.example.database_user.services.CustomFieldsService;
@@ -22,18 +23,18 @@ public class CustomFieldsServiceImpl implements CustomFieldsService {
   private CustomFieldsMapper customFieldsMapper;
 
   @Override
-  public CustomFieldsDTO createCustomTag(CustomFieldsDTO customFieldsDTO) {
+  public CustomFieldsDTO createCustomField(CustomFieldsDTO customFieldsDTO) {
     return customFieldsMapper.toDTO(
         customFieldsRepository.save(customFieldsMapper.toEntity(customFieldsDTO)));
   }
 
   @Override
-  public void deleteCustomTag(String tagId) {
-    customFieldsRepository.deleteById(tagId);
+  public void deleteCustomField(String fieldId) {
+    customFieldsRepository.deleteById(fieldId);
   }
 
   @Override
-  public List<CustomFieldsDTO> getAllCustomTags() {
+  public List<CustomFieldsDTO> getAllCustomFields() {
     List<CustomFieldsDTO> customFieldsDTOS = customFieldsRepository.findAll().stream()
         .map(customFieldsMapper::toDTO).toList();
     if (customFieldsDTOS.isEmpty()) {
@@ -45,9 +46,9 @@ public class CustomFieldsServiceImpl implements CustomFieldsService {
   }
 
   @Override
-  public CustomFieldsDTO getCustomTagById(String tagId) {
+  public CustomFieldsDTO getCustomFieldById(String fieldId) {
     CustomFieldsDTO customFieldsDTO = customFieldsMapper.toDTO(
-        customFieldsRepository.getCustomFieldsEntitiesById(tagId));
+        customFieldsRepository.getCustomFieldsEntitiesById(fieldId));
     if (customFieldsDTO == null) {
       throw new ListIsEmptyException();
     } else {
@@ -56,7 +57,26 @@ public class CustomFieldsServiceImpl implements CustomFieldsService {
   }
 
   @Override
-  public void updateCustomTag(String tagId, String tagName) {
+  public void updateCustomField(String fieldId, String fieldName) {
+    CustomFieldsDTO customFieldsDTO = customFieldsMapper.toDTO(
+        customFieldsRepository.getCustomFieldsEntitiesById(fieldId));
+    customFieldsDTO.setName(fieldName);
+    customFieldsRepository.save(customFieldsMapper.toEntity(customFieldsDTO));
+  }
 
+  @Override
+  public void addTagToCustomField(String fieldId, CustomTagDTO tagDTO) {
+    CustomFieldsDTO customFieldsDTO = getCustomFieldById(fieldId);
+    customFieldsDTO.getCustomTagDTOS().add(tagDTO);
+    customFieldsRepository.save(customFieldsMapper.toEntity(customFieldsDTO));
+  }
+
+  @Override
+  public void deleteTagFromCustomField(String tagId, String fieldId) {
+    CustomFieldsDTO customFieldsDTO = getCustomFieldById(fieldId);
+    if (customFieldsDTO.getCustomTagDTOS()
+        .removeIf(customTagDTO -> customTagDTO.getId().equals(tagId))) {
+      customFieldsRepository.save(customFieldsMapper.toEntity(customFieldsDTO));
+    }
   }
 }
