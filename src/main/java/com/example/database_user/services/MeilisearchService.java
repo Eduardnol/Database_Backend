@@ -1,6 +1,7 @@
 package com.example.database_user.services;
 
 import com.example.database_user.model.dto.Persona.PersonaDTO;
+import com.example.database_user.services.exception.UsersNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -86,6 +87,7 @@ public class MeilisearchService {
       persons.updateDocuments(mapper.writeValueAsString(personaDTO));
     } catch (Exception e) {
       log.error(e.getMessage());
+      throw new UsersNotFoundException();
     }
 
   }
@@ -95,6 +97,7 @@ public class MeilisearchService {
       persons.deleteDocument(id);
     } catch (Exception e) {
       log.error(e.getMessage());
+      throw new UsersNotFoundException();
     }
 
   }
