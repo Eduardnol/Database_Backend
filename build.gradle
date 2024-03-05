@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    api libs.org.springframework.boot.spring.boot.starter.data.mongodb
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:3.2.3'
     api libs.org.springframework.boot.spring.boot.starter.web
     api libs.org.springframework.boot.spring.boot.starter.security
     api libs.org.springframework.boot.spring.boot.starter.actuator
