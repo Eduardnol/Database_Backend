@@ -137,6 +137,7 @@ public class PersonaServiceImplementation implements PersonaService {
       MeilisearchService meilisearchService = MeilisearchService.getInstance();
       meilisearchService.deleteDocument(personID);
     } catch (HttpMessageNotReadableException e) {
+      log.error(e.getMessage());
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
