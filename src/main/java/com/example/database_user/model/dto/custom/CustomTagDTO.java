@@ -11,11 +11,17 @@ import lombok.Data;
  */
 @Builder
 @Data
-@AllArgsConstructor
 public class CustomTagDTO {
-  @Builder.Default
-  private String id = UUID.randomUUID().toString();
+
+  private String id;
   private String typeOfData;
   private String data;
   private String tagName;
+
+  public CustomTagDTO(String id, String typeOfData, String data, String tagName) {
+    this.id = UUID.randomUUID().toString();
+    this.typeOfData = typeOfData;
+    this.data = data;
+    this.tagName = tagName;
+  }
 }
