@@ -1,13 +1,15 @@
 package com.example.database_user.controllers.impl;
 
+import java.util.Locale;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Locale;
-
-@CrossOrigin( methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@Log4j2
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+    RequestMethod.DELETE})
 public class BaseController {
 
   @Autowired
@@ -18,8 +20,10 @@ public class BaseController {
 
   public String getMessage(final String code) {
     try {
-      return messageSource.getMessage(code, new Object[0], new Locale("es")); //todo languageConfig.getLocale()
+      return messageSource.getMessage(code, new Object[0],
+          new Locale("es")); //todo languageConfig.getLocale()
     } catch (Exception e) {
+      log.error(e.getMessage());
       return code;
     }
   }

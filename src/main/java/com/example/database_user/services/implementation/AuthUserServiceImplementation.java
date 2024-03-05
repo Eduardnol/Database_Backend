@@ -8,16 +8,17 @@ import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import com.example.database_user.model.dto.AuthUserDTO;
 import com.example.database_user.model.enums.Role;
 import com.example.database_user.model.mapper.AuthUserMapper;
+import com.example.database_user.repositories.AuthUserRepository;
 import com.example.database_user.services.AuthUserService;
 import com.example.database_user.services.exception.PasswordMismatchException;
 import com.example.database_user.services.exception.PasswordReusedException;
 import com.example.database_user.services.exception.UserAlreadyExistsException;
 import com.example.database_user.services.exception.WrongEmailOrPasswordException;
-import com.example.database_user.repositories.AuthUserRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
+@Log4j2
 public class AuthUserServiceImplementation implements AuthUserService, UserDetailsService {
 
   private final AuthUserRepository authUserRepository;
@@ -87,6 +89,7 @@ public class AuthUserServiceImplementation implements AuthUserService, UserDetai
           )
       );
     } catch (Exception e) {
+      log.error(e.getMessage());
       throw new WrongEmailOrPasswordException();
     }
     //They are both username and password correct at this point
@@ -139,6 +142,7 @@ public class AuthUserServiceImplementation implements AuthUserService, UserDetai
       }
 
     } catch (Exception e) {
+      log.error(e.getMessage());
       throw new WrongEmailOrPasswordException();
     }
     return null;
