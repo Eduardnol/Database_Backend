@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class JWTService {
 
   @Autowired
-  JwtProperties jwtProperties;
+  private JwtProperties jwtProperties;
 
   /**
    * GENERATE
