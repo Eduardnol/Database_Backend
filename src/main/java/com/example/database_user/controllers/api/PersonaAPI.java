@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -124,7 +123,7 @@ public interface PersonaAPI {
                   schema = @Schema(implementation = PersonaDTO.class))})
   })
   @GetMapping(value = "/sort")
-  @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
   ResponseEntity<List<PersonaDTO>> sortPeopleByName(
       @Parameter(description = "specify ordening field (name or surname)") @RequestParam(name = "field") String field,
       @Parameter(description = "Specify direction (asc or desc)") @RequestParam(name = "direction") String direction);

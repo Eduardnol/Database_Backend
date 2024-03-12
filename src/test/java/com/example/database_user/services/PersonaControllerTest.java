@@ -36,7 +36,8 @@ public class PersonaControllerTest extends BaseTest {
   @Test
   public void fetchAllPeople_returnsOkWhenCalledWithDefaultParameters() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(ALL_PEOPLE)
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isOk())
         .andReturn();
 
@@ -46,7 +47,8 @@ public class PersonaControllerTest extends BaseTest {
   @Test
   public void getById_returnsNotFoundWhenIdDoesNotExist() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID, "nonexistent")
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isNotFound())
         .andReturn();
 
@@ -56,7 +58,8 @@ public class PersonaControllerTest extends BaseTest {
   @Test
   public void fetchPeopleByName_returnsNotFoundWhenNameDoesNotExist() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID, "nonexistent")
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isNotFound())
         .andReturn();
 
@@ -66,7 +69,8 @@ public class PersonaControllerTest extends BaseTest {
   @Test
   public void insertNewUser_returnsBadRequestWhenUserIsNull() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(INSERT_NEW)
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isBadRequest())
         .andReturn();
 
@@ -91,7 +95,8 @@ public class PersonaControllerTest extends BaseTest {
 
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(INSERT_NEW)
             .content(objectMapper.writeValueAsString(personaDTO))
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isCreated())
         .andReturn();
 
@@ -102,7 +107,8 @@ public class PersonaControllerTest extends BaseTest {
   public void deleteUser_returnsNotFoundWhenIdDoesNotExist() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(DELETE_BY_ID, "nonexistent")
             .param("id", "nonexistent")
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isNotFound())
         .andReturn();
 
@@ -112,7 +118,8 @@ public class PersonaControllerTest extends BaseTest {
   @Test
   public void updateExisting_returnsBadRequestWhenUserIsNull() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put(UPDATE)
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isBadRequest())
         .andReturn();
 
@@ -124,7 +131,8 @@ public class PersonaControllerTest extends BaseTest {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SORT)
             .param("field", "name")
             .param("direction", "invalid")
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isBadRequest())
         .andReturn();
 
@@ -136,7 +144,8 @@ public class PersonaControllerTest extends BaseTest {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SORT)
             .param("field", "invalid")
             .param("direction", "asc")
-            .contentType(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
         .andExpect(status().isBadRequest())
         .andReturn();
 
