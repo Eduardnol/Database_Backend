@@ -1,7 +1,6 @@
 package com.example.database_user.services;
 
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,7 +26,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 public class CustomFieldsControllerTest extends BaseTest {
 
-  private static final String BASE = "http://localhost:8080/api/v1/people";
+  private static final String BASE = "http://localhost:8080/api/v1";
   private static final String CUSTOM_TAG = BASE + "/custom-tag";
   private static final String CREATE_CUSTOM_TAG = CUSTOM_TAG + "/create";
   private static final String DELETE_BY_ID = CUSTOM_TAG + "/delete/{tagId}";
@@ -37,12 +35,6 @@ public class CustomFieldsControllerTest extends BaseTest {
 
   @Autowired
   private MockMvc mockMvc;
-
-  @Mock
-  private ObjectMapper objectMapper;
-
-  @Mock
-  private CustomFieldsService customFieldsService;
 
   @BeforeEach
   public void setup() {
@@ -59,18 +51,20 @@ public class CustomFieldsControllerTest extends BaseTest {
         .build();
     List<CustomTagDTO> customTagDTOList = new ArrayList<>();
     customTagDTOList.add(customTagDTO);
+
     CustomFieldsDTO customFieldsDTO = CustomFieldsDTO.builder()
         .id("tagId")
         .name("tagName")
         .customTagDTOS(customTagDTOList)
         .build();
 
-    when(customFieldsService.createCustomTag(customFieldsDTO)).thenReturn(customFieldsDTO);
+    // when(customFieldsService.createCustomTag(customFieldsDTO)).thenReturn(customFieldsDTO);
+    String json = new ObjectMapper().writeValueAsString(customFieldsDTO);
 
     mockMvc.perform(post(CREATE_CUSTOM_TAG)
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token)
-            .content(objectMapper.writeValueAsString(customFieldsDTO)))
+            .content(json))
         .andExpect(status().isCreated());
   }
 
@@ -85,6 +79,7 @@ public class CustomFieldsControllerTest extends BaseTest {
   @Test
   public void testGetAllCustomTags() throws Exception {
     mockMvc.perform(get(GET_ALL)
+            .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token))
         .andExpect(status().isOk());
   }
