@@ -1,10 +1,9 @@
 package com.example.database_user.controllers.impl;
 
 import com.example.database_user.controllers.api.CustomFieldsAPI;
-import com.example.database_user.model.dto.custom.CustomFieldsDTO;
 import com.example.database_user.model.dto.Reponses.MainResponse;
+import com.example.database_user.model.dto.custom.CustomFieldsDTO;
 import com.example.database_user.services.CustomFieldsService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +17,10 @@ public class CustomFieldsController implements CustomFieldsAPI {
 
   @Override
   public ResponseEntity<MainResponse> createCustomTag(CustomFieldsDTO customFieldsDTO) {
+    CustomFieldsDTO customFieldsDTO1 = customFieldsService.createCustomTag(customFieldsDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(
         new MainResponse("Custom tag created", HttpStatus.CREATED,
-            customFieldsService.createCustomTag(customFieldsDTO)));
+            customFieldsDTO1));
   }
 
   @Override
