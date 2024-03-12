@@ -32,7 +32,7 @@ public class JWTService {
         .claims(extraClaims)
         .subject(userDetails.getUsername())
         .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis() + jwtProperties.getExpirationHours()))
+        .expiration(new Date(System.currentTimeMillis() + jwtProperties.getExpirationMiliseconds()))
         .signWith(getSignInKey())
         .compact();
   }

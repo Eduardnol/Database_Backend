@@ -7,15 +7,16 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration("jwtProperties")
 @ConfigurationProperties("dbsi.jwt")
 @Getter
 @Setter
 public class JwtProperties {
 
   @NonNull
+  @Name("key")
   private String key;
 
-  @Name("expirationHours")
-  private int expirationHours;
+  @Name("expirationMiliseconds")
+  private int expirationMiliseconds;
 }
