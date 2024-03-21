@@ -1,5 +1,6 @@
 package com.example.database_user.configs.security;
 
+import com.example.database_user.configs.properties.JwtProperties;
 import com.example.database_user.model.mapper.AuthUserMapper;
 import com.example.database_user.repositories.AuthUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,5 +45,10 @@ public class ApplicationConfig {
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public JwtProperties jwtProperties() {
+    return new JwtProperties();
   }
 }
