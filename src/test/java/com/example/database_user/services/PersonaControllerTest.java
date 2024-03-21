@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.LocalDate;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -74,6 +75,7 @@ public class PersonaControllerTest extends BaseTest {
   }
 
   @Test
+  @Order(1)
   public void insertNewUser_ok() throws Exception {
     PersonaDTO personaDTO = PersonaDTO.builder()
         .nombre("nombre")
