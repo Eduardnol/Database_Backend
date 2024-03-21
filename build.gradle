@@ -112,7 +112,7 @@ dockerCompose {
     isRequiredBy(build as Task) // specify that Docker Compose is required by the test task
 }
 test {
-    dependsOn composeUp
+   // dependsOn composeUp
 }
 build {
     finalizedBy composeDown

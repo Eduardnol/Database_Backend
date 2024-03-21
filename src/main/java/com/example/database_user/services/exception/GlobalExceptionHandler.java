@@ -81,4 +81,24 @@ public class GlobalExceptionHandler {
     apiError.setTimestamp(LocalDateTime.now());
     return new ResponseEntity<>(apiError, HttpStatus.NO_CONTENT);
   }
+
+  @ExceptionHandler(OrderFormatException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<ApiError> handleOrderFormatException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.BAD_REQUEST.value());
+    apiError.setErrorMessage("Order format is not valid");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(DateOrderException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<ApiError> handleDateOrderException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.BAD_REQUEST.value());
+    apiError.setErrorMessage("Initial date is after final date");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+  }
 }

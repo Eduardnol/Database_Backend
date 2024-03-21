@@ -98,9 +98,9 @@ public interface PersonaAPI {
           content = @Content(schema = @Schema(implementation = ApiError.class))),
   })
 
-  @DeleteMapping(value = "/deletebyid")
+  @DeleteMapping(value = "/deletebyid/{id}")
   ResponseEntity<String> deleteUser(
-      @Parameter(description = "Id of the user to be deleted") @RequestParam(name = "id") String identificador);
+      @Parameter(description = "Id of the user to be deleted") @PathVariable(name = "id") String identificador);
 
 
   @Operation(summary = "Update a specific user")
