@@ -215,7 +215,7 @@ public class PersonaControllerTest extends BaseTest {
 
   @Test
   public void fetchDateRangePeople_returnsBadRequestWhenInitialDateIsInvalid() throws Exception {
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(DATE_RANGE, "invalid", "2022-01-01")
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(DATE_RANGE, "2023-01-01", "2022-01-01")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token))
         .andExpect(status().isBadRequest())

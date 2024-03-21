@@ -6,8 +6,10 @@ import com.example.database_user.repositories.PersonaRepository;
 import com.example.database_user.repositories.entity.PersonaEntity;
 import com.example.database_user.services.MeilisearchService;
 import com.example.database_user.services.PersonaService;
+import com.example.database_user.services.exception.DateOrderException;
 import com.example.database_user.services.exception.ErrorSavingIntoDBException;
 import com.example.database_user.services.exception.ListIsEmptyException;
+import com.example.database_user.services.exception.OrderFormatException;
 import com.example.database_user.services.exception.UsersNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -60,12 +62,6 @@ public class PersonaServiceImplementation implements PersonaService {
 
   @Override
   public ResponseEntity<List<PersonaDTO>> fetchPeopleByName(String name) {
-
-    HttpStatus status = HttpStatus.ACCEPTED;
-    TextCriteria criteria = TextCriteria
-        .forDefaultLanguage()
-        .matching(name);
-
     // Query query = TextQuery.queryText(criteria).sortByScore();
     // List<PersonaDTO> posts = mongoTemplate.find(query, PersonaDTO.class);
 
@@ -78,11 +74,10 @@ public class PersonaServiceImplementation implements PersonaService {
     if (posts.isEmpty()) {
       throw new UsersNotFoundException();
     } else {
-      status = HttpStatus.OK;
       log.info("Retrieved users by name");
     }
 
-    return new ResponseEntity<List<PersonaDTO>>(posts, status);
+    return new ResponseEntity<List<PersonaDTO>>(posts, HttpStatus.OK);
 
   }
 
@@ -96,9 +91,8 @@ public class PersonaServiceImplementation implements PersonaService {
     HttpStatus status;
 
     if (endDate.isBefore(startDate)) {
-      //Error
-      status = HttpStatus.BAD_REQUEST;
       log.warn("End date is before start date");
+      throw new DateOrderException();
     } else {
      /* personaRepository.findAllByBirthdayBetween(startDate.minusDays(1)
           , endDate.plusDays(1)).ifPresent(queryResult::addAll);*/
@@ -169,12 +163,16 @@ public class PersonaServiceImplementation implements PersonaService {
     } else if (sort.equals("desc")) {
       sort_dir = Sort.Direction.DESC;
     } else {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      throw new OrderFormatException();
     }
     HttpStatus status = HttpStatus.ACCEPTED;
     List<PersonaDTO> persons = personaRepository.findAll(Sort.by(sort_dir, "nombre")).stream()
         .map(personaMapper::toDTO).collect(Collectors.toList());
-    status = HttpStatus.OK;
+    if (persons.isEmpty()) {
+      throw new UsersNotFoundException();
+    } else{
+      status = HttpStatus.OK;
+    }
     return new ResponseEntity<List<PersonaDTO>>(persons, status);
   }
 
@@ -193,7 +191,7 @@ public class PersonaServiceImplementation implements PersonaService {
     } else if (sort.equals("desc")) {
       sort_dir = Sort.Direction.DESC;
     } else {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      throw new OrderFormatException();
     }
 
     HttpStatus status = HttpStatus.ACCEPTED;
@@ -201,7 +199,11 @@ public class PersonaServiceImplementation implements PersonaService {
         .stream()
         .map(personaMapper::toDTO)
         .collect(Collectors.toList());
-    status = HttpStatus.OK;
+    if (persons.isEmpty()) {
+      throw new UsersNotFoundException();
+    } else{
+      status = HttpStatus.OK;
+    }
     return new ResponseEntity<List<PersonaDTO>>(persons, status);
   }
 }
