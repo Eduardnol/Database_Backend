@@ -175,4 +175,62 @@ public class PersonaControllerTest extends BaseTest {
 
     // Add assertions to check the response content if needed
   }
+
+  @Test
+  public void fetchPeopleByName_ok() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SEARCH, "nombre")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    // Add assertions to check the response content if needed
+  }
+
+  @Test
+  public void sortPeopleBySurName_desc_ok() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SORT)
+            .param("field", "surname")
+            .param("direction", "desc")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    // Add assertions to check the response content if needed
+  }
+
+  @Test
+  public void sortPeopleBySurName_asc_ok() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SORT)
+            .param("field", "surname")
+            .param("direction", "asc")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    // Add assertions to check the response content if needed
+  }
+
+  @Test
+  public void fetchDateRangePeople_returnsBadRequestWhenInitialDateIsInvalid() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(DATE_RANGE, "invalid", "2022-01-01")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
+        .andExpect(status().isBadRequest())
+        .andReturn();
+
+    // Add assertions to check the response content if needed
+  }
+  @Test
+  public void fetchDateRangePeople_returnOk() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(DATE_RANGE, "2020-01-01", "2022-01-01")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + token))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    // Add assertions to check the response content if needed
+  }
 }
