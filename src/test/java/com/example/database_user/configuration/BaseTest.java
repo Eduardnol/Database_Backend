@@ -15,10 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 
 @SpringBootTest
 @ActiveProfiles("test")
+@ContextConfiguration(classes = TestMongoDBContainer.class)
 public abstract class BaseTest {
 
   protected String token;
