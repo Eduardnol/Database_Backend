@@ -2,26 +2,21 @@ package com.example.database_user.configuration;
 
 import com.example.database_user.clock.ClockProvider;
 import com.example.database_user.configs.security.JWTService;
-import com.example.database_user.model.dto.AuthUserDTO;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 
 
 @SpringBootTest
 @ActiveProfiles("test")
-@ContextConfiguration(classes = TestMongoDBContainer.class)
-public abstract class BaseTest {
+public abstract class BaseTest extends TestMongoDBContainer {
 
   protected String token;
   @Autowired
@@ -29,6 +24,7 @@ public abstract class BaseTest {
   @Autowired
   private ClockProvider clockProvider;
 
+/*
   @BeforeEach
   public void generateToken() {
     AuthUserDTO userDetailsDTO = AuthUserDTO.builder()
@@ -42,6 +38,7 @@ public abstract class BaseTest {
   public void tearDown() {
     this.clockProvider.setClock(Clock.systemDefaultZone());
   }
+*/
 
   protected void setCurrentTime(final LocalDateTime date) {
     this.clockProvider.setClock(

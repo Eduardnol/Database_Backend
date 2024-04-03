@@ -2,8 +2,7 @@ spring:
   profiles.active: test
   data:
     mongodb:
-      uri: 'mongodb://root:example@localhost:27017/test?authSource=admin'
-      auto-index-creation: true
+      uri: 'mongodb://test:test@localhost:27017/management'
   servlet:
     multipart:
       max-file-size: 5000KB
@@ -35,5 +34,5 @@ springdoc:
     path: /swagger-ui.html
 dbsi:
   jwt:
-    expirationMiliseconds: 1000
+    expirationMiliseconds: 10000
     key: UCtSRmw0NExSSy9DemRvYnZiYmZ3Umh6dlI0YWdxUENMVHRld3NhT2ZRWjJFRjV6YjVYeXFFMC93Y2wvSSswMHJPakZ0MzdySXBoeEhrNHlWL0JRZ1BtNC9QcDdSOS9YWldXREVpU3JYdk9MQ2JIVmlwZ0tSVzN1dmNXVkttUWNWc1JxemlmRlhQQytGdkNVV1psdHQ3NlhaWmExb1R6UWpHRzR5RHAyQnIyaUdZanc0bkYwTE5yMlVxbk9ma0RtRVVYd2FkZ3R1OHhmcExkWFJiN0pYa2pQSlpHclNmNytGeTFNbGUreHZnMnRDeUVrUDNEMnY2elF2NkNnS3lVZXlXUno4bzh1UUhaV0htUUlqZ1A0WmpETUtTanBPTTFBb3lZZTk1NGJzSUVid0JuUm9iN0F5eHdXMXVHQklvWEJNNW9aOXdkdm5UWDFTZ1UySmFjaU5LaVZkYjF0V1NEODNETGRNNHR2VnBsSzlGTHJJd2tCZFVXbHBwU0ZIeFp2R2NkY1lFS0JmYnk5WitJMlprR3pVMW5oMTBnR2xJUVo1VWdwTVhoQ1hRUnhlSnpvTlZoaTk2MndXZjNJRUJSK3c1aWRJTWZDdCtMWUZScnlTcVBOelNCWEcwWHdrWkYrWEdJdHZpNGJ0eURaNjJTY1BkR2FFT0UxT2FKTm03SG5VeHluQXNMUVpxR0xFelZOMkNPNERWQ1h1SDk5MmU1S1VSb0JrMXl3bmZJcnNKQW5tMm9BRlIxYWUrdTlCS3RhSEVKNnlyMjNRazc3QUlHZkhVTlJrUHM4eG9CQjJhWWp4aG1NWGRiSWcvU1RoVXlmR3ZvYm4vMmdjTnFsWWhLeXhFbkltTW9JVDR1QjBOaTluK1hVWC80RGRnVjZhMGNvSThDZXVqZkN0Nmc9
