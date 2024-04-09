@@ -23,12 +23,12 @@ public abstract class BaseTest extends TestMongoDBContainer {
   private ClockProvider clockProvider;
 
   @BeforeAll
-  public static void startContainer() {
-    TestMongoDBContainer.getInstance().start();
+  static void startContainer() {
+    TestMongoDBContainer.getInstance();
   }
 
   @AfterAll
-  public static void stopContainer() {
+  static void stopContainer() {
     TestMongoDBContainer.getInstance().stop();
   }
 
