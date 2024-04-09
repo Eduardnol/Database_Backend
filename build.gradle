@@ -66,6 +66,7 @@ dependencies {
     testImplementation libs.org.testcontainers.junit.jupiter
     api libs.org.apache.tomcat.embed.tomcat.embed.core
     testImplementation libs.org.testcontainers.mongodb
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.4'
 
     api libs.org.mapstruct.mapstruct
     annotationProcessor('org.mapstruct:mapstruct-processor:1.4.2.Final') {
@@ -112,7 +113,7 @@ dockerCompose {
     isRequiredBy(build as Task) // specify that Docker Compose is required by the test task
 }
 test {
-   // dependsOn composeUp
+    // dependsOn composeUp
 }
 build {
     finalizedBy composeDown
