@@ -21,6 +21,7 @@ public class TestMongoDBContainer extends MongoDBContainer {
   public static TestMongoDBContainer getInstance() {
     if (container == null) {
       container = new TestMongoDBContainer();
+      container.start();
     }
     return container;
   }
