@@ -21,6 +21,7 @@ spring:
           - localhost
           - http://localhost:8888
           - http://localhost:4200
+          - http://localhost:8080
         allowedMethods:
           - GET
           - POST

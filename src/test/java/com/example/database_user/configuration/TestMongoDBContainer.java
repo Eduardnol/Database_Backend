@@ -5,23 +5,22 @@ import org.testcontainers.utility.MountableFile;
 
 public class TestMongoDBContainer extends MongoDBContainer {
 
-  private static final Integer CONTAINER_PORT = 27017;
+  private static final String IMAGE_VERSION = "mongo:4.4.6";
+  //private static final Integer CONTAINER_PORT = 27017;
   private static TestMongoDBContainer container;
 
-  public TestMongoDBContainer() {
-    super("mongo:4.4.6");
-    withExposedPorts(CONTAINER_PORT);
-    withEnv("MONGO_INITDB_ROOT_USERNAME", "test");
-    withEnv("MONGO_INITDB_ROOT_PASSWORD", "test");
-    withEnv("MONGO_INITDB_DATABASE", "management");
-    withCopyFileToContainer(MountableFile.forClasspathResource("init-script.js"),
-        "/docker-entrypoint-initdb.d/init-mongo.js");
+  private TestMongoDBContainer() {
+    super(IMAGE_VERSION);
   }
 
   public static TestMongoDBContainer getInstance() {
     if (container == null) {
       container = new TestMongoDBContainer();
-      container.start();
+      container.withEnv("MONGO_INITDB_ROOT_USERNAME", "test");
+      container.withEnv("MONGO_INITDB_ROOT_PASSWORD", "test");
+      container.withEnv("MONGO_INITDB_DATABASE", "management");
+      container.withCopyFileToContainer(MountableFile.forClasspathResource("init-script.js"),
+          "/docker-entrypoint-initdb.d/init-mongo.js");
     }
     return container;
   }

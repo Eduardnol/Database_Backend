@@ -79,6 +79,9 @@ version = '0.0.1-SNAPSHOT'
 description = 'database_user'
 java.sourceCompatibility = JavaVersion.VERSION_19
 
+configurations {
+    all*.exclude group: 'com.vaadin.external.google', module: 'android-json'
+}
 publishing {
     publications {
         maven(MavenPublication) {

@@ -1,4 +1,4 @@
-db = db.getSiblingDB('user_management');
+db = db.getSiblingDB('management');
 
 db.createUser({
   user: 'test_container',
