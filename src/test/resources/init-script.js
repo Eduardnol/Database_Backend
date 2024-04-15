@@ -1,10 +1,10 @@
 db = db.getSiblingDB('management');
 
 db.createUser({
-  user: 'test_container',
-  pwd: 'test_container',
+  user: 'test',
+  pwd: 'test',
   roles: [
-    {role: 'readWrite', db: 'user_management'}
+    {role: 'readWrite', db: 'management'}
   ]
 });
 

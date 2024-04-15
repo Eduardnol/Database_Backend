@@ -32,4 +32,9 @@ public class TestMongoDBContainer extends MongoDBContainer {
     System.setProperty("DB_USERNAME", "test");
     System.setProperty("DB_PASSWORD", "test");
   }
+
+  @Override
+  public void stop() {
+    // JVM takes care
+  }
 }
