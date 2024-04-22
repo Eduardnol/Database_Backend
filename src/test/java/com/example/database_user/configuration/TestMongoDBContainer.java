@@ -20,12 +20,13 @@ public class TestMongoDBContainer {
   public static TestMongoDBContainer getInstance() {
     if (instance == null) {
       instance = new TestMongoDBContainer();
-      mongoContainer.withEnv("MONGO_INITDB_ROOT_USERNAME", "test");
-      mongoContainer.withEnv("MONGO_INITDB_ROOT_PASSWORD", "test");
+      //mongoContainer.withEnv("MONGO_INITDB_ROOT_USERNAME", "test");
+      // mongoContainer.withEnv("MONGO_INITDB_ROOT_PASSWORD", "test");
       mongoContainer.withEnv("MONGO_INITDB_DATABASE", "management");
       mongoContainer.withCopyFileToContainer(
           MountableFile.forClasspathResource("init-script.js"),
           "/docker-entrypoint-initdb.d/init-mongo.js");
+      //mongoContainer.withReuse(true);
       instance.start();
     }
     return instance;
