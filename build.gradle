@@ -63,6 +63,8 @@ dependencies {
     //implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
 
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers:3.2.5'
+    testImplementation 'org.testcontainers:testcontainers:1.19.7'
     testImplementation libs.org.testcontainers.junit.jupiter
     api libs.org.apache.tomcat.embed.tomcat.embed.core
     testImplementation libs.org.testcontainers.mongodb

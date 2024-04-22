@@ -1,12 +1,8 @@
 package com.example.database_user.configuration;
 
-import com.example.database_user.clock.ClockProvider;
 import com.example.database_user.configs.security.JWTService;
 import com.example.database_user.model.dto.AuthUserDTO;
-import org.junit.ClassRule;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +11,15 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public abstract class BaseTest {
+public class BaseTest {
 
-  @ClassRule
-  public static TestMongoDBContainer testMongoDBContainer = TestMongoDBContainer.getInstance();
-  protected String token;
-  @Autowired
-  private JWTService jwtService;
-  @Autowired
-  private ClockProvider clockProvider;
-
-  @BeforeAll
-  static void startContainer() {
+  static {
     TestMongoDBContainer.getInstance().start();
   }
 
-  @AfterAll
-  static void stopContainer() {
-    TestMongoDBContainer.getInstance().stop();
-  }
+  protected String token;
+  @Autowired
+  private JWTService jwtService;
 
   @BeforeEach
   public void generateToken() {

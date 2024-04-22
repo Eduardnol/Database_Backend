@@ -8,7 +8,6 @@ import com.example.database_user.model.dto.Persona.PersonaDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.time.LocalDate;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,6 +150,7 @@ public class PersonaControllerTest extends BaseTest {
 
     // Add assertions to check the response content if needed
   }
+
   @Test
   public void sortPeopleByName_asc_ok() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SORT)
@@ -163,6 +163,7 @@ public class PersonaControllerTest extends BaseTest {
 
     // Add assertions to check the response content if needed
   }
+
   @Test
   public void sortPeopleByName_desc_ok() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SORT)
@@ -215,19 +216,22 @@ public class PersonaControllerTest extends BaseTest {
 
   @Test
   public void fetchDateRangePeople_returnsBadRequestWhenInitialDateIsInvalid() throws Exception {
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(DATE_RANGE, "2023-01-01", "2022-01-01")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer " + token))
+    MvcResult mvcResult = mockMvc.perform(
+            MockMvcRequestBuilders.get(DATE_RANGE, "2023-01-01", "2022-01-01")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token))
         .andExpect(status().isBadRequest())
         .andReturn();
 
     // Add assertions to check the response content if needed
   }
+
   @Test
   public void fetchDateRangePeople_returnOk() throws Exception {
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(DATE_RANGE, "2020-01-01", "2022-01-01")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer " + token))
+    MvcResult mvcResult = mockMvc.perform(
+            MockMvcRequestBuilders.get(DATE_RANGE, "2020-01-01", "2022-01-01")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token))
         .andExpect(status().isOk())
         .andReturn();
 
