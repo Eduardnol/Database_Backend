@@ -11,11 +11,11 @@ db.createUser({
 db.users.insertOne({
   id: 2,
   createdAt: new Date(),
-  email: "test@example.com",
+  email: "test0@example.com",
   isLocked: false,
   name: "John",
-  password: "testPassword",
   surname: "Doe",
+  password: "testPassword",
   loginHistory: [],
   passwordHistory: [],
   loginIpHistory: [],
