@@ -26,6 +26,7 @@ public class TestMongoDBContainer {
       mongoContainer.withCopyFileToContainer(
           MountableFile.forClasspathResource("init-script.js"),
           "/docker-entrypoint-initdb.d/init-mongo.js");
+      instance.start();
     }
     return instance;
   }

@@ -5,27 +5,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
 import com.example.database_user.configs.security.auth_messages.AuthenticationReset;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
+import com.example.database_user.configuration.BaseTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class AuthUserControllerTest {
 
-  @Autowired
-  private MockMvc mockMvc;
+@AutoConfigureMockMvc
+public class AuthUserControllerTest extends BaseTest {
 
   private static final String BASE = "http://localhost:8080/api/v1/auth";
   private static final String REGISTER = BASE + "/register";
   private static final String AUTHENTICATE = BASE + "/authenticate";
   private static final String RESET_PASSWORD = BASE + "/change-password";
+  @Autowired
+  private MockMvc mockMvc;
 
   @Test
   public void register_returnsBadRequestWhenCalledWithInvalidParameters() throws Exception {

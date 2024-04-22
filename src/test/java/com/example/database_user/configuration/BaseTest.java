@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class BaseTest {
 
   static {
-    TestMongoDBContainer.getInstance().start();
+    TestMongoDBContainer.getInstance();
   }
 
   protected String token;
