@@ -1,13 +1,5 @@
 db = db.getSiblingDB('management');
 
-db.createUser({
-  user: 'test',
-  pwd: 'test',
-  roles: [
-    {role: 'readWrite', db: 'management'}
-  ]
-});
-
 db.users.insertOne({
   id: 2,
   createdAt: new Date(),
