@@ -1,8 +1,5 @@
 spring:
   profiles.active: test
-  data:
-    mongodb:
-      uri: ${DB_URL}
   servlet:
     multipart:
       max-file-size: 5000KB
