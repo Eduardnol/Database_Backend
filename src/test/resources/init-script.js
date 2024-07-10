@@ -9,12 +9,12 @@ db.createUser({
   ],
 });
 
-db = new Mongo().getDB("testContainer");
+use('testContainer');
 
-db.createCollection('users');
-db.createCollection('persona');
-db.createCollection('discipuladoMenores');
-db.createCollection('customFields');
+db.createCollection('users', {capped: false});
+db.createCollection('persona', {capped: false});
+db.createCollection('discipuladoMenores', {capped: false});
+db.createCollection('customFields', {capped: false});
 
 db.users.insertOne({
   id: 2,
