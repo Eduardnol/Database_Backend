@@ -1,4 +1,9 @@
-db = db.getSiblingDB('management');
+db = new Mongo().getDB("testContainer");
+
+db.createCollection('users');
+db.createCollection('persona');
+db.createCollection('discipuladoMenores');
+db.createCollection('customFields');
 
 db.users.insertOne({
   id: 2,
