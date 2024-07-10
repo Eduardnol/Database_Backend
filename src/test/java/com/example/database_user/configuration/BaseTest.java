@@ -25,7 +25,7 @@ public class BaseTest {
       DockerImageName.parse(IMAGE_VERSION))
       .withCopyFileToContainer(
           MountableFile.forClasspathResource("init-script.js", 777),
-          "/docker-entrypoint-initdb.d/init-mongo.js");
+          "./data/mongo-init:/docker-entrypoint-initdb.d/init-mongo.js");
 
   protected String token;
   @Autowired
