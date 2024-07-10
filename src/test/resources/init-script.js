@@ -1,3 +1,14 @@
+db.createUser({
+  user: 'root',
+  pwd: 'root',
+  roles: [
+    {
+      role: 'readWrite',
+      db: 'testContainer',
+    },
+  ],
+});
+
 db = new Mongo().getDB("testContainer");
 
 db.createCollection('users');
