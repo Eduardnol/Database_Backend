@@ -19,13 +19,12 @@ import org.testcontainers.utility.MountableFile;
 public class BaseTest {
 
   private static final String IMAGE_VERSION = "mongo:4.4.6";
-
   @Container
   @ServiceConnection
   static MongoDBContainer mongoContainer = new MongoDBContainer(
       DockerImageName.parse(IMAGE_VERSION))
       .withCopyFileToContainer(
-          MountableFile.forClasspathResource("init-script.js"),
+          MountableFile.forClasspathResource("init-script.js", 777),
           "/docker-entrypoint-initdb.d/init-mongo.js");
 
   protected String token;
@@ -44,7 +43,6 @@ public class BaseTest {
   @Test
   public void test_ok() {
     System.out.println("Test ok");
-    int six = 6;
     Assertions.assertTrue(true);
   }
 }
