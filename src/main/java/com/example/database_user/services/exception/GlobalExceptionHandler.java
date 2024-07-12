@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(UsersNotFoundException.class)
-  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public ResponseEntity<ApiError> handleUsersNotFoundException() {
     ApiError apiError = new ApiError();
-    apiError.setErrorCode(HttpStatus.NOT_FOUND.value());
+    apiError.setErrorCode(HttpStatus.NO_CONTENT.value());
     apiError.setErrorMessage("Users not found");
     apiError.setTimestamp(LocalDateTime.now());
-    return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(apiError, HttpStatus.NO_CONTENT);
   }
 
   @ExceptionHandler(ErrorSavingIntoDBException.class)
