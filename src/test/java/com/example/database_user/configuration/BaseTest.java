@@ -1,36 +1,33 @@
 package com.example.database_user.configuration;
 
+import static com.example.database_user.configuration.TestMongoDBContainer.mongoContainer;
+
 import com.example.database_user.configs.security.JWTService;
 import com.example.database_user.model.dto.AuthUserDTO;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
-import org.testcontainers.utility.MountableFile;
+import org.springframework.context.annotation.Import;
 
 @SpringBootTest
-@Testcontainers
-public abstract class BaseTest {
-
-  private static final String IMAGE_VERSION = "mongo:4.4.6";
-  @Container
-  @ServiceConnection
-  static MongoDBContainer mongoContainer = new MongoDBContainer(
-      DockerImageName.parse(IMAGE_VERSION))
-      .withReuse(true)
-      .withCopyFileToContainer(
-          MountableFile.forClasspathResource("init-script.js", 777),
-          "./data/mongo-init:/docker-entrypoint-initdb.d/init-mongo.js");
+@Import(TestMongoDBContainer.class)
+public class BaseTest {
 
   protected String token;
+
   @Autowired
   private JWTService jwtService;
+
+
+  @BeforeAll
+  public static void startContainer() {
+    mongoContainer.start();
+    mongoContainer.getReplicaSetUrl();
+
+  }
 
   @BeforeEach
   public void generateToken() {
