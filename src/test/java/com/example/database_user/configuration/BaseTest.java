@@ -1,33 +1,22 @@
 package com.example.database_user.configuration;
 
-import static com.example.database_user.configuration.TestMongoDBContainer.mongoContainer;
 
 import com.example.database_user.configs.security.JWTService;
 import com.example.database_user.model.dto.AuthUserDTO;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 
 @SpringBootTest
-@Import(TestMongoDBContainer.class)
-public class BaseTest {
+public class BaseTest extends TestMongoDBContainer {
 
   protected String token;
 
   @Autowired
   private JWTService jwtService;
 
-
-  @BeforeAll
-  public static void startContainer() {
-    mongoContainer.start();
-    mongoContainer.getReplicaSetUrl();
-
-  }
 
   @BeforeEach
   public void generateToken() {
