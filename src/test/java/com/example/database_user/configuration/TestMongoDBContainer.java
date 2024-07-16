@@ -6,7 +6,6 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import org.testcontainers.utility.MountableFile;
 
 @SpringBootTest
 @Testcontainers
@@ -17,10 +16,10 @@ public abstract class TestMongoDBContainer {
 
   static {
     mongoDBContainer = new MongoDBContainer(
-        DockerImageName.parse(IMAGE_VERSION))
-        .withCopyFileToContainer(
+        DockerImageName.parse(IMAGE_VERSION));
+/*        .withCopyFileToContainer(
             MountableFile.forClasspathResource("init-script.js", 777),
-            "docker-entrypoint-initdb.d/init-mongo.js");
+            "docker-entrypoint-initdb.d/init-mongo.js");*/
     mongoDBContainer.start();
 
   }
