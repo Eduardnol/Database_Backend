@@ -20,7 +20,7 @@ public abstract class TestMongoDBContainer {
         DockerImageName.parse(IMAGE_VERSION))
         .withCopyFileToContainer(
             MountableFile.forClasspathResource("init-script.js", 777),
-            "./data/mongo-init:/docker-entrypoint-initdb.d/init-mongo.js");
+            "docker-entrypoint-initdb.d/init-mongo.js");
     mongoDBContainer.start();
 
   }
