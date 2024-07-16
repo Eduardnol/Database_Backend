@@ -2,11 +2,14 @@ package com.example.database_user.services;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.database_user.configs.security.JWTService;
 import com.example.database_user.configs.security.auth_messages.AuthenticationRequest;
 import com.example.database_user.configs.security.auth_messages.AuthenticationReset;
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
-import com.example.database_user.configuration.BaseTest;
+import com.example.database_user.configuration.TestMongoDBContainer;
+import com.example.database_user.model.dto.AuthUserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +23,27 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class AuthUserControllerTest extends BaseTest {
+public class AuthUserControllerTest extends TestMongoDBContainer {
 
   private static final String BASE = "http://localhost:8080/api/v1/auth";
   private static final String REGISTER = BASE + "/register";
   private static final String AUTHENTICATE = BASE + "/authenticate";
   private static final String RESET_PASSWORD = BASE + "/change-password";
+  protected String token;
   @Autowired
   private MockMvc mockMvc;
+  @Autowired
+  private JWTService jwtService;
+
+
+  @BeforeEach
+  public void generateToken() {
+    AuthUserDTO userDetailsDTO = AuthUserDTO.builder()
+        .email("test@example.com")
+        .password("testPassword")
+        .build();
+    token = jwtService.generateToken(userDetailsDTO);
+  }
 
   @Test
   public void register_returnsBadRequestWhenCalledWithInvalidParameters() throws Exception {

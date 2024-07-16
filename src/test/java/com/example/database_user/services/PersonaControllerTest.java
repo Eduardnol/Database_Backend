@@ -3,11 +3,14 @@ package com.example.database_user.services;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.database_user.PersonaHelper;
-import com.example.database_user.configuration.BaseTest;
+import com.example.database_user.configs.security.JWTService;
+import com.example.database_user.configuration.TestMongoDBContainer;
+import com.example.database_user.model.dto.AuthUserDTO;
 import com.example.database_user.model.dto.Persona.PersonaDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,7 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class PersonaControllerTest extends BaseTest {
+public class PersonaControllerTest extends TestMongoDBContainer {
 
   private static final String BASE = "http://localhost:8080/api/v1/people";
   private static final String ALL_PEOPLE = BASE + "/allpeople";
@@ -31,8 +34,21 @@ public class PersonaControllerTest extends BaseTest {
   private static final String DELETE_BY_ID = BASE + "/deletebyid/{id}";
   private static final String UPDATE = BASE + "/update";
   private static final String SORT = BASE + "/sort";
+  protected String token;
   @Autowired
   private MockMvc mockMvc;
+  @Autowired
+  private JWTService jwtService;
+
+
+  @BeforeEach
+  public void generateToken() {
+    AuthUserDTO userDetailsDTO = AuthUserDTO.builder()
+        .email("test@example.com")
+        .password("testPassword")
+        .build();
+    token = jwtService.generateToken(userDetailsDTO);
+  }
 
   @Test
   public void fetchAllPeople_returnsOkWhenCalledWithDefaultParameters() throws Exception {

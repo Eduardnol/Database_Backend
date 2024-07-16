@@ -6,7 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.database_user.configuration.BaseTest;
+import com.example.database_user.configs.security.JWTService;
+import com.example.database_user.configuration.TestMongoDBContainer;
+import com.example.database_user.model.dto.AuthUserDTO;
 import com.example.database_user.model.dto.custom.CustomFieldsDTO;
 import com.example.database_user.model.dto.custom.CustomTagDTO;
 import java.util.ArrayList;
@@ -24,17 +26,28 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class CustomFieldsControllerTest extends BaseTest {
+public class CustomFieldsControllerTest extends TestMongoDBContainer {
 
   private static final String BASE = "http://localhost:8080/api/v1";
   private static final String CUSTOM_TAG = BASE + "/custom-tag";
   private static final String CREATE_CUSTOM_TAG = CUSTOM_TAG + "/create";
   private static final String DELETE_BY_ID = CUSTOM_TAG + "/delete/{tagId}";
   private static final String GET_ALL = CUSTOM_TAG + "/get-all";
-
-
+  protected String token;
   @Autowired
   private MockMvc mockMvc;
+  @Autowired
+  private JWTService jwtService;
+
+
+  @BeforeEach
+  public void generateToken() {
+    AuthUserDTO userDetailsDTO = AuthUserDTO.builder()
+        .email("test@example.com")
+        .password("testPassword")
+        .build();
+    token = jwtService.generateToken(userDetailsDTO);
+  }
 
   @BeforeEach
   public void setup() {
