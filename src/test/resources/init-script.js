@@ -19,7 +19,7 @@ db.createCollection('customFields', {capped: false});
 db.users.insertOne({
   id: 2,
   createdAt: new Date(),
-  email: "test0@example.com",
+  email: "test@example.com",
   isLocked: false,
   name: "John",
   surname: "Doe",
