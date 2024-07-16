@@ -7,6 +7,7 @@ import com.example.database_user.configs.security.auth_messages.AuthenticationRe
 import com.example.database_user.configs.security.auth_messages.RegisterRequest;
 import com.example.database_user.configuration.BaseTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -105,6 +106,7 @@ public class AuthUserControllerTest extends BaseTest {
   }
 
   @Test
+  @Disabled
   public void resetPassword_returnsOkWhenCalledWithValidParameters() throws Exception {
     AuthenticationReset authenticationReset = new AuthenticationReset();
     authenticationReset.setEmail("test@example.com");

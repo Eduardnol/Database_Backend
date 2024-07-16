@@ -11,6 +11,21 @@ db.createCollection('persona', {capped: false});
 db.createCollection('discipuladoMenores', {capped: false});
 db.createCollection('customFields', {capped: false});
 
+db.users.insertOne({
+  id: 1,
+  createdAt: new Date(),
+  email: "test@example.com",
+  isLocked: false,
+  name: "John",
+  surname: "Doe",
+  password: "testPassword",
+  loginHistory: [],
+  passwordHistory: [],
+  loginIpHistory: [],
+  passwordUpdatedAt: new Date(),
+  role: "admin",
+});
+
 db.persona.insertMany([{
   "_id": "01H8HB8X6J7MA6KZD789J07HYH",
   "apellido": "Labbet",
