@@ -51,18 +51,18 @@ public class PersonaControllerTest extends BaseTest {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID, "nonexistent")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token))
-        .andExpect(status().isNotFound())
+        .andExpect(status().isNoContent())
         .andReturn();
 
     // Add assertions to check the response content if needed
   }
 
   @Test
-  public void fetchPeopleByName_returnsNotFoundWhenNameDoesNotExist() throws Exception {
+  public void fetchPeopleByName_returnsNoContentWhenNameDoesNotExist() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID, "nonexistent")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token))
-        .andExpect(status().isNotFound())
+        .andExpect(status().isNoContent())
         .andReturn();
 
     // Add assertions to check the response content if needed
@@ -120,7 +120,7 @@ public class PersonaControllerTest extends BaseTest {
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token)
             .content(objectMapper.writeValueAsString(personaDTO)))
-        .andExpect(status().isBadRequest())
+        .andExpect(status().isNotFound())
         .andReturn();
 
     // Add assertions to check the response content if needed

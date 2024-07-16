@@ -71,7 +71,7 @@ public class AuthUserControllerTest extends BaseTest {
   @Test
   public void authenticate_returnsOkWhenCalledWithValidParameters() throws Exception {
     AuthenticationRequest authenticationRequest = new AuthenticationRequest();
-    authenticationRequest.setEmail("test0@example.com");
+    authenticationRequest.setEmail("test@example.com");
     authenticationRequest.setPassword("testPassword");
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -107,7 +107,7 @@ public class AuthUserControllerTest extends BaseTest {
   @Test
   public void resetPassword_returnsOkWhenCalledWithValidParameters() throws Exception {
     AuthenticationReset authenticationReset = new AuthenticationReset();
-    authenticationReset.setEmail("test0@example.com");
+    authenticationReset.setEmail("test@example.com");
     authenticationReset.setOldPassword("testPassword");
     authenticationReset.setNewPassword("newPassword");
     authenticationReset.setConfirmNewPassword("newPassword");
