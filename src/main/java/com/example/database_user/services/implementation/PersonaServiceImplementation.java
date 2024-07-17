@@ -10,7 +10,7 @@ import com.example.database_user.services.exception.DateOrderException;
 import com.example.database_user.services.exception.ErrorSavingIntoDBException;
 import com.example.database_user.services.exception.ListIsEmptyException;
 import com.example.database_user.services.exception.OrderFormatException;
-import com.example.database_user.services.exception.UsersNotFoundException;
+import com.example.database_user.services.exception.UsersEmptyException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -55,7 +54,7 @@ public class PersonaServiceImplementation implements PersonaService {
   public ResponseEntity<PersonaDTO> findPersonById(String id) {
     PersonaDTO personaDTO = personaRepository.findById(id).map(personaMapper::toDTO).orElse(null);
     if (personaDTO == null) {
-      throw new UsersNotFoundException();
+      throw new UsersEmptyException();
     }
     return new ResponseEntity<>(personaDTO, HttpStatus.OK);
   }
@@ -72,7 +71,7 @@ public class PersonaServiceImplementation implements PersonaService {
         .collect(Collectors.toList());
 
     if (posts.isEmpty()) {
-      throw new UsersNotFoundException();
+      throw new UsersEmptyException();
     } else {
       log.info("Retrieved users by name");
     }
@@ -169,8 +168,8 @@ public class PersonaServiceImplementation implements PersonaService {
     List<PersonaDTO> persons = personaRepository.findAll(Sort.by(sort_dir, "nombre")).stream()
         .map(personaMapper::toDTO).collect(Collectors.toList());
     if (persons.isEmpty()) {
-      throw new UsersNotFoundException();
-    } else{
+      throw new UsersEmptyException();
+    } else {
       status = HttpStatus.OK;
     }
     return new ResponseEntity<List<PersonaDTO>>(persons, status);
@@ -200,8 +199,8 @@ public class PersonaServiceImplementation implements PersonaService {
         .map(personaMapper::toDTO)
         .collect(Collectors.toList());
     if (persons.isEmpty()) {
-      throw new UsersNotFoundException();
-    } else{
+      throw new UsersEmptyException();
+    } else {
       status = HttpStatus.OK;
     }
     return new ResponseEntity<List<PersonaDTO>>(persons, status);

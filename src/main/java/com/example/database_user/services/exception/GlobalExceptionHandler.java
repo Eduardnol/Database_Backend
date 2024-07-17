@@ -22,6 +22,16 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
   }
 
+  @ExceptionHandler(UsersEmptyException.class)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public ResponseEntity<ApiError> handleUsersEmptyException() {
+    ApiError apiError = new ApiError();
+    apiError.setErrorCode(HttpStatus.NO_CONTENT.value());
+    apiError.setErrorMessage("User is empty");
+    apiError.setTimestamp(LocalDateTime.now());
+    return new ResponseEntity<>(apiError, HttpStatus.NO_CONTENT);
+  }
+
   @ExceptionHandler(ErrorSavingIntoDBException.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ResponseEntity<ApiError> handleSavingIntoDBException() {

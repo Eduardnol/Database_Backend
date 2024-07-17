@@ -3,13 +3,14 @@ package com.example.database_user.services;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.database_user.PersonaHelper;
-import com.example.database_user.configuration.BaseTest;
+import com.example.database_user.configs.security.JWTService;
+import com.example.database_user.configuration.TestMongoDBContainer;
+import com.example.database_user.model.dto.AuthUserDTO;
 import com.example.database_user.model.dto.Persona.PersonaDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.time.LocalDate;
-import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,9 +20,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@SpringBootTest
+
 @AutoConfigureMockMvc
-public class PersonaControllerTest extends BaseTest {
+@SpringBootTest
+public class PersonaControllerTest extends TestMongoDBContainer {
 
   private static final String BASE = "http://localhost:8080/api/v1/people";
   private static final String ALL_PEOPLE = BASE + "/allpeople";
@@ -32,8 +34,21 @@ public class PersonaControllerTest extends BaseTest {
   private static final String DELETE_BY_ID = BASE + "/deletebyid/{id}";
   private static final String UPDATE = BASE + "/update";
   private static final String SORT = BASE + "/sort";
+  protected String token;
   @Autowired
   private MockMvc mockMvc;
+  @Autowired
+  private JWTService jwtService;
+
+
+  @BeforeEach
+  public void generateToken() {
+    AuthUserDTO userDetailsDTO = AuthUserDTO.builder()
+        .email("test@example.com")
+        .password("testPassword")
+        .build();
+    token = jwtService.generateToken(userDetailsDTO);
+  }
 
   @Test
   public void fetchAllPeople_returnsOkWhenCalledWithDefaultParameters() throws Exception {
@@ -51,18 +66,18 @@ public class PersonaControllerTest extends BaseTest {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID, "nonexistent")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token))
-        .andExpect(status().isNotFound())
+        .andExpect(status().isNoContent())
         .andReturn();
 
     // Add assertions to check the response content if needed
   }
 
   @Test
-  public void fetchPeopleByName_returnsNotFoundWhenNameDoesNotExist() throws Exception {
+  public void fetchPeopleByName_returnsNoContentWhenNameDoesNotExist() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(GET_BY_ID, "nonexistent")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token))
-        .andExpect(status().isNotFound())
+        .andExpect(status().isNoContent())
         .andReturn();
 
     // Add assertions to check the response content if needed
@@ -80,7 +95,6 @@ public class PersonaControllerTest extends BaseTest {
   }
 
   @Test
-  @Order(1)
   public void insertNewUser_ok() throws Exception {
     PersonaDTO personaDTO = PersonaHelper.createPersona1();
     ObjectMapper objectMapper = new ObjectMapper();
@@ -120,7 +134,7 @@ public class PersonaControllerTest extends BaseTest {
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token)
             .content(objectMapper.writeValueAsString(personaDTO)))
-        .andExpect(status().isBadRequest())
+        .andExpect(status().isNotFound())
         .andReturn();
 
     // Add assertions to check the response content if needed
@@ -151,6 +165,7 @@ public class PersonaControllerTest extends BaseTest {
 
     // Add assertions to check the response content if needed
   }
+
   @Test
   public void sortPeopleByName_asc_ok() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SORT)
@@ -163,6 +178,7 @@ public class PersonaControllerTest extends BaseTest {
 
     // Add assertions to check the response content if needed
   }
+
   @Test
   public void sortPeopleByName_desc_ok() throws Exception {
     MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SORT)
@@ -215,19 +231,22 @@ public class PersonaControllerTest extends BaseTest {
 
   @Test
   public void fetchDateRangePeople_returnsBadRequestWhenInitialDateIsInvalid() throws Exception {
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(DATE_RANGE, "2023-01-01", "2022-01-01")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer " + token))
+    MvcResult mvcResult = mockMvc.perform(
+            MockMvcRequestBuilders.get(DATE_RANGE, "2023-01-01", "2022-01-01")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token))
         .andExpect(status().isBadRequest())
         .andReturn();
 
     // Add assertions to check the response content if needed
   }
+
   @Test
   public void fetchDateRangePeople_returnOk() throws Exception {
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(DATE_RANGE, "2020-01-01", "2022-01-01")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer " + token))
+    MvcResult mvcResult = mockMvc.perform(
+            MockMvcRequestBuilders.get(DATE_RANGE, "2020-01-01", "2022-01-01")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token))
         .andExpect(status().isOk())
         .andReturn();
 
