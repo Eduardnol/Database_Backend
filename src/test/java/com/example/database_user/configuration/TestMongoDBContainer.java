@@ -1,5 +1,6 @@
 package com.example.database_user.configuration;
 
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
@@ -10,6 +11,7 @@ import org.testcontainers.utility.MountableFile;
 
 
 @Testcontainers
+@DirtiesContext
 public class TestMongoDBContainer {
 
   //protected static final GenericContainer mongoDBContainer;
@@ -34,6 +36,4 @@ public class TestMongoDBContainer {
             + "/testContainer";
     registry.add("spring.data.mongodb.uri", () -> uri);
   }
-
-
 }
