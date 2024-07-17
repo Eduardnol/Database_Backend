@@ -10,7 +10,7 @@ import com.example.database_user.configuration.TestMongoDBContainer;
 import com.example.database_user.model.dto.AuthUserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -68,9 +68,10 @@ public class AuthUserControllerTest extends TestMongoDBContainer {
   }
 
   @Test
+  @Order(1)
   public void register_returnsOkWhenCalledWithValidParameters() throws Exception {
     RegisterRequest registerRequest = new RegisterRequest();
-    registerRequest.setEmail("test@example.com");
+    registerRequest.setEmail("test1@example.com");
     registerRequest.setPassword("testPassword");
     registerRequest.setName("testName");
     registerRequest.setSurname("testSurname");
@@ -88,9 +89,10 @@ public class AuthUserControllerTest extends TestMongoDBContainer {
   }
 
   @Test
+  @Order(2)
   public void authenticate_returnsOkWhenCalledWithValidParameters() throws Exception {
     AuthenticationRequest authenticationRequest = new AuthenticationRequest();
-    authenticationRequest.setEmail("test@example.com");
+    authenticationRequest.setEmail("test1@example.com");
     authenticationRequest.setPassword("testPassword");
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -124,10 +126,10 @@ public class AuthUserControllerTest extends TestMongoDBContainer {
   }
 
   @Test
-  @Disabled
+  @Order(3)
   public void resetPassword_returnsOkWhenCalledWithValidParameters() throws Exception {
     AuthenticationReset authenticationReset = new AuthenticationReset();
-    authenticationReset.setEmail("test@example.com");
+    authenticationReset.setEmail("test1@example.com");
     authenticationReset.setOldPassword("testPassword");
     authenticationReset.setNewPassword("newPassword");
     authenticationReset.setConfirmNewPassword("newPassword");
