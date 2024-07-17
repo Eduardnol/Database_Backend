@@ -1,10 +1,10 @@
 # REST API Database User Administration
 
+## When cloning
 
+Create inside /src/main/resources a file names `application.properties` with the following info
+inside.
 
-
-## When cloning 
-Create inside /src/main/resources a file names `application.properties` with the following info inside.
 ```properties
 spring.data.mongodb.authentication-database=xxxx
 #spring.data.mongodb.username=xxxx
@@ -23,21 +23,26 @@ spring.jpa.show-sql=false
 spring.jpa.open-in-view=false
 ```
 
-
-
 This is a REST API that allows you to create, update, delete and list all the users included in a
 database.
 
-The aim is to help a NGO organisation to manage all the users included in there. They can be classified into different
+The aim is to help a NGO organisation to manage all the users included in there. They can be
+classified into different
 groups
 and can be assigned to different roles.
 
-To store all the data, a MongoDB database is used. And in order to get better search results and faster ones,
+To store all the data, a MongoDB database is used. And in order to get better search results and
+faster ones,
 Meilisearch is used. The API itself has been developed using Java and Spring Boot.
 
-> In order to start the API, you need `docker` and `docker-compose` installed. Since the Database and the Search Engine
+> In order to start the API, you need `docker` and `docker-compose` installed. Since the Database
+> and the Search Engine
 > are
 > executed from a container.
+
+## API Docs with Swagger UI
+
+http://127.0.0.1:8080/swagger-ui/index.html
 
 ## Frontend
 

@@ -6,8 +6,6 @@ import com.example.database_user.model.dto.Persona.SimplePersona;
 import com.example.database_user.model.dto.discipulado.DiscipuladoMenoresDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -22,44 +20,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "DiscipuladoMenores", description = "Obtain all information relative to the DiscipuladoMenores")
 public interface DiscipuladoMenoresAPI {
 
+  @Operation(summary = "Get a DiscipuladoMenoresDTO record by its id")
   @GetMapping("/{id}")
   ResponseEntity<DiscipuladoMenoresDTO> fetchDiscipuladoMenoresById(@PathVariable String id);
 
+  @Operation(summary = "Get all DiscipuladoMenoresDTO records")
   @GetMapping("/all")
   ResponseEntity<List<DiscipuladoMenoresDTO>> fetchAllDiscipuladoMenores();
 
+  @Operation(summary = "Get all inscritos of a DiscipuladoMenoresDTO record")
   @GetMapping("/{id}/inscritos")
   ResponseEntity<List<SimplePersona>> fetchDiscipuladoMenoresInscritosById(
       @PathVariable String id);
 
+  @Operation(summary = "Get all monitors of a DiscipuladoMenoresDTO record")
   @GetMapping("/{id}/monitores")
   ResponseEntity<List<PersonaDTO>> fetchDiscipuladoMenoresMonitoresById(
       @PathVariable String id);
 
-
+  @Operation(summary = "Insert a new DiscipuladoMenoresDTO record")
   //TODO verify the valid command
   @PostMapping("/insert")
   ResponseEntity<String> insertNewDiscipuladoMenores(
       @RequestBody @Valid DiscipuladoMenoresDTO discipuladoMenoresDTO);
 
+  @Operation(summary = "Delete a DiscipuladoMenoresDTO record by its id")
   @DeleteMapping("/delete/{id}")
   ResponseEntity<String> deleteDiscipuladoMenores(@PathVariable String id);
 
   @Operation(summary = "Update a DiscipuladoMenoresDTO record")
-  @ApiResponse(responseCode = "200", description = "DiscipuladoMenoresDTO record updated successfully", content =
-  @Content(mediaType = "text/plain"))
-  @ApiResponse(responseCode = "400", description = "Invalid request payload")
   @PutMapping("/update")
   ResponseEntity<String> updateDiscipuladoMenores(
       @RequestBody @Valid DiscipuladoMenoresDTO discipuladoMenoresDTO);
 
 
   @Operation(summary = "Insert a new inscription")
-  @ApiResponse(responseCode = "200", description = "Inscription inserted successfully", content =
-  @Content(mediaType = "text/plain"))
-  @ApiResponse(responseCode = "400", description = "Invalid request payload")
-  @ApiResponse(responseCode = "404", description = "DiscipuladoMenoresDTO not found")
-  @ApiResponse(responseCode = "500", description = "Internal server error")
   @PostMapping("/insert-inscription/{id-discipulado-menores}")
   ResponseEntity<String> insertNewInscription(
       @Parameter(description = "Persona Niños object") @RequestBody @Valid PersonaNinos personaNinos,
