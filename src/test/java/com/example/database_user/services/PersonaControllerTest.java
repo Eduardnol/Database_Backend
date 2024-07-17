@@ -196,7 +196,7 @@ public class PersonaControllerTest extends TestMongoDBContainer {
 
   @Test
   public void fetchPeopleByName_ok() throws Exception {
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SEARCH, "nombre")
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(SEARCH, "Christen")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + token))
         .andExpect(status().isOk())
