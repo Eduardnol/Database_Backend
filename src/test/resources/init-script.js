@@ -23,7 +23,7 @@ db.users.insertOne({
   passwordHistory: [],
   loginIpHistory: [],
   passwordUpdatedAt: new Date(),
-  role: "admin",
+  role: "ADMIN",
 });
 
 db.persona.insertMany([{
