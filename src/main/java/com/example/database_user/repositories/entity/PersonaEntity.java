@@ -1,10 +1,10 @@
 package com.example.database_user.repositories.entity;
 
 
-import com.example.database_user.model.dto.custom.CustomTagDTO;
 import com.example.database_user.model.dto.FileStorage;
 import com.example.database_user.model.dto.PersonGroups;
 import com.example.database_user.model.dto.Persona.PersonaNinos;
+import com.example.database_user.model.dto.custom.CustomTagDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Email;
@@ -20,6 +20,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -27,6 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Document(collection = "persona")
+@TypeAlias("persona")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

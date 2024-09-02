@@ -1,8 +1,8 @@
 package com.example.database_user.model.dto.Persona;
 
-import com.example.database_user.model.dto.custom.CustomTagDTO;
 import com.example.database_user.model.dto.FileStorage;
 import com.example.database_user.model.dto.PersonGroups;
+import com.example.database_user.model.dto.custom.CustomTagDTO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,4 +33,5 @@ public class PersonaDTO {
   private List<PersonGroups> personGroups;
   private String homeAddress;
   private PersonaNinos personaNinos;
+  private String notas;
 }
