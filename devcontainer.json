@@ -1,0 +1,30 @@
+{
+  "name": "Java Spring Dev Container",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "devcontainer",
+  "postCreateCommand": "npm install -g @angular/cli",
+  "forwardPorts": [
+    8080,
+    27017,
+    7700
+  ],
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "installGradle": true,
+      "version": "21",
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+  },
+  "customizations": {
+    "jetbrains": {
+      "settings": {
+        "com.intellij:app:EditorSettings.soft_wrap_file_masks": "*.md; *.txt; *.rst; *.adoc",
+        "com.intellij:app:EditorSettings.is_ensure_newline_at_eof": true,
+        "com.intellij:app:Vcs-Log-App-Settings.compact_references_view": false
+      }
+    }
+  },
+}

@@ -1,5 +1,10 @@
 version: '3'
 services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
   mongo_db:
     container_name: mongo_db
     image: mongo
